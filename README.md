@@ -1,16 +1,71 @@
-# React + Vite
+📚 eBook-Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive React frontend for an online eBook store, featuring search, category filters, book details, a cart, and a checkout/payment prototype. Built with React, Tailwind CSS, and Vite.
 
-Currently, two official plugins are available:
+Live Demo:
+coming soon...
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Features:
 
-## React Compiler
+Browse books by category or search by title
+View book details including title, author, description, price, and cover
+Add to cart and view cart items
+Mock checkout/payment system
+Profile page for user info and saved courses
+Fully responsive, mobile-first design
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Technologies Used:
 
-## Expanding the ESLint configuration
+React – Frontend UI
+Vite – Fast development build tool
+Tailwind CSS – Modern styling
+React Router DOM – Page routing
+LocalStorage – Save user data and cart items
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Getting Started:
+
+1. Clone the repository
+git clone https://github.com/stephaniekanu-5/eBook-Store
+cd eBook-Store
+2. Install dependencies
+npm install
+3. Start development server
+npm run dev
+
+Visit http://localhost:5173/ to see the app in your browser.
+
+Project Structure:
+
+eBook-Store/
+├─ public/                  # Static assets
+│   └─ covers/              # Book cover images
+├─ src/
+│   ├─ components/          # Reusable UI components
+│   ├─ context/             # Cart and Auth context
+│   ├─ data/                # Sample books data
+│   ├─ pages/               # All page components (Books, Profile, Cart, Checkout)
+│   └─ App.jsx              # Main app with routes
+├─ package.json
+└─ README.md
+
+How to Use:
+
+Browse books on the home page
+Filter by category or search by title
+Click “Buy Now” to add to cart
+View your cart and proceed to checkout
+Edit your profile and manage saved courses
+
+Note: Payment is currently a mock simulation.
+
+Future Improvements
+
+Integrate secure backend & database
+Real payment gateway (Stripe, PayPal, etc.)
+User authentication & authorization
+Persistent user sessions across devices
+
+Author
+
+Stephanie Kanu – Frontend Developer
+GitHub | LinkedIn
