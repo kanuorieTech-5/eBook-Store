@@ -9,7 +9,7 @@ export default function Cart() {
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-white shadow rounded mt-6">
+    <div className="p-6 max-w-2xl mx-auto bg-white shadow rounded mt-6 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Cart</h2>
 
       {cart.map((item) => (
@@ -30,7 +30,7 @@ export default function Cart() {
       </div>
 
       <button
-        onClick={() => navigate("/checkout")}
+        onClick={() => navigate("/Checkoutform")}
         className="bg-green-600 text-white w-full py-2 rounded mt-4"
       >
         Checkout

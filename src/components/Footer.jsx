@@ -45,8 +45,9 @@ export default function Footer() {
           </p>
 
           <p className="text-gray-400">
-            Built with ❤️ using React
+            follow us on social media:
           </p>
+          
         </div>
 
       </div>

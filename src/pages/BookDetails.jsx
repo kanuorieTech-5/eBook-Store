@@ -15,7 +15,7 @@ export default function BookDetails() {
   if (!book) return <div className="p-6">Book not found</div>;
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow p-6 rounded mt-6">
+    <div className="max-w-md mx-auto bg-white shadow p-6 rounded mt-6 min-h-screen">
       <img
         src={book.cover}
         alt=""

@@ -14,6 +14,8 @@ import Footer from "../components/Footer";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Profile from "../pages/profile";
 import Success from "../pages/OrderSuccess";
+import CheckoutForm from "../components/CheckoutForm";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -31,25 +33,9 @@ export default function AppRoutes() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/success" element={<Success />} />
       <Route path="/success" element={<OrderSuccess />} />
-
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/MyLibrary"
-        element={
-          <ProtectedRoute>
-            <MyLibrary />
-          </ProtectedRoute>
-        }
-      />
-
+      <Route path="/checkoutform" element={<CheckoutForm />} />
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/MyLibrary" element={<ProtectedRoute> <MyLibrary /></ProtectedRoute>}/>
     </Routes>
   );
 }

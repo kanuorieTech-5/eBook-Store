@@ -12,7 +12,7 @@ export default function Navbar() {
 
       {/* Logo */}
       <Link to="/" className="text-xl font-bold">
-        📚 E-Library
+        📚Favorite BookStore
       </Link>
 
       {/* Right Side */}
