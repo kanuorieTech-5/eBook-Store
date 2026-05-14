@@ -13,9 +13,11 @@ export default function Navbar() {
 
       {/* Logo */}
       <Link to="/" className="text-xl font-bold">
-        📚Favorite BookStore
+        📚
       </Link>
+
       <SearchBar />
+      
       {/* Right Side */}
       <div className="flex items-center gap-6">
 
