@@ -164,6 +164,13 @@ export default function Profile() {
             )}
           </div>
         </div>
+        <button 
+          onClick={() => alert("Admin dashboard coming soon!")}
+          className="mt-10 bg-gray-600 text-white px-6 py-3 rounded-xl"
+        >
+           Go to
+          admin dashboard
+        </button>
       </main>
     </div>
   );

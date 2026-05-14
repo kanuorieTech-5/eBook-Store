@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { useStore } from "../context/StoreContext";
 
-export default function BookCard({ book, addToCart }) {
+export default function BookCard({ book, cart, addToCart }) {
 
   const navigate = useNavigate();
 

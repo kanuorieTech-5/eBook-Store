@@ -1,112 +1,106 @@
 export const books = [
-   {
+  {
     id: 1,
     title: "Atomic Habits",
     author: "James Clear",
-    category: "Self Development",
-    price: 12,  
-    cover: "https://images-na.ssl-images-amazon.com/images/I/51-nXsSRfZL._SX329_BO1,204,203,200_.jpg",
-    description: "An easy & proven way to build good habits and break bad ones."
+    price: 5000,
+    category: "Self Help",
+    rating: 4.9,
+    description:
+      "A practical guide to building good habits and breaking bad ones.",
+    cover: "/covers/atomic.jpg",
+    preview: "/previews/atomic-preview.pdf",
+    file: "/books/atomic-habits.pdf",
   },
   {
     id: 2,
-    title: "Rich Dad Poor Dad",
-    author: "Robert Kiyosaki",
-    category: "Business",
-    price: 10,
-    cover: "https://tse3.mm.bing.net/th/id/OIP.xlJ7Ym0GXIQYBR6C5v1TSQHaJQ?rs=1&pid=ImgDetMain&o=7&rm=3",
-    description: "How to improve your financial and investment outcomes." 
+    title: "The Psychology of Money",
+    author: "Morgan Housel",
+    price: 4500,
+    category: "Finance",
+    rating: 4.8,
+    description:
+      "Timeless lessons on wealth, greed, and happiness.",
+    cover: "/covers/psychology-of-money.jpg",
+    preview: "/previews/psychology-of-money-preview.pdf",
+    file: "/books/psychology-of-money.pdf",
   },
   {
     id: 3,
     title: "The Alchemist",
     author: "Paulo Coelho",
+    price: 4000,
     category: "Fiction",
-    price: 9,
-    cover: "https://th.bing.com/th/id/R.e49e4d33dd7f6c8a818a3f826f121537?rik=ZPBPzVndLsIb3A&pid=ImgRaw&r=0.jpg",
-    description: "A novel about the journey of a young shepherd in search of a worldly treasure." 
+    rating: 4.7,
+    description:
+      "A magical story about following your dreams.",
+    cover: "/covers/alchemist.jpg",
+    preview: "/previews/alchemist-preview.pdf",
+    file: "/books/alchemist.pdf",
   },
   {
     id: 4,
     title: "Clean Code",
-    author: "Robert Martin",
-    category: "Technology",
-    price: 15,
-    cover: "https://my-test-11.slatic.net/p/3e55e57fac4d8d71f675f3f1a14764b3.jpg",
-    description: "A handbook of agile software craftsmanship."
+    author: "Robert C. Martin",
+    price: 5500,
+    category: "Programming",
+    rating: 4.9,
+    description:
+      "A handbook of agile software craftsmanship.",
+    cover: "/covers/clean-code.jpg",
+    preview: "/previews/clean-code-preview.pdf",
+    file: "/books/clean-code.pdf",
   },
   {
-      id: 5,
-    title: "Guns, Germs, and Steel",
-    author: "Jared Diamond",
+    id: 5,
+    title: "Sapiens",
+    author: "Yuval Noah Harari",
+    price: 4800,
     category: "History",
-    price: 14,
-    cover: "https://tse1.mm.bing.net/th/id/OIP.og4BZuldPqqXc5u1JcLr6gHaLL?rs=1&pid=ImgDetMain&o=7&rm=3.jpg",
-    description: "The impact of geography on the development of human societies."
+    rating: 4.8,
+    description:
+      "A brief history of humankind.",
+    cover: "/covers/sapiens.jpg",
+    preview: "/previews/sapiens-preview.pdf",
+    file: "/books/sapiens.pdf",
   },
   {
     id: 6,
-    title: "Thinking, Fast and Slow",
-    author: "Daniel Kahneman",
-    category: "Self Development",
-    price: 13,
-    cover: "https://tse3.mm.bing.net/th/id/OIP.O4xDiZh6rtXlOCJxy0C7LwHaLY?rs=1&pid=ImgDetMain&o=7&rm=3.jpg",
-    description: "An exploration of the two systems that drive our thinking."
+    title: "Deep Work",
+    author: "Cal Newport",
+    price: 5200,
+    category: "Productivity",
+    rating: 4.9,
+    description:
+      "Rules for focused success in a distracted world.",
+    cover: "/covers/deep-work.jpg",
+    preview: "/previews/deep-work-preview.pdf",
+    file: "/books/deep-work.pdf",
   },
   {
     id: 7,
     title: "Zero to One",
     author: "Peter Thiel",
+    price: 5000,
     category: "Business",
-    price: 14,
-    cover: " https://m.media-amazon.com/images/I/71uAI28kJuL.jpg.jpg",
-    description: "How to build unstoppable companies."
+    rating: 4.7,
+    description:
+      "Notes on startups and how to build the future.",
+    cover: "/covers/zero-to-one.jpg",
+    preview: "/previews/zero-to-one-preview.pdf",
+    file: "/books/zero-to-one.pdf",
   },
   {
     id: 8,
-    title: "Sapiens",
-    author: "Yuval Noah Harari",
+    title: "Guns, Germs, and Steel",
+    author: "Jared Diamond",
+    price: 4800,
     category: "History",
-    price: 14,
-    cover: "https://images-na.ssl-images-amazon.com/images/I/51-VZ1J1JZSL._SX329_BO1,204,203,200_.jpg",
-    description: "A brief history of humankind."
+    rating: 4.6,
+    description:
+      "A deep dive into the forces shaping civilizations.",
+    cover: "/covers/guns-germs-and-steel.jpg",
+    preview: "/previews/guns-germs-and-steel-preview.pdf",
+    file: "/books/guns-germs-and-steel.pdf",
   },
-  {
-    id: 9,
-    title: "The Power of Habit",
-    author: "James Clear",
-    category: "Self Development",
-    price: 12,
-    cover: "https://images-na.ssl-images-amazon.com/images/I/51-VZ1J1JZSL._SX329_BO1,204,203,200_.jpg",
-    description: "How to build better habits and create positive change."
-  },
-  {
-    id: 10,
-    title: "The Lean Startup",
-    author: "Eric Ries",
-    category: "Business",
-    price: 13,
-    cover: "https://images-na.ssl-images-amazon.com/images/I/51-VZ1J1JZSL._SX329_BO1,204,203,200_.jpg",
-    description: "A systematic approach to building and scaling a successful startup."
-  },
-  {
-    id: 11,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    category: "Fiction",
-    price: 11,
-    cover: "https://images-na.ssl-images-amazon.com/images/I/51-VZ1J1JZSL._SX329_BO1,204,203,200_.jpg",
-    description: "A gripping tale of racial injustice and childhood innocence."
-  },
-  {
-    id: 12,
-    title: "The Pragmatic Programmer",
-    author: "Andrew Hunt",
-    category: "Technology",
-    price: 16,
-    cover: "https://images-na.ssl-images-amazon.com/images/I/51-VZ1J1JZSL._SX329_BO1,204,203,200_.jpg",
-    description: "A handbook for software developers on the path to mastery."
-  },
-  
-
 ];

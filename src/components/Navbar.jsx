@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const { cart } = useContext(CartContext);
@@ -14,7 +15,7 @@ export default function Navbar() {
       <Link to="/" className="text-xl font-bold">
         📚Favorite BookStore
       </Link>
-
+      <SearchBar />
       {/* Right Side */}
       <div className="flex items-center gap-6">
 
