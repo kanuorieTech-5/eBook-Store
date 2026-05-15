@@ -5,7 +5,7 @@ export default function SearchBar({ search, setSearch }) {
       placeholder="Search books..."
       value={search}
       onChange={(e) => setSearch(e.target.value)}
-      className="border p-2 rounded "
+      className="border rounded "
     />
   );
 }
