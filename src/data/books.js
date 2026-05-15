@@ -8,8 +8,8 @@ export const books = [
     rating: 4.9,
     description:
       "A practical guide to building good habits and breaking bad ones.",
-    cover: "/covers/atomic.jpg",
-    preview: "/previews/atomic-preview.pdf",
+    cover: "https://images-na.ssl-images-amazon.com/images/I/51-nXsSRfZL._SX329_BO1,204,203,200_.jpg",
+    preview: "/previewmodal/atomic-preview.pdf",
     file: "/books/atomic-habits.pdf",
   },
   {
@@ -21,8 +21,8 @@ export const books = [
     rating: 4.8,
     description:
       "Timeless lessons on wealth, greed, and happiness.",
-    cover: "/covers/psychology-of-money.jpg",
-    preview: "/previews/psychology-of-money-preview.pdf",
+    cover: "https://tse2.mm.bing.net/th/id/OIP.fevTTAk4Lxg4jarKJbndzwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+    preview: "/previewmodal/psychology-of-money-preview.pdf",
     file: "/books/psychology-of-money.pdf",
   },
   {
@@ -34,8 +34,8 @@ export const books = [
     rating: 4.7,
     description:
       "A magical story about following your dreams.",
-    cover: "/covers/alchemist.jpg",
-    preview: "/previews/alchemist-preview.pdf",
+    cover: "https://tse1.mm.bing.net/th/id/OIP.5J5NM91_bIqBij-CbxIVNwHaLN?rs=1&pid=ImgDetMain&o=7&rm=3",
+    preview: "/previewmodal/alchemist-preview.pdf",
     file: "/books/alchemist.pdf",
   },
   {
@@ -47,8 +47,8 @@ export const books = [
     rating: 4.9,
     description:
       "A handbook of agile software craftsmanship.",
-    cover: "/covers/clean-code.jpg",
-    preview: "/previews/clean-code-preview.pdf",
+    cover: "https://tse3.mm.bing.net/th/id/OIP.dr5kVHA9Kt06WGhng_dI5wHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+    preview: "/previewmodal/clean-code-preview.pdf",
     file: "/books/clean-code.pdf",
   },
   {
@@ -60,8 +60,8 @@ export const books = [
     rating: 4.8,
     description:
       "A brief history of humankind.",
-    cover: "/covers/sapiens.jpg",
-    preview: "/previews/sapiens-preview.pdf",
+    cover: "https://images-na.ssl-images-amazon.com/images/I/51-9ZV9JZNL._SX329_BO1,204,203,200_.jpg",
+    preview: "/previewmodal/sapiens-preview.pdf",
     file: "/books/sapiens.pdf",
   },
   {
@@ -73,8 +73,8 @@ export const books = [
     rating: 4.9,
     description:
       "Rules for focused success in a distracted world.",
-    cover: "/covers/deep-work.jpg",
-    preview: "/previews/deep-work-preview.pdf",
+    cover: "https://images-na.ssl-images-amazon.com/images/I/51-9ZV9JZNL._SX329_BO1,204,203,200_.jpg",
+    preview: "/previewmodal/deep-work-preview.pdf",
     file: "/books/deep-work.pdf",
   },
   {
@@ -86,8 +86,8 @@ export const books = [
     rating: 4.7,
     description:
       "Notes on startups and how to build the future.",
-    cover: "/covers/zero-to-one.jpg",
-    preview: "/previews/zero-to-one-preview.pdf",
+    cover: "https://images-na.ssl-images-amazon.com/images/I/51-9ZV9JZNL._SX329_BO1,204,203,200_.jpg",
+    preview: "/previewmodal/zero-to-one-preview.pdf",
     file: "/books/zero-to-one.pdf",
   },
   {
@@ -99,8 +99,8 @@ export const books = [
     rating: 4.6,
     description:
       "A deep dive into the forces shaping civilizations.",
-    cover: "/covers/guns-germs-and-steel.jpg",
-    preview: "/previews/guns-germs-and-steel-preview.pdf",
+    cover: "https://images-na.ssl-images-amazon.com/images/I/51-9ZV9JZNL._SX329_BO1,204,203,200_.jpg",
+    preview: "/previewmodal/guns-germs-and-steel-preview.pdf",
     file: "/books/guns-germs-and-steel.pdf",
   },
 ];

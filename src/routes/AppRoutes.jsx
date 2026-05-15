@@ -15,7 +15,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Profile from "../pages/profile";
 import Success from "../pages/OrderSuccess";
 import CheckoutForm from "../components/CheckoutForm";
-
+import previewModal from "../components/previewModal";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -33,6 +33,7 @@ export default function AppRoutes() {
       <Route path="/success" element={<Success />} />
       <Route path="/success" element={<OrderSuccess />} />
       <Route path="/checkoutform" element={<CheckoutForm />} />
+      <Route path="/previewmodal" element={<previewModal />} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/MyLibrary" element={<ProtectedRoute> <MyLibrary /></ProtectedRoute>}/>
     </Routes>

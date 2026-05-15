@@ -17,12 +17,12 @@ export default function Navbar() {
       </Link>
 
       <SearchBar />
-      
+
       {/* Right Side */}
       <div className="flex items-center gap-6">
 
         <Link to="/cart" className="relative">
-          🛒 Cart
+          🛒
 
           {cart.length > 0 && (
             <span className="absolute -top-2 -right-3 bg-red-500 text-xs px-2 py-1 rounded-full">

@@ -19,14 +19,14 @@ export default function FeaturedBooks() {
   ];
 
   return (
-    <section className="py-16 bg-gray-100">
+    <section className="bg-black border-t border-white/10 text-gray-400 py-20">
       <div className="max-w-6xl mx-auto px-6">
 
         <h2 className="text-3xl font-bold mb-10 text-center">
           ⭐ Featured Books
         </h2>
 
-<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">          {books.map((book) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">          {books.map((book) => (
             <div
               key={book.id}
               className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"

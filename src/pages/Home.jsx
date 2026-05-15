@@ -11,7 +11,7 @@ import BookCard from "../components/BookCard";
 
 export default function Home() {
   return (
-    <div className="bg-gray-950 min-h-screen">
+    <div className="bg-black min-h-screen">
       {/* <Navbar /> */}
       <Hero />
 

@@ -1,4 +1,5 @@
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const books = [
   {
@@ -29,10 +30,10 @@ const books = [
 
 export default function FeatureCarousel() {
   return (
-    <section className="px-6 md:px-12 py-24 bg-gray-950">
+    <section className="bg-black border-t border-white/10 text-gray-400 py-20 px-6 md:px-12">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-14">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 max-w-6xl mx-auto w-full">
         
         <div>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-3">
@@ -45,9 +46,9 @@ export default function FeatureCarousel() {
           </p>
         </div>
 
-        <button className="text-yellow-400 hover:text-yellow-300 transition font-semibold">
+        <Link to="/books" className="text-yellow-400 hover:text-yellow-300 transition font-semibold">
           View All Books
-        </button>
+        </Link>
       </div>
 
       {/* Books Grid */}
@@ -107,13 +108,13 @@ export default function FeatureCarousel() {
               {/* Buttons */}
               <div className="flex gap-4">
                 
-                <button className="flex-1 bg-yellow-400 hover:bg-yellow-300 transition text-black py-3 rounded-2xl font-bold">
+                <Link to="/previewmodal" className="flex-1 bg-yellow-400 hover:bg-yellow-300 transition text-black py-3 rounded-2xl font-bold text-center">
                   Preview
-                </button>
+                </Link>
 
-                <button className="flex-1 border border-white/10 hover:bg-white/5 transition text-white py-3 rounded-2xl font-semibold">
+                <Link to="/checkoutform" className="flex-1 border border-white/10 hover:bg-white/5 transition text-white py-3 rounded-2xl font-semibold text-center">
                   Buy Now
-                </button>
+                </Link>
 
               </div>
             </div>

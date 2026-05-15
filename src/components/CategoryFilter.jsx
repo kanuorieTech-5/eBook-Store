@@ -10,11 +10,11 @@ export default function CategoryFilter({ category, setCategory }) {
   ];
 
   return (
-    <section className="py-10">
+    <section className="px-6 md:px-12 py-8 bg-gray-900 rounded-2xl mb-10">
 
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
 
-        <h2 className="text-2xl font-bold mb-6 text-center">
+        <h2 className="text-2xl font-bold mb-6 text-center text-yellow-400">
           Browse Categories
         </h2>
 

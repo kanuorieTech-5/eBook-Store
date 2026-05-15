@@ -7,7 +7,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-white/10 mt-24">
+    <footer className="bg-black border-t border-white/10 text-gray-400">
       
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">

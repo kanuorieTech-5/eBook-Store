@@ -36,7 +36,7 @@ const categories = [
 
 export default function Categories() {
   return (
-    <section className="px-6 md:px-12 py-20 bg-gray-950">
+    <section className="px-6 md:px-12 py-20 bg-black border-t border-white/10 text-gray-400 ">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">

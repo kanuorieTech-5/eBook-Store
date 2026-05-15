@@ -24,21 +24,29 @@ export default function Books() {
   });
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-
-      <SearchBar search={search} setSearch={setSearch} />
-
+    <div className="p-1 max-w-6xl mx-auto bg-black rounded-2xl shadow-lg">
+      <div className="mb-6">
+        <img 
+          src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+          alt="UketBooks" 
+          className="w-full h-40 object-cover rounded mb-3" 
+          />
+      </div>
       <CategoryFilter
         category={category}
         setCategory={setCategory}
       />
-
-<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+    <SearchBar search={search} setSearch={setSearch} />
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {filteredBooks.map((book) => (
 
           <BookCard
             key={book.id}
             book={book}
+            image={book.cover}
+            title={book.title}
+            author={book.author}
+            price={book.price}
             addToCart={addToCart}
           />
 
