@@ -112,8 +112,8 @@ export default function FeatureCarousel() {
                   Preview
                 </Link>
 
-                <Link to="/checkoutform" className="flex-1 border border-white/10 hover:bg-white/5 transition text-white py-3 rounded-2xl font-semibold text-center">
-                  Buy Now
+                <Link to="/checkout" className="flex-1 border border-white/10 hover:bg-white/5 transition text-white py-3 rounded-2xl font-semibold text-center">
+                  Download
                 </Link>
 
               </div>

@@ -41,7 +41,7 @@ export default function BookDetails() {
         }}
         className="bg-purple-600 text-white w-full py-2 rounded mt-4"
       >
-        buy now
+        Download
       </button>
     </div>
   );

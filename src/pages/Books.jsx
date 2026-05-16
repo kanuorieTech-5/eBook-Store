@@ -4,6 +4,7 @@ import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import CategoryFilter from "../components/CategoryFilter";
 import { CartContext } from "../context/CartContext";
+import FeaturedBooks from "../components/FeaturedBooks";
 
 export default function Books() {
 
@@ -31,6 +32,9 @@ export default function Books() {
           alt="UketBooks" 
           className="w-full h-40 object-cover rounded mb-3" 
           />
+      </div>
+      <div>
+        < FeaturedBooks />
       </div>
       <CategoryFilter
         category={category}

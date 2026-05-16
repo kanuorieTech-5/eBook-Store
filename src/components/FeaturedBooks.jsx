@@ -26,10 +26,10 @@ export default function FeaturedBooks() {
           ⭐ Featured Books
         </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">          {books.map((book) => (
+          <div className="grid grid-cols-4 md:grid-cols-3 lg:grid-cols-4 gap-2"> {books.map((book) => (
             <div
               key={book.id}
-              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition"
+              className="bg-white shadow-md rounded-lg p- hover:shadow-lg transition"
             >
               <div className="h-40 bg-gray-200 rounded mb-4"
                 style={{ backgroundImage: `url(${book.cover})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
