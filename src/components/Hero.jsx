@@ -1,91 +1,116 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+
 export default function Hero() {
+
+  const text = "Discover your next favorite book";
+  const [displayText, setDisplayText] = useState("");
+
+  // Typing effect
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayText(text.slice(0, i));
+      i++;
+      if (i > text.length) clearInterval(interval);
+    }, 60);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="bg-purple-700 text-white py-2 mb-2">
-      <div className="max-w-6xl mx-auto px-6 text-center md:px-12">
+    <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
 
-         {/* Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="relative z-10 max-w-5xl"
-        >
-          {/* Brand */}
-          <div
-            className="relative overflow-hidden rounded-3xl py-32 px-6 md:px-12 text-center bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')",
-            }}
-           >
-            
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/40"></div>
+      {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center scale-110"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1400&q=80')",
+        }}
+      />
 
-            {/* Content */}
-            <div className="relative z-10">
-              
-              {/* Brand */}
-              <h1 className="text-5xl md:text-6xl font-black text-yellow-400 mb-4 tracking-tight">
-                UketBooks
-              </h1>
-              <h2 className="text-2xl md:text-2xl text-gray-200 mb-6">
-                Your favorite Ebooks store
-              </h2>
-              {/* Headline */}
-              <h3 className="text-4xl md:text-7xl font-black leading-tight text-white mb-6">
-                Discover your next
-                <span className="text-yellow-400"> favorite book</span>
-              </h3>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/30"></div>
 
-              {/* Description */}
-              <p className="text-gray-100 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed">
-                
-              </p>
+      {/* Floating book animation */}
+      <motion.div
+        animate={{ y: [0, -20, 0] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute top-20 left-10 w-24 h-32 bg-yellow-400 rounded-xl opacity-30 blur-sm"
+      />
 
-            </div>
-          </div>
-          {/* Subtext */}
-          <p className="text-gray-400 text-lg md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed mt-6">
-            Read previews, explore categories, and instantly access
-            premium digital books after secure payment.
-          </p>
+      <motion.div
+        animate={{ y: [0, 25, 0] }}
+        transition={{ duration: 5, repeat: Infinity }}
+        className="absolute bottom-20 right-10 w-28 h-36 bg-purple-500 rounded-xl opacity-20 blur-md"
+      />
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative z-10 text-center px-6 max-w-4xl"
+      >
 
-            <Link
-              to="/books"
-              className="bg-yellow-400 hover:bg-yellow-300 transition text-black px-10 py-4 rounded-2xl font-bold text-lg shadow-lg shadow-yellow-400/20"
-            >
-              Explore Books
-            </Link>
+        {/* Brand */}
+        <h1 className="text-4xl md:text-6xl font-black text-yellow-400 mb-3">
+          UketBooks
+        </h1>
 
-            <Link
-              to="/previewmodal"
-              className="border border-white/10 bg-white/5 hover:bg-white/10 transition text-white px-10 py-4 rounded-2xl font-semibold text-lg"
-            >
-              Read Preview
-            </Link>
+        <p className="text-gray-300 mb-6 text-lg md:text-xl">
+          Your favorite bookstore.
+        </p>
 
-          </div>
+        {/* Animated headline */}
+        <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-6 min-h-[80px]">
+          {displayText}
+          <span className="animate-pulse text-yellow-400">|</span>
+        </h2>
 
-          {/* Trust Badge */}
-          <div className="mt-10 text-gray-800 text-sm mb-10">
-            Trusted by readers worldwide • Secure payments • Instant downloads
-          </div>
+        {/* Search Bar */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
 
-        </motion.div>
+          <input
+            type="text"
+            placeholder="Search books, authors, topics..."
+            className="w-full sm:w-[400px] px-5 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 outline-none border border-white/10 focus:border-yellow-400"
+          />
 
-        <Link
-          to="/books"
-          className="bg-white text-purple-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
-        >
-          Download Books 
-        </Link>
-      </div>
+          <button className="bg-yellow-400 hover:bg-yellow-300 text-black px-6 py-3 rounded-xl font-bold transition">
+            Search
+          </button>
+
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+
+          <Link
+            to="/books"
+            className="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-4 rounded-2xl font-bold transition"
+          >
+            Explore Books
+          </Link>
+
+          <Link
+            to="/books"
+            className="border border-white/30 bg-purple-500 hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-semibold transition"
+          >
+            Download books
+          </Link>
+
+        </div>
+
+        {/* Trust line */}
+        <p className="mt-10 text-sm text-gray-300">
+          Trusted by readers worldwide • Secure payments • Instant downloads.
+        </p>
+
+      </motion.div>
+
     </section>
   );
 }

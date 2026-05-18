@@ -1,48 +1,91 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useStore } from "../context/StoreContext";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import PreviewModal from "./previewModal";
-export default function BookCard({ book, cart, addToCart }) {
+
+export default function BookCard({ book }) {
 
   const navigate = useNavigate();
-  const { addToCart: cartContextAddToCart } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
 
   return (
-    <div className="border rounded p-4 shadow hover:shadow-lg transition">
+    <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-2xl transition duration-300 group">
 
-      <img
-        src={book.cover}
-        alt={book.title}
-        className="w-full h-60 object-cover rounded mb-3 transition-transform duration-300 hover:scale-105"
-      />
-      <Link
-        to={`/previewmodal/${book.id}`}
-        className="bg-yellow-400 text-black px-3 py-1 rounded text-sm font-bold hover:bg-yellow-300 transition"
-      >
-        Preview
-      </Link>
+      {/* Book Cover */}
+      <div className="overflow-hidden relative">
 
-      <h3 className="font-bold text-lg text-white">{book.title}</h3>
-      <p className="text-gray-300 text-sm ">{book.author}</p>
-      <p className="text-purple-600 font-bold mt-2">${book.price}</p>
+        <img
+          src={book.cover}
+          alt={book.title}
+          onError={(e) => {
+            e.target.src =
+              "https://via.placeholder.com/300x400?text=No+Cover";
+          }}
+          className="w-full h-72 object-cover group-hover:scale-105 transition duration-300"
+        />
 
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={() => navigate(`/books/${book.id}`)}
-          className="text-purple-600 text-sm font-bold px-3 py-1 rounded border border-purple-600 hover:bg-purple-600 hover:text-white transition"
+        {/* Category Badge */}
+        <span className="absolute top-3 left-3 bg-purple-600 text-white text-xs px-3 py-1 rounded-full">
+          {book.category}
+        </span>
+
+      </div>
+
+      {/* Content */}
+      <div className="p-4">
+
+        <h3 className="font-bold text-lg text-gray-900 line-clamp-1">
+          {book.title}
+        </h3>
+
+        <p className="text-gray-500 text-sm mt-1">
+          {book.author}
+        </p>
+
+        {/* Rating */}
+        <div className="flex items-center gap-1 mt-2 text-yellow-500 text-sm">
+          ⭐⭐⭐⭐⭐
+        </div>
+
+        {/* Price */}
+        <div className="flex items-center gap-2 mt-3">
+
+          <p className="text-purple-700 font-bold text-lg">
+            ${book.price}
+          </p>
+
+          <span className="text-gray-400 line-through text-sm">
+            ${(book.price + 5).toFixed(2)}
+          </span>
+
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-2 mt-5">
+
+          <button
+            onClick={() => addToCart(book)}
+            className="flex-1 bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition"
+          >
+            Add to Cart
+          </button>
+
+          <button
+            onClick={() => navigate(`/books/${book.id}`)}
+            className="border border-purple-600 text-purple-600 px-4 rounded-xl hover:bg-purple-600 hover:text-white transition"
+          >
+            View
+          </button>
+
+        </div>
+
+        {/* Preview Link */}
+        <Link
+          to={`/preview/${book.id}`}
+          className="block text-center text-sm text-purple-600 mt-3 hover:underline"
         >
-          View Details
-        </button>
+          Quick Preview
+        </Link>
 
-        <button
-          onClick={() => cartContextAddToCart(book)}
-          className="bg-purple-600 text-white px-3 py-1 rounded text-sm"
-        >
-          Add to Cart
-        </button>
-        
-      
       </div>
     </div>
   );

@@ -1,57 +1,138 @@
-export default function CategoryFilter({ category, setCategory }) {
+import {
+  FaBook,
+  FaBriefcase,
+  FaLaptopCode,
+  FaFlask,
+  FaBrain,
+  FaLandmark,
+} from "react-icons/fa";
+
+export default function CategoryFilter({
+  category,
+  setCategory,
+}) {
+
   const categories = [
-    "All",
-    "Fiction",
-    "Business",
-    "Technology",
-    "Science",
-    "Self Development",
-    "History",
+    {
+      name: "All",
+      icon: <FaBook />,
+    },
+    {
+      name: "Fiction",
+      icon: <FaBook />,
+    },
+    {
+      name: "Business",
+      icon: <FaBriefcase />,
+    },
+    {
+      name: "Technology",
+      icon: <FaLaptopCode />,
+    },
+    {
+      name: "Science",
+      icon: <FaFlask />,
+    },
+    {
+      name: "Self Development",
+      icon: <FaBrain />,
+    },
+    {
+      name: "History",
+      icon: <FaLandmark />,
+    },
   ];
 
   return (
-    <section className="px-6 md:px-12 py-8 bg-gray-900 rounded-2xl mb-10">
+    <section className="mb-10">
 
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
+      <div className="bg-gray-900 rounded-3xl p-6 md:p-8">
 
-        <h2 className="text-2xl font-bold mb-6 text-center text-yellow-400">
-          Browse Categories
-        </h2>
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+
+          <h2 className="text-2xl md:text-3xl font-bold text-white">
+            Browse Categories
+          </h2>
+
+          <span className="text-sm text-gray-400 hidden md:block">
+            Select a category
+          </span>
+
+        </div>
 
         {/* Mobile Scroll */}
-        <div className="flex gap-3 overflow-x-auto pb-2 md:hidden">
+        <div className="flex md:hidden gap-3 overflow-x-auto scrollbar-hide pb-2">
+
           {categories.map((cat) => (
+
             <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`px-4 py-2 whitespace-nowrap rounded-full text-sm font-medium transition
-                ${
-                  category === cat
-                    ? "bg-purple-600 text-white"
-                    : "bg-purple-100 text-purple-800"
-                }`}
+              key={cat.name}
+              onClick={() => setCategory(cat.name)}
+              className={`flex items-center gap-2 whitespace-nowrap px-5 py-3 rounded-2xl transition-all duration-300 text-sm font-medium
+              
+              ${
+                category === cat.name
+                  ? "bg-purple-600 text-white shadow-lg"
+                  : "bg-white/10 text-gray-300 hover:bg-white/20"
+              }`}
             >
-              {cat}
+
+              <span>{cat.icon}</span>
+
+              {cat.name}
+
             </button>
           ))}
+
         </div>
 
         {/* Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-4 gap-4 mt-4">
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-4">
+
           {categories.map((cat) => (
-            <div
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`p-6 text-center rounded-lg font-semibold cursor-pointer transition
-                ${
-                  category === cat
-                    ? "bg-purple-600 text-white"
-                    : "bg-purple-100 text-purple-800 hover:bg-purple-200"
-                }`}
+
+            <button
+              key={cat.name}
+              onClick={() => setCategory(cat.name)}
+              className={`group p-5 rounded-2xl transition-all duration-300 flex items-center gap-4 text-left
+              
+              ${
+                category === cat.name
+                  ? "bg-purple-600 text-white shadow-xl scale-105"
+                  : "bg-white/10 text-gray-300 hover:bg-white/20"
+              }`}
             >
-              {cat}
-            </div>
+
+              {/* Icon */}
+              <div className={`text-2xl
+              
+              ${
+                category === cat.name
+                  ? "text-white"
+                  : "text-yellow-400"
+              }`}>
+
+                {cat.icon}
+
+              </div>
+
+              {/* Text */}
+              <div>
+
+                <h3 className="font-semibold">
+                  {cat.name}
+                </h3>
+
+                <p className="text-xs opacity-70 mt-1">
+                  Explore books
+                </p>
+
+              </div>
+
+            </button>
           ))}
+
         </div>
 
       </div>
