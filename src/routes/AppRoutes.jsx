@@ -12,13 +12,12 @@ import Dashboard from "../pages/Dashboard";
 import MyLibrary from "../pages/MyLibrary";
 import Profile from "../pages/profile";
 import Preview from "../pages/Preview";
-
+import Categories from "../components/Categories";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function AppRoutes() {
   return (
     <Routes>
-
       {/* PUBLIC ROUTES */}
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
@@ -26,7 +25,7 @@ export default function AppRoutes() {
       <Route path="/books" element={<Books />} />
       <Route path="/books/:id" element={<BookDetails />} />
       <Route path="/Preview" element={<Preview />} />
-
+      <Route path="/categories" element={<Categories />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/Success" element={<PaymentSuccess />} />
