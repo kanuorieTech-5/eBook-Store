@@ -27,15 +27,38 @@ export default function AppRoutes() {
       <Route path="/Preview" element={<Preview />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/cart" element={<Cart />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/Success" element={<PaymentSuccess />} />
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      <Route path="/profile" element={<Profile />} />
-
       {/* PROTECTED ROUTES */}
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute>
+            <Checkout />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/success"
+        element={
+          <ProtectedRoute>
+            <PaymentSuccess />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/dashboard"
         element={

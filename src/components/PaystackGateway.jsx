@@ -2,10 +2,6 @@ import { useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { FaLock } from "react-icons/fa";
 import { verifyPayment } from "../services/paymentService";
-import {
-  savePurchases,
-  getPurchases,
-} from "../utils/storage";
 
 export default function PaystackGateway({
   amount = 0,
@@ -97,38 +93,16 @@ export default function PaystackGateway({
             },
           });
 
-        // PAYMENT VERIFIED
         if (response?.success) {
-          const existingPurchases =
-            getPurchases();
-
-          const updatedPurchases = [
-            ...existingPurchases,
-            ...response.purchases,
-          ];
-
-          // SAVE PURCHASES
-          savePurchases(
-            updatedPurchases
-          );
-
-          // SAVE LAST PAYMENT
           localStorage.setItem(
             "uketbooks-last-payment",
             JSON.stringify(reference)
           );
 
-          // CLEAR CART
-          localStorage.removeItem(
-            "cart"
-          );
-
-          // CALLBACK
           if (onSuccess) {
             onSuccess(response);
           }
 
-          // REDIRECT
           window.location.href =
             "/success";
         } else {

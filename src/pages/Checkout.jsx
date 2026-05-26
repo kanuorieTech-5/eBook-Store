@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { CartContext } from "../context/CartContext";
+import { useState } from "react";
+import { useCart } from "../context/CartContext";
 import { usePurchases, } from "../context/PurchaseContext";
+import { useAuth } from "../context/AuthContext";
 
 import PaystackGateway from "../components/PaystackGateway";
 
 export default function Checkout() {
   const navigate = useNavigate();
-  const { cart } = useContext(CartContext);
+  const { cart, clearCart } = useCart();
   const { addPurchase, } = usePurchases();
+  const { user } = useAuth();
   const [method, setMethod] =
     useState("paystack");
 
@@ -18,24 +20,16 @@ export default function Checkout() {
     0
   );
 
-  const handleSuccess = () => {
+  const handleSuccess = (response) => {
+    const purchasedBooks =
+      response?.purchases?.length
+        ? response.purchases
+        : cart;
 
-  setLoading(false);
-
-  /* SAVE PURCHASED BOOKS */
-  addPurchase(cart);
-
-  /* CLEAR CART */
-  clearCart();
-
-  // Save purchase details
-  addPurchase({
-    id: Date.now(),
-    books: cart,
-  });
-  
-  navigate("/Success");
-};
+    addPurchase(purchasedBooks);
+    clearCart();
+    navigate("/success");
+  };
 
   return (
     <main className="
@@ -230,7 +224,7 @@ export default function Checkout() {
           {method === "paystack" && (
             <PaystackGateway
               amount={total}
-              email="user@example.com"
+              email={user?.email || "guest@email.com"}
               metadata={{
                 books: cart.map(
                   (item) => item.title
