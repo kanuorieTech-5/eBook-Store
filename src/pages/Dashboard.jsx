@@ -1,46 +1,26 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
 
-import {
-  FaBook,
-  FaEdit,
-  FaTrash,
-  FaUsers,
-  FaMoneyBillWave,
-  FaDownload,
-  FaPlus,
-  FaSearch,
-  FaStar,
-  FaChartLine,
-  FaFilePdf,
-  FaImage,
-} from "react-icons/fa";
+import { getBooks, createBook, updateBook as updateBookService, deleteBook as deleteBookService, } from "../services/bookService";
 
-import { useBooks } from "../context/BookContext";
+import { FaBook, FaEdit, FaTrash, FaUsers, FaMoneyBillWave, FaDownload, FaPlus, FaSearch, FaStar, FaChartLine, FaFilePdf, FaImage, } from "react-icons/fa";
+
 import { usePurchases } from "../context/PurchaseContext";
 
 export default function Dashboard() {
   // =========================================
-  // CONTEXT
-  // =========================================
-  const {
-    books,
-    addBook,
-    updateBook,
-    deleteBook,
-  } = useBooks();
-
-  const {
-    purchases,
-  } = usePurchases();
-
-  // =========================================
   // STATES
   // =========================================
+  const [books, setBooks] =
+    useState([]);
+
   const [editingId, setEditingId] =
     useState(null);
 
   const [search, setSearch] =
     useState("");
+
+  const [loading, setLoading] =
+    useState(false);
 
   const [form, setForm] =
     useState({
@@ -61,6 +41,34 @@ export default function Dashboard() {
       pages: "",
       language: "English",
     });
+
+  // =========================================
+  // PURCHASES
+  // =========================================
+  const { purchases } =
+    usePurchases();
+
+  // =========================================
+  // FETCH BOOKS
+  // =========================================
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const fetchBooks = async () => {
+    try {
+      setLoading(true);
+
+      const data =
+        await getBooks();
+
+      setBooks(data.books || []);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // =========================================
   // ANALYTICS
@@ -134,7 +142,7 @@ export default function Dashboard() {
   };
 
   // =========================================
-  // INPUTS
+  // INPUT CHANGE
   // =========================================
   const handleChange = (e) => {
     const {
@@ -168,11 +176,11 @@ export default function Dashboard() {
       new FileReader();
 
     reader.onloadend = () => {
-      setForm({
-        ...form,
+      setForm((prev) => ({
+        ...prev,
         cover:
           reader.result,
-      });
+      }));
     };
 
     reader.readAsDataURL(file);
@@ -193,78 +201,95 @@ export default function Dashboard() {
       new FileReader();
 
     reader.onloadend = () => {
-      setForm({
-        ...form,
+      setForm((prev) => ({
+        ...prev,
 
         file:
           reader.result,
 
         preview:
           reader.result,
-      });
+      }));
     };
 
     reader.readAsDataURL(file);
   };
 
   // =========================================
-  // CREATE / UPDATE
+  // CREATE / UPDATE BOOK
   // =========================================
-  const handleSubmit = (
+  const handleSubmit = async (
     e
   ) => {
     e.preventDefault();
 
-    if (
-      !form.title ||
-      !form.author ||
-      !form.price
-    ) {
-      return alert(
-        "Please fill all required fields."
-      );
-    }
+    try {
+      if (
+        !form.title ||
+        !form.author ||
+        !form.price
+      ) {
+        return alert(
+          "Please fill all required fields."
+        );
+      }
 
-    const payload = {
-      ...form,
+      const payload = {
+        ...form,
 
-      price: Number(
-        form.price
-      ),
+        price: Number(
+          form.price
+        ),
 
-      pages: Number(
-        form.pages
-      ),
+        pages: Number(
+          form.pages
+        ),
 
-      updatedAt:
-        new Date().toISOString(),
-    };
-
-    if (editingId) {
-      updateBook(
-        editingId,
-        payload
-      );
-    } else {
-      addBook({
-        ...payload,
-
-        sales: 0,
-        downloads: 0,
-
-        createdAt:
+        updatedAt:
           new Date().toISOString(),
-      });
-    }
+      };
 
-    resetForm();
+      // UPDATE
+      if (editingId) {
+        const updated =
+          await updateBookService(
+            editingId,
+            payload
+          );
+
+        setBooks((prev) =>
+          prev.map((book) =>
+            book._id === editingId
+              ? updated.book
+              : book
+          )
+        );
+      }
+
+      // CREATE
+      else {
+        const created =
+          await createBook(
+            payload
+          );
+
+        setBooks((prev) => [
+          created.book,
+          ...prev,
+        ]);
+      }
+
+      resetForm();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // =========================================
   // EDIT
   // =========================================
   const handleEdit = (book) => {
-    setEditingId(book.id);
+    setEditingId(book._id);
 
     setForm(book);
 
@@ -277,17 +302,28 @@ export default function Dashboard() {
   // =========================================
   // DELETE
   // =========================================
-  const handleDelete = (
+  const handleDelete = async (
     id
   ) => {
-    const confirmDelete =
-      window.confirm(
-        "Delete this book?"
+    try {
+      const confirmDelete =
+        window.confirm(
+          "Delete this book?"
+        );
+
+      if (!confirmDelete) return;
+
+      await deleteBookService(id);
+
+      setBooks((prev) =>
+        prev.filter(
+          (book) =>
+            book._id !== id
+        )
       );
-
-    if (!confirmDelete) return;
-
-    deleteBook(id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

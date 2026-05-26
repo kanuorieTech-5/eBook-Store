@@ -24,7 +24,7 @@ export default function PreviewPage() {
   if (!book) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        Book not found
+        no preview available
       </div>
     );
   }

@@ -1,12 +1,10 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { Navigate, useLocation } from "react-router-dom";
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading } = useContext(AuthContext);
+  const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
 
-  // 🔥 Show nothing or loader while checking auth
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -15,8 +13,7 @@ export default function ProtectedRoute({ children }) {
     );
   }
 
-  // 🔥 Redirect if not logged in + preserve where user wanted to go
-  if (!user) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

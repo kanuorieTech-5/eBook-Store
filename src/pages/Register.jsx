@@ -1,178 +1,241 @@
-import { useNavigate } from "react-router-dom";
+import {
+  useState,
+} from "react";
 
 import {
-  FaLock,
-  FaArrowRight,
-} from "react-icons/fa";
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
-import { motion } from "framer-motion";
+import {
+  useAuth,
+} from "../context/AuthContext";
 
 export default function Register() {
-
   const navigate =
     useNavigate();
 
+  const { register } =
+    useAuth();
+
+  const [form, setForm] =
+    useState({
+      name: "",
+      email: "",
+      password: "",
+    });
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
+
+  // =========================
+  // HANDLE CHANGE
+  // =========================
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]:
+        e.target.value,
+    });
+  };
+
+  // =========================
+  // SUBMIT
+  // =========================
+  const handleSubmit =
+    async (e) => {
+      e.preventDefault();
+
+      setLoading(true);
+
+      setError("");
+
+      const result =
+        await register(
+          form.name,
+          form.email,
+          form.password
+        );
+
+      setLoading(false);
+
+      if (!result.success) {
+        return setError(
+          result.message
+        );
+      }
+
+      navigate("/dashboard");
+    };
+
   return (
-    <main
+    <div
       className="
         min-h-screen
-        bg-white
-        dark:bg-black
-        transition-colors
-        duration-300
         flex
         items-center
         justify-center
-        px-6
-        py-20
-        relative
-        overflow-hidden
+        px-4
+        bg-black
+        text-white
       "
     >
-
-      {/* BACKGROUND GLOW */}
       <div
         className="
-          absolute
-          top-1/2
-          left-1/2
-          -translate-x-1/2
-          -translate-y-1/2
-          w-[500px]
-          h-[500px]
-          bg-yellow-400/10
-          blur-[120px]
-          rounded-full
-        "
-      />
-
-      {/* CARD */}
-      <motion.div
-
-        initial={{
-          opacity: 0,
-          y: 40,
-        }}
-
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-
-        transition={{
-          duration: 0.7,
-        }}
-
-        className="
-          relative
-          z-10
           w-full
-          max-w-lg
-          bg-white/70
-          dark:bg-white/[0.04]
-          backdrop-blur-2xl
-          border border-black/5
-          dark:border-white/10
-          rounded-[36px]
-          p-10
-          shadow-2xl
-          text-center
+          max-w-md
+          bg-gray-900
+          border
+          border-gray-800
+          rounded-3xl
+          p-8
         "
       >
-
-        {/* ICON */}
-        <div
-          className="
-            w-24
-            h-24
-            rounded-full
-            bg-yellow-400
-            text-black
-            flex
-            items-center
-            justify-center
-            text-4xl
-            mx-auto
-            mb-8
-            shadow-lg
-            shadow-yellow-400/20
-          "
-        >
-          <FaLock />
-        </div>
-
-        {/* TITLE */}
         <h1
           className="
-            text-4xl
-            md:text-5xl
-            font-black
-            text-black
-            dark:text-white
-            mb-5
+            text-3xl
+            font-bold
+            mb-2
           "
         >
-          Registration
-          <span className="text-yellow-400">
-            {" "}Closed
-          </span>
+          Create Account
         </h1>
 
-        {/* TEXT */}
         <p
           className="
-            text-gray-600
-            dark:text-gray-400
-            text-lg
-            leading-relaxed
-            mb-10
+            text-gray-400
+            mb-8
           "
         >
-          Account creation is currently unavailable.
-          Please check back later for new member
-          access and exclusive digital content.
+          Start building your
+          digital library
         </p>
 
-        {/* BUTTON */}
-        <button
-          onClick={() =>
-            navigate("/")
-          }
-
-          className="
-            group
-            w-full
-            bg-yellow-400
-            hover:bg-yellow-300
-            text-black
-            py-4
-            rounded-2xl
-            font-bold
-            text-lg
-            transition-all
-            duration-300
-            flex
-            items-center
-            justify-center
-            gap-3
-            shadow-lg
-            shadow-yellow-400/20
-          "
-        >
-
-          Return Home
-
-          <FaArrowRight
+        {/* ERROR */}
+        {error && (
+          <div
             className="
-              group-hover:translate-x-1
-              transition-transform
+              bg-red-500/20
+              border
+              border-red-500/30
+              text-red-400
+              p-3
+              rounded-xl
+              mb-4
+            "
+          >
+            {error}
+          </div>
+        )}
+
+        <form
+          onSubmit={
+            handleSubmit
+          }
+          className="space-y-4"
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            value={form.name}
+            onChange={
+              handleChange
+            }
+            className="
+              w-full
+              bg-black
+              border
+              border-gray-700
+              rounded-xl
+              p-4
+              outline-none
+              focus:border-yellow-400
             "
           />
 
-        </button>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={
+              handleChange
+            }
+            className="
+              w-full
+              bg-black
+              border
+              border-gray-700
+              rounded-xl
+              p-4
+              outline-none
+              focus:border-yellow-400
+            "
+          />
 
-      </motion.div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={
+              handleChange
+            }
+            className="
+              w-full
+              bg-black
+              border
+              border-gray-700
+              rounded-xl
+              p-4
+              outline-none
+              focus:border-yellow-400
+            "
+          />
 
-    </main>
+          <button
+            type="submit"
+            disabled={loading}
+            className="
+              w-full
+              bg-yellow-400
+              hover:bg-yellow-300
+              text-black
+              font-bold
+              py-4
+              rounded-xl
+              transition-all
+            "
+          >
+            {loading
+              ? "Creating Account..."
+              : "Register"}
+          </button>
+        </form>
+
+        <p
+          className="
+            text-gray-400
+            mt-6
+            text-center
+          "
+        >
+          Already have an
+          account?{" "}
+          <Link
+            to="/login"
+            className="
+              text-yellow-400
+            "
+          >
+            Login
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }
