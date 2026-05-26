@@ -2,11 +2,13 @@ import Modal from "react-modal";
 import { useEffect, useState } from "react";
 import { FaTimes, FaHeart, FaBookOpen } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 export default function PreviewModal({ isOpen, closeModal, book }) {
   const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (book) setLoading(true);
@@ -123,8 +125,9 @@ export default function PreviewModal({ isOpen, closeModal, book }) {
 
           <button
             onClick={() => {
+              addToCart(book);
               closeModal();
-              navigate(`/checkout?book=${book.id}`);
+              navigate("/checkout");
             }}
             className="px-6 py-3 rounded-2xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold transition"
           >

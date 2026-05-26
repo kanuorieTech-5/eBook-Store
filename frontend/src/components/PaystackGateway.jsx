@@ -102,9 +102,6 @@ export default function PaystackGateway({
           if (onSuccess) {
             onSuccess(response);
           }
-
-          window.location.href =
-            "/success";
         } else {
           throw new Error(
             "Payment verification failed"

@@ -24,7 +24,7 @@ export default function AppRoutes() {
 
       <Route path="/books" element={<Books />} />
       <Route path="/books/:id" element={<BookDetails />} />
-      <Route path="/Preview" element={<Preview />} />
+      <Route path="/preview/:id" element={<Preview />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/cart" element={<Cart />} />
 

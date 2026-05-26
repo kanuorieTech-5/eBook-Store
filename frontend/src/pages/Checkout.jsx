@@ -225,6 +225,7 @@ export default function Checkout() {
             <PaystackGateway
               amount={total}
               email={user?.email || "guest@email.com"}
+              cart={cart}
               metadata={{
                 books: cart.map(
                   (item) => item.title

@@ -30,10 +30,9 @@ export default function BookDetails() {
       <p className="mt-2 text-gray-600">{book.description}</p>
 
       <p className="font-bold mt-3 text-lg text-yellow-600">₦{book.price}</p>
-    <button
+      <button
         onClick={() => {
-          addToCart(book);
-          navigate("/Preview");
+          navigate(`/preview/${book.id}`);
         }}
         className="bg-purple-600 text-white w-full py-2 rounded mt-4"
       >
