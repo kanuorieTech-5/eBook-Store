@@ -5,6 +5,10 @@ import {
   useState,
 } from "react";
 
+import {
+  getBookId,
+} from "../utils/bookIds";
+
 const PurchaseContext =
   createContext();
 
@@ -45,14 +49,14 @@ export function PurchaseProvider({
 
       const existingIds =
         prev.map(
-          (item) => item.id
+          (item) => getBookId(item)
         );
 
       const newBooks =
         books.filter(
           (book) =>
             !existingIds.includes(
-              book.id
+              getBookId(book)
             )
         );
 
@@ -70,7 +74,8 @@ export function PurchaseProvider({
 
     return purchases.some(
       (book) =>
-        book.id === bookId
+        String(getBookId(book)) ===
+        String(bookId)
     );
   };
 

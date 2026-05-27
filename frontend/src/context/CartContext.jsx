@@ -5,6 +5,11 @@ import {
   useState,
 } from "react";
 
+import {
+  getBookId,
+  isSameBook,
+} from "../utils/bookIds";
+
 export const CartContext =
   createContext();
 
@@ -38,18 +43,20 @@ export function CartProvider({
 
   /* ADD TO CART */
   const addToCart = (book) => {
+    const bookId =
+      getBookId(book);
 
     const existingBook =
       cart.find(
         (item) =>
-          item.id === book.id
+          isSameBook(item, bookId)
       );
 
     if (existingBook) {
 
       setCart((prev) =>
         prev.map((item) =>
-          item.id === book.id
+          isSameBook(item, bookId)
             ? {
                 ...item,
                 quantity:
@@ -65,6 +72,7 @@ export function CartProvider({
         ...prev,
         {
           ...book,
+          id: bookId,
           quantity: 1,
         },
       ]);
@@ -79,7 +87,7 @@ export function CartProvider({
     setCart((prev) =>
       prev.filter(
         (item) =>
-          item.id !== id
+          !isSameBook(item, id)
       )
     );
   };
@@ -91,7 +99,7 @@ export function CartProvider({
 
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id
+        isSameBook(item, id)
           ? {
               ...item,
               quantity:
@@ -110,7 +118,7 @@ export function CartProvider({
     setCart((prev) =>
       prev
         .map((item) =>
-          item.id === id
+          isSameBook(item, id)
             ? {
                 ...item,
                 quantity:

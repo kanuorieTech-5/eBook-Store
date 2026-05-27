@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { FaStar } from "react-icons/fa";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -88,7 +91,7 @@ export default function FeaturedBooks() {
 
           {books.map((book) => (
 
-            <SwiperSlide key={book.id}>
+            <SwiperSlide key={getBookId(book)}>
 
               <div className="bg-gray-900 border border-white/10 rounded-2xl overflow-hidden group hover:-translate-y-2 transition">
 

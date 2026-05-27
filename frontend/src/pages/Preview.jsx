@@ -1,17 +1,21 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import { books } from "../data/books";
 import PreviewModal from "../components/PreviewModal";
+import { useBooks } from "../context/BookContext";
+import {
+  isSameBook,
+} from "../utils/bookIds";
 
 export default function PreviewPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { books } = useBooks();
 
   const [isOpen, setIsOpen] = useState(true);
 
   const book = books.find(
-    (b) => b.id === Number(id)
+    (b) => isSameBook(b, id)
   );
 
   const closeModal = () => {

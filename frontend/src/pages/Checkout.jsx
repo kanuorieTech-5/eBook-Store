@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { usePurchases, } from "../context/PurchaseContext";
 import { useAuth } from "../context/AuthContext";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 import PaystackGateway from "../components/PaystackGateway";
 
@@ -13,6 +16,8 @@ export default function Checkout() {
   const { user } = useAuth();
   const [method, setMethod] =
     useState("paystack");
+  const hasInvalidItems =
+    cart.some((item) => !item._id);
 
   const total = cart.reduce(
     (sum, item) =>
@@ -85,7 +90,7 @@ export default function Checkout() {
             <div className="space-y-4">
               {cart.map((item, index) => (
                 <div
-                  key={item.id || index}
+                  key={getBookId(item) || index}
                   className="
                     flex
                     items-center
@@ -186,8 +191,7 @@ export default function Checkout() {
             mb-8
           ">
             {[
-              "paystack",
-              "flutterwave",
+              "card",
               "bank",
             ].map((type) => (
               <button
@@ -207,67 +211,176 @@ export default function Checkout() {
                   }
                 `}
               >
-                {type === "paystack" &&
-                  "Paystack"}
+              {type === "card" &&
+                "Card / Bank / USSD"}
 
-                {type ===
-                  "flutterwave" &&
-                  "Flutterwave"}
-
-                {type === "bank" &&
-                  "Bank Transfer"}
+              {type === "bank" &&
+                "Bank Transfer"}
               </button>
             ))}
           </div>
 
-          {/* PAYSTACK */}
-          {method === "paystack" && (
-            <PaystackGateway
-              amount={total}
-              email={user?.email || "guest@email.com"}
-              cart={cart}
-              metadata={{
-                books: cart.map(
-                  (item) => item.title
-                ),
-
-                totalBooks: cart.length,
-              }}
-              onSuccess={handleSuccess}
-            />
-          )}
-
-          {/* FLUTTERWAVE */}
-          {method ===
-            "flutterwave" && (
-            <div className="
-              bg-gray-800
-              rounded-2xl
-              p-6
-            ">
-              <p className="
-                text-gray-300
-                mb-6
-              ">
-                Flutterwave integration
-                coming soon.
-              </p>
-
-              <button
+          {/* CARD / PAYSTACK PAYMENT */}
+          {method === "card" && (
+            hasInvalidItems ? (
+              <div
                 className="
-                  w-full
-                  py-4
                   rounded-2xl
-                  bg-yellow-400
-                  hover:bg-yellow-300
-                  text-black
-                  font-bold
-                  transition
+                  border border-red-500/20
+                  bg-red-500/10
+                  p-4
+                  text-center
+                  text-red-400
                 "
               >
-                Coming Soon
-              </button>
-            </div>
+                One or more items in your cart
+                are no longer available.
+              </div>
+            ) : (
+              <div className="space-y-6">
+
+                {/* PAYMENT INFO */}
+                <div
+                  className="
+                    bg-gray-800
+                    border border-white/10
+                    rounded-2xl
+                    p-5
+                  "
+                >
+                  <h3
+                    className="
+                      text-lg
+                      font-bold
+                      mb-4
+                    "
+                  >
+                    Secure Online Payment
+                  </h3>
+
+                  <div
+                    className="
+                      grid
+                      grid-cols-2
+                      gap-3
+                      text-sm
+                    "
+                  >
+                    <div
+                      className="
+                        bg-gray-900
+                        rounded-xl
+                        p-3
+                      "
+                    >
+                      💳 Visa
+                    </div>
+
+                    <div
+                      className="
+                        bg-gray-900
+                        rounded-xl
+                        p-3
+                      "
+                    >
+                      💳 Mastercard
+                    </div>
+
+                    <div
+                      className="
+                        bg-gray-900
+                        rounded-xl
+                        p-3
+                      "
+                    >
+                      🇳🇬 Verve
+                    </div>
+
+                    <div
+                      className="
+                        bg-gray-900
+                        rounded-xl
+                        p-3
+                      "
+                    >
+                      🏦 Bank Transfer
+                    </div>
+
+                    <div
+                      className="
+                        bg-gray-900
+                        rounded-xl
+                        p-3
+                      "
+                    >
+                      📱 USSD
+                    </div>
+
+                    <div
+                      className="
+                        bg-gray-900
+                        rounded-xl
+                        p-3
+                      "
+                    >
+                      🔒 Secure Checkout
+                    </div>
+                  </div>
+                </div>
+
+                <PaystackGateway
+                  amount={total}
+                  email={
+                    user?.email ||
+                    "guest@email.com"
+                  }
+                  cart={cart}
+                  metadata={{
+                    books: cart.map(
+                      (item) => item.title
+                    ),
+
+                    totalBooks:
+                      cart.length,
+
+                    custom_fields: [
+                      {
+                        display_name:
+                          "Payment Type",
+
+                        variable_name:
+                          "payment_type",
+
+                        value:
+                          "ebook_purchase",
+                      },
+                    ],
+                  }}
+                  onSuccess={
+                    handleSuccess
+                  }
+                />
+
+                {/* SECURITY NOTICE */}
+                <div
+                  className="
+                    bg-green-500/10
+                    border border-green-500/20
+                    rounded-2xl
+                    p-4
+                    text-sm
+                    text-green-300
+                  "
+                >
+                  Payments are securely
+                  processed through Paystack
+                  with support for all major
+                  Nigerian bank cards and
+                  payment methods.
+                </div>
+
+              </div>
+            )
           )}
 
           {/* BANK TRANSFER */}

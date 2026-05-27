@@ -1,13 +1,13 @@
-import API from "./axios";
+import axios from "axios";
 
-// =========================
-// VERIFY PAYMENT
-// =========================
+const API_URL =
+  "http://localhost:5000/api/payments";
+
 export const verifyPayment =
   async (paymentData) => {
     const response =
-      await API.post(
-        "/payments/verify",
+      await axios.post(
+        `${API_URL}/verify`,
         paymentData
       );
 

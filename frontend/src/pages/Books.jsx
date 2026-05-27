@@ -4,6 +4,10 @@ import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import CategoryFilter from "../components/CategoryFilter";
 import { CartContext } from "../context/CartContext";
+import {
+  getBookId,
+  isSameBook,
+} from "../utils/bookIds";
 
 export default function Books() {
   const { addToCart } = useContext(CartContext);
@@ -39,9 +43,17 @@ export default function Books() {
 
   // ❤️ Wishlist toggle
   const toggleWishlist = (book) => {
+    const bookId =
+      getBookId(book);
+
     setWishlist((prev) =>
-      prev.find((b) => b.id === book.id)
-        ? prev.filter((b) => b.id !== book.id)
+      prev.find((b) =>
+        isSameBook(b, bookId)
+      )
+        ? prev.filter(
+            (b) =>
+              !isSameBook(b, bookId)
+          )
         : [...prev, book]
     );
   };
@@ -80,7 +92,7 @@ export default function Books() {
         {visibleBooks.length > 0 ? (
           visibleBooks.map((book) => (
             <BookCard
-              key={book.id}
+              key={getBookId(book)}
               book={book}
               addToCart={addToCart}
               wishlist={wishlist}

@@ -2,13 +2,20 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useBooks, } from "../context/BookContext";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import {
+  getBookId,
+  isSameBook,
+} from "../utils/bookIds";
 
 export default function BookDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const { books } = useBooks();
-  const book = books.find((b) => b.id === Number(id));
+  const book = books.find((b) =>
+    isSameBook(b, id)
+  );
+  const bookId = getBookId(book);
 
   if (!book) {
     return <div className="p-6">Book not found</div>;
@@ -32,7 +39,7 @@ export default function BookDetails() {
       <p className="font-bold mt-3 text-lg text-yellow-600">₦{book.price}</p>
       <button
         onClick={() => {
-          navigate(`/preview/${book.id}`);
+          navigate(`/preview/${bookId}`);
         }}
         className="bg-purple-600 text-white w-full py-2 rounded mt-4"
       >
@@ -43,12 +50,23 @@ export default function BookDetails() {
 
       <button
         onClick={() => {
+          if (!book._id) {
+            return;
+          }
+
           addToCart(book);
           navigate("/cart");
         }}
-        className="bg-purple-600 text-white w-full py-2 rounded mt-4"
+        disabled={!book._id}
+        className={`w-full py-2 rounded mt-4 ${
+          book._id
+            ? "bg-purple-600 text-white"
+            : "bg-gray-300 text-gray-600 cursor-not-allowed"
+        }`}
       >
-        Download Now
+        {book._id
+          ? "Download Now"
+          : "Unavailable for checkout"}
       </button>
     </div>
   );

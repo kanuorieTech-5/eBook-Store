@@ -65,6 +65,15 @@ export default function PaystackGateway({
 
     metadata,
 
+    channels: [
+      "card",
+      "bank",
+      "ussd",
+      "qr",
+      "mobile_money",
+      "bank_transfer",
+    ],
+
     text: loading
       ? "Processing..."
       : `Pay ₦${Number(

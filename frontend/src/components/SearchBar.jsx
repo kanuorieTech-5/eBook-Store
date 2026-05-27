@@ -1,6 +1,9 @@
 import { FiSearch } from "react-icons/fi";
 import { useState, useMemo, useEffect } from "react";
 import Fuse from "fuse.js";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 export default function SearchBar({ search, setSearch, books = [] }) {
   const [focus, setFocus] = useState(false);
@@ -67,7 +70,7 @@ export default function SearchBar({ search, setSearch, books = [] }) {
 
           {results.map((book, index) => (
             <div
-              key={book.id}
+              key={getBookId(book)}
               onMouseEnter={() => setActiveIndex(index)}
               onClick={() => setSearch(book.title)}
               className={`flex items-center gap-3 p-3 cursor-pointer transition

@@ -8,6 +8,14 @@ import {
 import { books as initialBooks }
 from "../data/books";
 
+import {
+  getBooks,
+} from "../services/bookService";
+
+import {
+  isSameBook,
+} from "../utils/bookIds";
+
 const BookContext =
   createContext();
 
@@ -38,6 +46,24 @@ export function BookProvider({
 
   }, [books]);
 
+  useEffect(() => {
+    const loadBooks = async () => {
+      try {
+        const data = await getBooks();
+
+        if (data?.books?.length) {
+          setBooks(data.books);
+        }
+      } catch (error) {
+        console.warn(
+          "Using local fallback books because the API is unavailable."
+        );
+      }
+    };
+
+    loadBooks();
+  }, []);
+
   /* ADD BOOK */
   const addBook = (book) => {
 
@@ -61,7 +87,8 @@ export function BookProvider({
 
     setBooks((prev) =>
       prev.filter(
-        (book) => book.id !== id
+        (book) =>
+          !isSameBook(book, id)
       )
     );
   };
@@ -74,7 +101,7 @@ export function BookProvider({
 
     setBooks((prev) =>
       prev.map((book) =>
-        book.id === id
+        isSameBook(book, id)
           ? {
               ...book,
               ...updatedBook,

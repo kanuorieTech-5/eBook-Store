@@ -10,6 +10,12 @@ import {
 } from "react";
 
 import { CartContext } from "../context/CartContext";
+import {
+  useBooks,
+} from "../context/BookContext";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 import {
   Swiper,
@@ -26,7 +32,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-const books = [
+const fallbackBooks = [
   {
     id: 1,
     title: "Atomic Habits",
@@ -72,9 +78,29 @@ export default function FeatureCarousel() {
 
   const { addToCart } =
     useContext(CartContext);
+  const { books } = useBooks();
 
   const navigate =
     useNavigate();
+
+  const highlightedBooks =
+    books.filter(
+      (book) =>
+        book.featured ||
+        book.bestseller
+    );
+
+  const carouselBooks =
+    (
+      highlightedBooks.length
+        ? highlightedBooks
+        : books
+    ).slice(0, 6);
+
+  const displayBooks =
+    carouselBooks.length
+      ? carouselBooks
+      : fallbackBooks;
 
   return (
     <section
@@ -208,8 +234,8 @@ export default function FeatureCarousel() {
           }}
         >
 
-          {books.map((book) => (
-            <SwiperSlide key={book.id}>
+          {displayBooks.map((book) => (
+            <SwiperSlide key={getBookId(book)}>
 
               <div
                 className="
@@ -233,7 +259,7 @@ export default function FeatureCarousel() {
                 <div className="relative overflow-hidden">
 
                   <img
-                    src={book.image}
+                    src={book.cover || book.image}
                     alt={book.title}
                     className="
                       w-full
@@ -273,7 +299,7 @@ export default function FeatureCarousel() {
                       shadow-lg
                     "
                   >
-                    ₦{book.price.toLocaleString()}
+                    NGN {Number(book.price).toLocaleString()}
                   </div>
 
                 </div>
@@ -343,7 +369,7 @@ export default function FeatureCarousel() {
                   <div className="flex gap-4">
 
                     <Link
-                      to={`/Preview/${book.id}`}
+                      to={`/preview/${getBookId(book)}`}
                       className="
                         flex-1
                         bg-yellow-400
@@ -361,6 +387,11 @@ export default function FeatureCarousel() {
 
                     <button
                       onClick={() => {
+                        if (!book._id) {
+                          navigate("/books");
+                          return;
+                        }
+
                         addToCart(book);
 
                         navigate("/checkout");
@@ -377,7 +408,9 @@ export default function FeatureCarousel() {
                         font-semibold
                       "
                     >
-                      Buy Now
+                      {book._id
+                        ? "Buy Now"
+                        : "View Catalog"}
                     </button>
 
                   </div>

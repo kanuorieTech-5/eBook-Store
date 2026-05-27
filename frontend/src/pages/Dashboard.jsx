@@ -5,6 +5,9 @@ import { getBooks, createBook, updateBook as updateBookService, deleteBook as de
 import { FaBook, FaEdit, FaTrash, FaUsers, FaMoneyBillWave, FaDownload, FaPlus, FaSearch, FaStar, FaChartLine, FaFilePdf, FaImage, } from "react-icons/fa";
 
 import { usePurchases } from "../context/PurchaseContext";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 export default function Dashboard() {
   // =========================================
@@ -1089,7 +1092,7 @@ export default function Dashboard() {
             {filteredBooks.map(
               (book) => (
                 <div
-                  key={book.id}
+                  key={getBookId(book)}
                   className="
                     flex
                     flex-col
@@ -1237,7 +1240,7 @@ export default function Dashboard() {
                     <button
                       onClick={() =>
                         handleDelete(
-                          book.id
+                          getBookId(book)
                         )
                       }
                       className="

@@ -125,13 +125,21 @@ export default function PreviewModal({ isOpen, closeModal, book }) {
 
           <button
             onClick={() => {
+              if (!book._id) {
+                closeModal();
+                navigate("/books");
+                return;
+              }
+
               addToCart(book);
               closeModal();
               navigate("/checkout");
             }}
             className="px-6 py-3 rounded-2xl bg-yellow-400 hover:bg-yellow-300 text-black font-bold transition"
           >
-            Buy & Unlock Full Book
+            {book._id
+              ? "Buy & Unlock Full Book"
+              : "View Store Catalog"}
           </button>
 
         </div>

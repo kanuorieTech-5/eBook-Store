@@ -1,4 +1,8 @@
 import { createContext, useContext, useState } from "react";
+import {
+  getBookId,
+  isSameBook,
+} from "../utils/bookIds";
 
 const StoreContext = createContext();
 
@@ -9,12 +13,22 @@ export function StoreProvider({ children }) {
 
   // Add book to cart
   const addToCart = (book) => {
-    setCart((prev) => [...prev, book]);
+    setCart((prev) => [
+      ...prev,
+      {
+        ...book,
+        id: getBookId(book),
+      },
+    ]);
   };
 
   // Remove book from cart
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((b) => b.id !== id));
+    setCart((prev) =>
+      prev.filter(
+        (b) => !isSameBook(b, id)
+      )
+    );
   };
 
   return (

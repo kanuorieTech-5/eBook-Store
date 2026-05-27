@@ -1,11 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 export default function BookCard({ book }) {
 
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
+  const bookId = getBookId(book);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-2xl transition duration-300 group">
@@ -63,14 +67,21 @@ export default function BookCard({ book }) {
         <div className="flex gap-2 mt-5">
 
           <button
-            onClick={() => addToCart(book)}
+            onClick={() => {
+              if (!book._id) {
+                navigate(`/books/${bookId}`);
+                return;
+              }
+
+              addToCart(book);
+            }}
             className="flex-1 bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition"
           >
-            Add to Cart
+            {book._id ? "Add to Cart" : "View Details"}
           </button>
 
           <button
-            onClick={() => navigate(`/books/${book.id}`)}
+            onClick={() => navigate(`/books/${bookId}`)}
             className="border border-purple-600 text-purple-600 px-4 rounded-xl hover:bg-purple-600 hover:text-white transition"
           >
             View
@@ -80,7 +91,7 @@ export default function BookCard({ book }) {
 
         {/* Preview Link */}
         <Link
-          to={`/preview/${book.id}`}
+          to={`/preview/${bookId}`}
           className="block text-center text-sm text-purple-600 mt-3 hover:underline"
         >
           Quick Preview

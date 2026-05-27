@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 export default function Cart() {
   const {
@@ -29,7 +32,7 @@ export default function Cart() {
         <div className="space-y-4">
           {cart.map((item) => (
             <div
-              key={item.id}
+              key={getBookId(item)}
               className="flex flex-col gap-4 bg-gray-800 p-4 rounded-xl sm:flex-row sm:items-center sm:justify-between"
             >
               <div>
@@ -41,7 +44,7 @@ export default function Cart() {
 
               <div className="flex flex-wrap items-center gap-3">
                 <button
-                  onClick={() => decreaseQuantity(item.id)}
+                  onClick={() => decreaseQuantity(getBookId(item))}
                   className="w-9 h-9 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
                   aria-label={`Decrease ${item.title} quantity`}
                 >
@@ -53,7 +56,7 @@ export default function Cart() {
                 </span>
 
                 <button
-                  onClick={() => increaseQuantity(item.id)}
+                  onClick={() => increaseQuantity(getBookId(item))}
                   className="w-9 h-9 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
                   aria-label={`Increase ${item.title} quantity`}
                 >
@@ -61,7 +64,7 @@ export default function Cart() {
                 </button>
 
                 <button
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => removeFromCart(getBookId(item))}
                   className="text-red-400 hover:text-red-300 transition"
                 >
                   Remove

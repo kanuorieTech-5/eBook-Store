@@ -6,6 +6,9 @@ import {
   FaDownload,
   FaBookOpen,
 } from "react-icons/fa";
+import {
+  getBookId,
+} from "../utils/bookIds";
 
 export default function MyLibrary() {
 
@@ -117,7 +120,7 @@ export default function MyLibrary() {
             (book) => (
 
               <div
-                key={book.id}
+                key={getBookId(book)}
                 className="
                   bg-white/5
                   border
