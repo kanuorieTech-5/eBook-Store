@@ -1,13 +1,12 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-
 import connectDB from "./config/db.js";
-
 import authRoutes from "./routes/authRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
-
+import uploadRoutes  from "./routes/uploadRoutes.js";
+import webhookRoutes  from "./routes/webhookRoutes.js";
 dotenv.config();
 
 connectDB();
@@ -19,20 +18,18 @@ app.use(cors());
 app.use(express.json());
 
 /* STATIC FILES */
-app.use(
-  "/uploads",
-  express.static("uploads")
-);
+app.use("/uploads", express.static("uploads"));
 
 /* ROUTES */
 app.use("/api/auth", authRoutes);
 
 app.use("/api/books", bookRoutes);
 
-app.use(
-  "/api/payments",
-  paymentRoutes
-);
+app.use("/api/payments", paymentRoutes);
+  
+app.use("/api/uploads", uploadRoutes);
+  
+app.use("/api/webhooks", webhookRoutes);
 
 /* TEST */
 app.get("/", (req, res) => {

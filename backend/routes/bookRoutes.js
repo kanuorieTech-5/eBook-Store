@@ -26,6 +26,7 @@ router.get("/:id", getBook);
 router.post(
   "/",
   protect,
+  adminOnly,
 
   upload.fields([
     {
@@ -53,6 +54,7 @@ router.post(
 router.put(
   "/:id",
   protect,
+  adminOnly,
   updateBook
 );
 
@@ -62,6 +64,7 @@ router.put(
 router.delete(
   "/:id",
   protect,
+  adminOnly,
   deleteBook
 );
 

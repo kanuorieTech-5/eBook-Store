@@ -132,7 +132,7 @@ const loginUser = async (
       success: true,
       token: generateToken(user),
       user: {
-        id: user._1,
+        id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,

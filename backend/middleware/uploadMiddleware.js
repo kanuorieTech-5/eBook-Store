@@ -4,60 +4,33 @@ import {
   CloudinaryStorage,
 } from "multer-storage-cloudinary";
 
-import cloudinary from "../config/cloudinary.js";
+import cloudinary
+  from "../config/cloudinary.js";
 
-
-// ===============================
-// COVER IMAGE STORAGE
-// ===============================
-const coverStorage =
+const storage =
   new CloudinaryStorage({
     cloudinary,
 
-    params: {
-      folder:
-        "ebook-store/covers",
+    params: async (
+      req,
+      file
+    ) => ({
+      folder: "uketbooks",
+
+      resource_type: "auto",
 
       allowed_formats: [
         "jpg",
-        "jpeg",
         "png",
+        "jpeg",
         "webp",
-      ],
-    },
-  });
-
-
-// ===============================
-// PDF STORAGE
-// ===============================
-const pdfStorage =
-  new CloudinaryStorage({
-    cloudinary,
-
-    params: {
-      folder:
-        "ebook-store/books",
-
-      resource_type: "raw",
-
-      allowed_formats: [
         "pdf",
-        "epub",
       ],
-    },
+    }),
   });
 
+const upload = multer({
+  storage,
+});
 
-// ===============================
-// MULTER EXPORTS
-// ===============================
-export const uploadCover =
-  multer({
-    storage: coverStorage,
-  });
-
-export const uploadBook =
-  multer({
-    storage: pdfStorage,
-  });
+export default upload;

@@ -6,46 +6,47 @@ export const protect = async (
   res,
   next
 ) => {
-  let token;
+  const authHeader =
+    req.headers.authorization;
 
   if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith(
-      "Bearer"
-    )
+    !authHeader ||
+    !authHeader.startsWith("Bearer ")
   ) {
-    try {
-      token =
-        req.headers.authorization.split(
-          " "
-        )[1];
-
-      const decoded =
-        jwt.verify(
-          token,
-          process.env.JWT_SECRET
-        );
-
-      req.user =
-        await User.findById(
-          decoded.id
-        ).select("-password");
-
-      next();
-    } catch (error) {
-      res.status(401);
-
-      throw new Error(
-        "Not authorized"
-      );
-    }
+    return res.status(401).json({
+      success: false,
+      message: "No token",
+    });
   }
 
-  if (!token) {
-    res.status(401);
+  try {
+    const token =
+      authHeader.split(" ")[1];
 
-throw new Error( 
-      "No token"
-    );
+    const decoded =
+      jwt.verify(
+        token,
+        process.env.JWT_SECRET
+      );
+
+    const user =
+      await User.findById(
+        decoded.id
+      ).select("-password");
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Not authorized",
+    });
   }
 };

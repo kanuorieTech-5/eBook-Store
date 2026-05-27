@@ -21,16 +21,16 @@ const createBook = async (
     } = req.body;
 
     const cover = req.files?.cover
-      ? `/uploads/${req.files.cover[0].filename}`
+      ? req.files.cover[0].path
       : "";
 
     const file = req.files?.file
-      ? `/uploads/${req.files.file[0].filename}`
+      ? req.files.file[0].path
       : "";
 
     const preview =
       req.files?.preview
-        ? `/uploads/${req.files.preview[0].filename}`
+        ? req.files.preview[0].path
         : "";
 
     const book = await Book.create({
