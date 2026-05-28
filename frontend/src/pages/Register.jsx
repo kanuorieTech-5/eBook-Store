@@ -116,7 +116,7 @@ export default function Register() {
         }
 
         navigate(
-          "/dashboard"
+          "/profile"
         );
       } catch (err) {
         console.error(err);

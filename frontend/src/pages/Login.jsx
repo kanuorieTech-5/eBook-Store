@@ -107,7 +107,7 @@ export default function Login() {
         }
 
         navigate(
-          "/dashboard"
+          "/profile"
         );
       } catch (err) {
         console.error(err);
