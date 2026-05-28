@@ -13,9 +13,12 @@ connectDB();
 
 const app = express();
 
-app.use(cors({ origin: ["http://localhost:5173",
-      "https://yourfrontend.netlify.app",
-    ],
+app.use(cors({ origin: 
+  [
+    "http://localhost:5173",
+    "https://e-book-store-8cn5mqc6j-uketbooks-team.vercel.app/",
+    "https://uketbooks-frontend-7cnt.onrender.com",
+  ],
 
     credentials: true,
   })
