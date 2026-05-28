@@ -3,30 +3,32 @@ import API from "./axios";
 // =========================
 // REGISTER
 // =========================
-export const registerUser =
-  async (userData) => {
-    const response =
-      await API.post(
-        "/auth/register",
-        userData
-      );
+export const registerUser = async (
+  userData
+) => {
+  const response =
+    await API.post(
+      "/api/auth/register",
+      userData
+    );
 
-    return response.data;
-  };
+  return response.data;
+};
 
 // =========================
 // LOGIN
 // =========================
-export const loginUser =
-  async (userData) => {
-    const response =
-      await API.post(
-        "/auth/login",
-        userData
-      );
+export const loginUser = async (
+  userData
+) => {
+  const response =
+    await API.post(
+      "/api/auth/login",
+      userData
+    );
 
-    return response.data;
-  };
+  return response.data;
+};
 
 // =========================
 // GET PROFILE
@@ -35,7 +37,7 @@ export const getProfile =
   async () => {
     const response =
       await API.get(
-        "/auth/profile"
+        "/api/auth/profile"
       );
 
     return response.data;
@@ -43,55 +45,27 @@ export const getProfile =
 
 // =========================
 // LOGOUT
-// =========================  
-  export const logoutUser =
+// =========================
+export const logoutUser =
   async () => {
     const response =
       await API.post(
-        "/auth/logout"
+        "/api/auth/logout"
       );
+
     return response.data;
   };
 
 // =========================
 // SEND RECEIPT EMAIL
-// =========================  
+// =========================
 export const sendReceiptEmail =
   async (emailData) => {
     const response =
       await API.post(
-        "/auth/send-receipt",
+        "/api/auth/send-receipt",
         emailData
       );
+
     return response.data;
   };
-
-// =========================
-// SEND RECEIPT EMAIL (BACKEND)
-// =========================  
-import nodemailer from "nodemailer";
-
-const sendReceipt = async (
-  to,
-  subject,
-  html
-) => {
-  const transporter = nodemailer.createTransporter({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to,
-    subject,
-    html
-  };
-
-  await transporter.sendMail(mailOptions);
-};
-
-export default sendReceipt;

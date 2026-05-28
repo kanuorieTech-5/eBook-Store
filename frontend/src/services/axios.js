@@ -1,13 +1,23 @@
 import axios from "axios";
 
+// =========================
+// API INSTANCE
+// =========================
 const API = axios.create({
   baseURL:
     import.meta.env.VITE_API_URL ||
-    "http://localhost:5000/api",
+    "http://localhost:5000",
+
+  headers: {
+    "Content-Type":
+      "application/json",
+  },
+
+  withCredentials: true,
 });
 
 // =========================
-// AUTO TOKEN
+// AUTO ATTACH TOKEN
 // =========================
 API.interceptors.request.use(
   (config) => {
@@ -26,6 +36,23 @@ API.interceptors.request.use(
 
   (error) =>
     Promise.reject(error)
+);
+
+// =========================
+// RESPONSE ERROR HANDLER
+// =========================
+API.interceptors.response.use(
+  (response) => response,
+
+  (error) => {
+    console.error(
+      "API Error:",
+      error?.response?.data ||
+        error.message
+    );
+
+    return Promise.reject(error);
+  }
 );
 
 export default API;
