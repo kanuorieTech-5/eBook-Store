@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API_URL =
-  "http://localhost:5000/api/payments";
+  import.meta.env.VITE_API_URL +
+  "payments"  || "http://localhost:5000/api/payments";
 
 export const verifyPayment =
   async (paymentData) => {
