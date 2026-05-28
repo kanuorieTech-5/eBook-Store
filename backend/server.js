@@ -33,8 +33,8 @@ app.use(
     origin: [
       "http://localhost:5173",
 
-      "https://e-book-store-8cn5mqc6j-uketbooks-team.vercel.app",
-
+      "https://uketbooks-store.vercel.app",
+      
       "https://uketbooks-frontend-7cnt.onrender.com",
     ],
 
