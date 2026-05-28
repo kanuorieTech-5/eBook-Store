@@ -11,6 +11,11 @@ import {
   useAuth,
 } from "../context/AuthContext";
 
+import {
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+
 export default function Register() {
   const navigate =
     useNavigate();
@@ -18,6 +23,9 @@ export default function Register() {
   const { register } =
     useAuth();
 
+  // =========================
+  // STATES
+  // =========================
   const [form, setForm] =
     useState({
       name: "",
@@ -31,15 +39,44 @@ export default function Register() {
   const [error, setError] =
     useState("");
 
+  const [showPassword,
+    setShowPassword,
+  ] = useState(false);
+
   // =========================
   // HANDLE CHANGE
   // =========================
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]:
-        e.target.value,
-    });
+    const {
+      name,
+      value,
+    } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // =========================
+  // VALIDATION
+  // =========================
+  const validateForm = () => {
+    if (
+      !form.name ||
+      !form.email ||
+      !form.password
+    ) {
+      return "Please fill all fields.";
+    }
+
+    if (
+      form.password.length < 6
+    ) {
+      return "Password must be at least 6 characters.";
+    }
+
+    return null;
   };
 
   // =========================
@@ -49,26 +86,47 @@ export default function Register() {
     async (e) => {
       e.preventDefault();
 
-      setLoading(true);
-
       setError("");
 
-      const result =
-        await register(
-          form.name,
-          form.email,
-          form.password
-        );
+      const validationError =
+        validateForm();
 
-      setLoading(false);
-
-      if (!result.success) {
+      if (validationError) {
         return setError(
-          result.message
+          validationError
         );
       }
 
-      navigate("/dashboard");
+      try {
+        setLoading(true);
+
+        const result =
+          await register(
+            form.name,
+            form.email,
+            form.password
+          );
+
+        if (!result.success) {
+          setError(
+            result.message
+          );
+
+          return;
+        }
+
+        navigate(
+          "/dashboard"
+        );
+      } catch (err) {
+        console.error(err);
+
+        setError(
+          "Something went wrong. Please try again."
+        );
+      } finally {
+        setLoading(false);
+      }
     };
 
   return (
@@ -87,17 +145,24 @@ export default function Register() {
         className="
           w-full
           max-w-md
-          bg-gray-900
+
+          bg-gray-900/95
+          backdrop-blur-xl
+
           border
           border-gray-800
+
           rounded-3xl
           p-8
+
+          shadow-2xl
         "
       >
+        {/* HEADER */}
         <h1
           className="
             text-3xl
-            font-bold
+            font-black
             mb-2
           "
         >
@@ -121,22 +186,29 @@ export default function Register() {
               bg-red-500/20
               border
               border-red-500/30
+
               text-red-400
+
               p-3
               rounded-xl
-              mb-4
+
+              mb-5
             "
           >
             {error}
           </div>
         )}
 
+        {/* FORM */}
         <form
           onSubmit={
             handleSubmit
           }
-          className="space-y-4"
+          className="
+            space-y-5
+          "
         >
+          {/* NAME */}
           <input
             type="text"
             name="name"
@@ -145,71 +217,145 @@ export default function Register() {
             onChange={
               handleChange
             }
+            autoComplete="name"
             className="
               w-full
-              bg-black
+              bg-black/70
+
               border
               border-gray-700
+
               rounded-xl
               p-4
+
               outline-none
+
               focus:border-yellow-400
+              transition-all
             "
           />
 
+          {/* EMAIL */}
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Email Address"
             value={form.email}
             onChange={
               handleChange
             }
+            autoComplete="email"
             className="
               w-full
-              bg-black
+              bg-black/70
+
               border
               border-gray-700
+
               rounded-xl
               p-4
+
               outline-none
+
               focus:border-yellow-400
+              transition-all
             "
           />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={
-              handleChange
-            }
+          {/* PASSWORD */}
+          <div
             className="
-              w-full
-              bg-black
-              border
-              border-gray-700
-              rounded-xl
-              p-4
-              outline-none
-              focus:border-yellow-400
+              relative
             "
-          />
+          >
+            <input
+              type={
+                showPassword
+                  ? "text"
+                  : "password"
+              }
+              name="password"
+              placeholder="Password"
+              value={
+                form.password
+              }
+              onChange={
+                handleChange
+              }
+              autoComplete="new-password"
+              className="
+                w-full
+                bg-black/70
 
+                border
+                border-gray-700
+
+                rounded-xl
+                p-4
+                pr-14
+
+                outline-none
+
+                focus:border-yellow-400
+                transition-all
+              "
+            />
+
+            {/* TOGGLE */}
+            <button
+              type="button"
+              onClick={() =>
+                setShowPassword(
+                  !showPassword
+                )
+              }
+              className="
+                absolute
+                top-1/2
+                right-4
+                -translate-y-1/2
+
+                text-gray-400
+                hover:text-yellow-400
+
+                transition-all
+              "
+            >
+              {showPassword ? (
+                <FaEyeSlash />
+              ) : (
+                <FaEye />
+              )}
+            </button>
+          </div>
+
+          {/* BUTTON */}
           <button
             type="submit"
             disabled={loading}
-            className="
+            className={`
               w-full
-              bg-yellow-400
-              hover:bg-yellow-300
-              text-black
+
               font-bold
+
               py-4
               rounded-xl
+
               transition-all
-            "
+
+              ${
+                loading
+                  ? `
+                    bg-gray-700
+                    cursor-not-allowed
+                  `
+                  : `
+                    bg-yellow-400
+                    hover:bg-yellow-300
+                    text-black
+                  `
+              }
+            `}
           >
             {loading
               ? "Creating Account..."
@@ -217,6 +363,7 @@ export default function Register() {
           </button>
         </form>
 
+        {/* FOOTER */}
         <p
           className="
             text-gray-400
@@ -230,6 +377,8 @@ export default function Register() {
             to="/login"
             className="
               text-yellow-400
+              hover:text-yellow-300
+              font-semibold
             "
           >
             Login

@@ -1,14 +1,51 @@
 import API from "./axios";
 
 // =========================
-// GET BOOKS
+// HELPERS
+// =========================
+const createFormData = (
+  data
+) => {
+  const formData =
+    new FormData();
+
+  Object.keys(data).forEach(
+    (key) => {
+      if (
+        data[key] !== undefined &&
+        data[key] !== null
+      ) {
+        formData.append(
+          key,
+          data[key]
+        );
+      }
+    }
+  );
+
+  return formData;
+};
+
+// =========================
+// GET ALL BOOKS
 // =========================
 export const getBooks =
   async () => {
-    const response =
-      await API.get("/books");
+    try {
+      const response =
+        await API.get(
+          "/api/books"
+        );
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error fetching books:",
+        error
+      );
+
+      throw error;
+    }
   };
 
 // =========================
@@ -16,12 +53,21 @@ export const getBooks =
 // =========================
 export const getBook =
   async (id) => {
-    const response =
-      await API.get(
-        `/books/${id}`
+    try {
+      const response =
+        await API.get(
+          `/api/books/${id}`
+        );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error fetching book:",
+        error
       );
 
-    return response.data;
+      throw error;
+    }
   };
 
 // =========================
@@ -29,45 +75,70 @@ export const getBook =
 // =========================
 export const createBook =
   async (bookData) => {
-    const formData =
-      new FormData();
-
-    Object.keys(bookData).forEach(
-      (key) => {
-        formData.append(
-          key,
-          bookData[key]
+    try {
+      const formData =
+        createFormData(
+          bookData
         );
-      }
-    );
 
-    const response =
-      await API.post(
-        "/books",
-        formData,
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data",
-          },
-        }
+      const response =
+        await API.post(
+          "/api/books",
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data",
+            },
+          }
+        );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error creating book:",
+        error
       );
 
-    return response.data;
+      throw error;
+    }
   };
 
 // =========================
 // UPDATE BOOK
 // =========================
 export const updateBook =
-  async (id, data) => {
-    const response =
-      await API.put(
-        `/books/${id}`,
-        data
+  async (
+    id,
+    updatedData
+  ) => {
+    try {
+      const formData =
+        createFormData(
+          updatedData
+        );
+
+      const response =
+        await API.put(
+          `/api/books/${id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data",
+            },
+          }
+        );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error updating book:",
+        error
       );
 
-    return response.data;
+      throw error;
+    }
   };
 
 // =========================
@@ -75,10 +146,19 @@ export const updateBook =
 // =========================
 export const deleteBook =
   async (id) => {
-    const response =
-      await API.delete(
-        `/books/${id}`
+    try {
+      const response =
+        await API.delete(
+          `/api/books/${id}`
+        );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error deleting book:",
+        error
       );
 
-    return response.data;
+      throw error;
+    }
   };

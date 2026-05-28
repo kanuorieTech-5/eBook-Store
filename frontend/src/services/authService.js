@@ -1,46 +1,98 @@
 import API from "./axios";
 
 // =========================
+// SAVE TOKEN
+// =========================
+const saveToken = (
+  token
+) => {
+  if (token) {
+    localStorage.setItem(
+      "token",
+      token
+    );
+  }
+};
+
+// =========================
 // REGISTER
 // =========================
-export const registerUser = async (
-  userData
-) => {
-  const response =
-    await API.post(
-      "/api/auth/register",
-      userData
-    );
+export const registerUser =
+  async (userData) => {
+    try {
+      const response =
+        await API.post(
+          "/api/auth/register",
+          userData
+        );
 
-  return response.data;
-};
+      // Save token if backend returns one
+      saveToken(
+        response.data?.token
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Registration Error:",
+        error?.response?.data ||
+          error.message
+      );
+
+      throw error;
+    }
+  };
 
 // =========================
 // LOGIN
 // =========================
-export const loginUser = async (
-  userData
-) => {
-  const response =
-    await API.post(
-      "/api/auth/login",
-      userData
-    );
+export const loginUser =
+  async (userData) => {
+    try {
+      const response =
+        await API.post(
+          "/api/auth/login",
+          userData
+        );
 
-  return response.data;
-};
+      // Save auth token
+      saveToken(
+        response.data?.token
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Login Error:",
+        error?.response?.data ||
+          error.message
+      );
+
+      throw error;
+    }
+  };
 
 // =========================
 // GET PROFILE
 // =========================
 export const getProfile =
   async () => {
-    const response =
-      await API.get(
-        "/api/auth/profile"
+    try {
+      const response =
+        await API.get(
+          "/api/auth/profile"
+        );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Profile Error:",
+        error?.response?.data ||
+          error.message
       );
 
-    return response.data;
+      throw error;
+    }
   };
 
 // =========================
@@ -48,12 +100,32 @@ export const getProfile =
 // =========================
 export const logoutUser =
   async () => {
-    const response =
-      await API.post(
-        "/api/auth/logout"
+    try {
+      const response =
+        await API.post(
+          "/api/auth/logout"
+        );
+
+      // Remove local token
+      localStorage.removeItem(
+        "token"
       );
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Logout Error:",
+        error?.response?.data ||
+          error.message
+      );
+
+      // Still remove token locally
+      localStorage.removeItem(
+        "token"
+      );
+
+      throw error;
+    }
   };
 
 // =========================
@@ -61,11 +133,21 @@ export const logoutUser =
 // =========================
 export const sendReceiptEmail =
   async (emailData) => {
-    const response =
-      await API.post(
-        "/api/auth/send-receipt",
-        emailData
+    try {
+      const response =
+        await API.post(
+          "/api/auth/send-receipt",
+          emailData
+        );
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Receipt Email Error:",
+        error?.response?.data ||
+          error.message
       );
 
-    return response.data;
+      throw error;
+    }
   };

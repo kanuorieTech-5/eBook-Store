@@ -9,13 +9,14 @@ import {
   loginUser,
   registerUser,
   getProfile,
+  logoutUser,
 } from "../services/authService";
 
 // =========================
 // CONTEXT
 // =========================
 const AuthContext =
-  createContext();
+  createContext(null);
 
 // =========================
 // PROVIDER
@@ -30,10 +31,10 @@ export const AuthProvider = ({
     useState(true);
 
   // =========================
-  // LOAD USER
+  // LOAD AUTH USER
   // =========================
   useEffect(() => {
-    const loadUser =
+    const initializeAuth =
       async () => {
         try {
           const token =
@@ -41,27 +42,36 @@ export const AuthProvider = ({
               "token"
             );
 
+          // No token
           if (!token) {
             setLoading(false);
             return;
           }
 
+          // Fetch user profile
           const data =
             await getProfile();
 
-          setUser(data.user);
+          setUser(
+            data.user
+          );
         } catch (error) {
-          console.log(error);
+          console.error(
+            "Auth initialization failed:",
+            error
+          );
 
           localStorage.removeItem(
             "token"
           );
+
+          setUser(null);
         } finally {
           setLoading(false);
         }
       };
 
-    loadUser();
+    initializeAuth();
   }, []);
 
   // =========================
@@ -72,99 +82,115 @@ export const AuthProvider = ({
     password
   ) => {
     try {
+      setLoading(true);
+
       const data =
         await loginUser({
           email,
           password,
         });
 
-      localStorage.setItem(
-        "token",
-        data.token
-      );
-
       setUser(data.user);
 
       return {
         success: true,
+        user: data.user,
       };
     } catch (error) {
       return {
         success: false,
 
         message:
-          error.response?.data
+          error?.response?.data
             ?.message ||
           "Login failed",
       };
+    } finally {
+      setLoading(false);
     }
   };
 
   // =========================
   // REGISTER
   // =========================
-  const register = async (
-    name,
-    email,
-    password
-  ) => {
-    try {
-      const data =
-        await registerUser({
-          name,
-          email,
-          password,
-        });
+  const register =
+    async (
+      name,
+      email,
+      password
+    ) => {
+      try {
+        setLoading(true);
 
-      localStorage.setItem(
-        "token",
-        data.token
-      );
+        const data =
+          await registerUser({
+            name,
+            email,
+            password,
+          });
 
-      setUser(data.user);
+        setUser(data.user);
 
-      return {
-        success: true,
-      };
-    } catch (error) {
-      return {
-        success: false,
+        return {
+          success: true,
+          user: data.user,
+        };
+      } catch (error) {
+        return {
+          success: false,
 
-        message:
-          error.response?.data
-            ?.message ||
-          "Registration failed",
-      };
-    }
-  };
+          message:
+            error?.response?.data
+              ?.message ||
+            "Registration failed",
+        };
+      } finally {
+        setLoading(false);
+      }
+    };
 
   // =========================
   // LOGOUT
   // =========================
-  const logout = () => {
-    localStorage.removeItem(
-      "token"
-    );
+  const logout =
+    async () => {
+      try {
+        await logoutUser();
+      } catch (error) {
+        console.error(
+          "Logout failed:",
+          error
+        );
+      } finally {
+        localStorage.removeItem(
+          "token"
+        );
 
-    setUser(null);
+        setUser(null);
+      }
+    };
+
+  // =========================
+  // VALUES
+  // =========================
+  const value = {
+    user,
+
+    loading,
+
+    login,
+
+    register,
+
+    logout,
+
+    isAuthenticated:
+      !!user,
   };
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-
-        loading,
-
-        login,
-
-        register,
-
-        logout,
-
-        isAuthenticated:
-          !!user,
-      }}
+      value={value}
     >
       {children}
     </AuthContext.Provider>
@@ -174,5 +200,17 @@ export const AuthProvider = ({
 // =========================
 // CUSTOM HOOK
 // =========================
-export const useAuth = () =>
-  useContext(AuthContext);
+export const useAuth = () => {
+  const context =
+    useContext(
+      AuthContext
+    );
+
+  if (!context) {
+    throw new Error(
+      "useAuth must be used within AuthProvider"
+    );
+  }
+
+  return context;
+};

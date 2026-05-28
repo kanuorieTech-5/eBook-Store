@@ -14,6 +14,7 @@ import Profile from "../pages/profile";
 import Preview from "../pages/Preview";
 import Categories from "../components/Categories";
 import ProtectedRoute from "../components/ProtectedRoute";
+import AdminRoute from "../components/AdminRoute";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Help from "../pages/Help";
@@ -76,9 +77,9 @@ export default function AppRoutes() {
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <Dashboard />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 

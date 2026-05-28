@@ -6,7 +6,7 @@ import {
   useAuth,
 } from "../context/AuthContext";
 
-export default function ProtectedRoute({
+export default function AdminRoute({
   children,
 }) {
   const {
@@ -14,7 +14,6 @@ export default function ProtectedRoute({
     loading,
   } = useAuth();
 
-  // Loading state
   if (loading) {
     return (
       <div
@@ -32,11 +31,23 @@ export default function ProtectedRoute({
     );
   }
 
-  // Not authenticated
+  // Not logged in
   if (!user) {
     return (
       <Navigate
         to="/login"
+        replace
+      />
+    );
+  }
+
+  // Not admin
+  if (
+    user.role !== "admin"
+  ) {
+    return (
+      <Navigate
+        to="/"
         replace
       />
     );

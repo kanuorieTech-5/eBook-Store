@@ -1,23 +1,25 @@
 import axios from "axios";
 
 // =========================
+// BASE URL
+// =========================
+const BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:5000";
+
+// =========================
 // API INSTANCE
 // =========================
 const API = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL ||
-    "http://localhost:5000",
-
-  headers: {
-    "Content-Type":
-      "application/json",
-  },
+  baseURL: BASE_URL,
 
   withCredentials: true,
+
+  timeout: 15000,
 });
 
 // =========================
-// AUTO ATTACH TOKEN
+// REQUEST INTERCEPTOR
 // =========================
 API.interceptors.request.use(
   (config) => {
@@ -26,6 +28,7 @@ API.interceptors.request.use(
         "token"
       );
 
+    // Attach token
     if (token) {
       config.headers.Authorization =
         `Bearer ${token}`;
@@ -34,12 +37,15 @@ API.interceptors.request.use(
     return config;
   },
 
-  (error) =>
-    Promise.reject(error)
+  (error) => {
+    return Promise.reject(
+      error
+    );
+  }
 );
 
 // =========================
-// RESPONSE ERROR HANDLER
+// RESPONSE INTERCEPTOR
 // =========================
 API.interceptors.response.use(
   (response) => response,
@@ -51,7 +57,23 @@ API.interceptors.response.use(
         error.message
     );
 
-    return Promise.reject(error);
+    // Auto logout on unauthorized
+    if (
+      error?.response?.status ===
+      401
+    ) {
+      localStorage.removeItem(
+        "token"
+      );
+
+      // optional redirect
+      window.location.href =
+        "/login";
+    }
+
+    return Promise.reject(
+      error
+    );
   }
 );
 
