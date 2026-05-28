@@ -1,10 +1,38 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useContext, useState, useEffect, useRef } from "react";
-import { CartContext } from "../context/CartContext";
+import {
+  Link,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+
+import {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
+
+import {
+  CartContext,
+} from "../context/CartContext";
+
 import SearchBar from "./SearchBar";
+
 import {
   FaMoon,
   FaSun,
+  FaHome,
+  FaBook,
+  FaUser,
+  FaShoppingCart,
+  FaInfoCircle,
+  FaEnvelope,
+  FaQuestionCircle,
+  FaCommentDots,
+  FaShieldAlt,
+  FaFileContract,
+  FaBookOpen,
+  FaTachometerAlt,
+  FaSignOutAlt,
 } from "react-icons/fa";
 
 import {
@@ -12,122 +40,599 @@ import {
 } from "../context/ThemeContext";
 
 export default function Navbar() {
-  const {cart, totalItems, totalPrice} = useContext(CartContext);
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const menuRef = useRef();
+  const {
+    totalItems,
+  } = useContext(CartContext);
 
-  // Close dropdown on outside click
+  const [open, setOpen] =
+    useState(false);
+
+  const navigate =
+    useNavigate();
+
+  const location =
+    useLocation();
+
+  const menuRef =
+    useRef();
+
+  const {
+    darkMode,
+    toggleTheme,
+  } = useTheme();
+
+  // =========================================
+  // CLOSE MENU ON OUTSIDE CLICK
+  // =========================================
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
+    const handleClickOutside =
+      (e) => {
+        if (
+          menuRef.current &&
+          !menuRef.current.contains(
+            e.target
+          )
+        ) {
+          setOpen(false);
+        }
+      };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () =>
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
   }, []);
 
-  const isActive = (path) => location.pathname === path;
-  const {darkMode, toggleTheme,} = useTheme();
+  // =========================================
+  // ACTIVE LINK
+  // =========================================
+  const isActive = (path) =>
+    location.pathname === path;
+
+  // =========================================
+  // NAV LINKS
+  // =========================================
+  const navLinks = [
+    {
+      name: "Home",
+      path: "/",
+      icon: <FaHome />,
+    },
+
+    {
+      name: "Books",
+      path: "/books",
+      icon: <FaBook />,
+    },
+
+    {
+      name: "Library",
+      path: "/mylibrary",
+      icon: <FaBookOpen />,
+    },
+
+    {
+      name: "Profile",
+      path: "/profile",
+      icon: <FaUser />,
+    },
+
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: (
+        <FaTachometerAlt />
+      ),
+    },
+
+    {
+      name: "About",
+      path: "/about",
+      icon: (
+        <FaInfoCircle />
+      ),
+    },
+
+    {
+      name: "Contact",
+      path: "/contact",
+      icon: <FaEnvelope />,
+    },
+
+    {
+      name: "Help",
+      path: "/help",
+      icon: (
+        <FaQuestionCircle />
+      ),
+    },
+
+    {
+      name: "Feedback",
+      path: "/feedback",
+      icon: (
+        <FaCommentDots />
+      ),
+    },
+
+    {
+      name: "FAQ",
+      path: "/faq",
+      icon: (
+        <FaQuestionCircle />
+      ),
+    },
+
+    {
+      name: "Terms",
+      path: "/terms",
+      icon: (
+        <FaFileContract />
+      ),
+    },
+
+    {
+      name: "Privacy",
+      path: "/privacy",
+      icon: (
+        <FaShieldAlt />
+      ),
+    },
+  ];
+
   return (
-    <nav className="bg-purple-700 text-white px-6 py-4 flex justify-between items-center shadow relative">
+    <nav
+      className={`
+        sticky
+        top-0
+        z-[99999]
+        bg-purple-600/70
+        px-4
+        md:px-8
+        py-4
 
-      {/* Logo */}
-      <Link to="/" className="text-xl font-bold">
-        📚 eBook Store
-      </Link>
+        border-b
+        backdrop-blur-2xl
 
-      {/* Search */}
-      <div className="hidden md:block w-[300px]">
-        <SearchBar />
-      </div>
+        transition-all
+        duration-300
 
-      {/* Right */}
-      <div className="flex items-center gap-6">
+        ${
+          darkMode
+            ? `
+              bg-black/70
+              border-white/10
+              text-white
+            `
+            : `
+              bg-white/70
+              border-black/10
+              text-black
+            `
+        }
+      `}
+    >
+      <div
+        className="
+          max-w-7xl
+          mx-auto
 
-        {/* Cart */}
-        <Link to="/cart" className="relative text-xl">
-          🛒
-          {totalItems > 0 && (
-            <span className="absolute -top-2 -right-3 bg-red-500 text-xs px-2 py-1 rounded-full">
-              {totalItems}
-            </span>
-          )}
-        </Link>
-
-        {/* Profile */}
+          flex
+          items-center
+          justify-between
+          gap-4
+        "
+      >
+        {/* =========================================
+            LOGO
+        ========================================= */}
         <Link
-          to="/profile"
-          className={`text-xl ${isActive("/profile") ? "text-yellow-300" : ""}`}
+          to="/"
+          className="
+            text-2xl
+            font-black
+
+            flex
+            items-center
+            gap-2
+          "
         >
-          👤
+          <span
+            className="
+              text-3xl
+            "
+          >
+            📚
+          </span>
+
+          <span>
+            eBook Store
+          </span>
         </Link>
 
-        {/* Menu */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="text-2xl"
+        {/* =========================================
+            SEARCH
+        ========================================= */}
+        <div
+          className="
+            hidden
+            lg:block
+            w-[350px]
+          "
         >
-          ☰
-        </button>
+          <SearchBar />
+        </div>
 
-      </div>
-
-      {/* Dropdown */}
-      {open && (
-        <div className="absolute top-16 right-6 z-[9999] w-40 p-4 rounded-2xl border border-white/10 bg-white/95
-          dark:bg-gray-900/95 backdrop-blur-2xl shadow-2xl shadow-black/20 text-black dark:text-white animate-in fade-in
-          zoom-in-95 duration-200" ref={menuRef}>
+        {/* =========================================
+            RIGHT SIDE
+        ========================================= */}
+        <div
+          className="
+            flex
+            items-center
+            gap-3
+          "
+        >
+          {/* THEME TOGGLE */}
           <button
-            onClick={toggleTheme}
-            className="w-10 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center transition">
+            onClick={
+              toggleTheme
+            }
+            className={`
+              w-11
+              h-11
+
+              rounded-full
+
+              flex
+              items-center
+              justify-center
+
+              border
+
+              transition-all
+              duration-300
+
+              ${
+                darkMode
+                  ? `
+                    bg-white/10
+                    border-white/10
+                    hover:bg-white/20
+                  `
+                  : `
+                    bg-black/5
+                    border-black/10
+                    hover:bg-black/10
+                  `
+              }
+            `}
+          >
             {darkMode ? (
-              <FaSun className="text-yellow-400" />
+              <FaSun
+                className="
+                  text-yellow-400
+                "
+              />
             ) : (
-              <FaMoon className="text-white" />
+              <FaMoon />
             )}
           </button>
-          
-          <Link to="/" className="block py-2 hover:bg-gray-200 rounded">
-            Home
-          </Link>
 
-          <Link to="/books" className="block py-2 hover:bg-gray-200 rounded">
-            Books
-          </Link>
+          {/* CART */}
+          <Link
+            to="/cart"
+            className={`
+              relative
 
-          <Link to="/profile" className="block py-2 hover:bg-gray-200 rounded">
-            Profile
-          </Link>
+              w-11
+              h-11
 
-          <Link to="/MyLibrary" className="block py-2 hover:bg-gray-200 rounded">
-            My Library
-          </Link>
+              rounded-full
 
-          <Link to="/login" className="block py-2 hover:bg-gray-200 rounded">
-            Login
-          </Link>
+              flex
+              items-center
+              justify-center
 
-          <Link to="/register" className="block py-2 hover:bg-gray-200 rounded">
-            Register
-          </Link>
+              border
 
-          <button
-            onClick={() => {
-              localStorage.removeItem("authToken");
-              navigate("/login");
-            }}
-            className="block py-2 text-red-500 hover:text-red-700 w-full text-left"
+              transition-all
+              duration-300
+
+              ${
+                darkMode
+                  ? `
+                    bg-white/10
+                    border-white/10
+                    hover:bg-white/20
+                  `
+                  : `
+                    bg-black/5
+                    border-black/10
+                    hover:bg-black/10
+                  `
+              }
+            `}
           >
-            Logout
-          </button>
+            <FaShoppingCart />
 
+            {totalItems > 0 && (
+              <span
+                className="
+                  absolute
+                  -top-2
+                  -right-2
+
+                  bg-red-500
+                  text-white
+
+                  text-xs
+                  font-bold
+
+                  min-w-[22px]
+                  h-[22px]
+
+                  rounded-full
+
+                  flex
+                  items-center
+                  justify-center
+                "
+              >
+                {totalItems}
+              </span>
+            )}
+          </Link>
+
+          {/* PROFILE */}
+          <Link
+            to="/profile"
+            className={`
+              w-11
+              h-11
+
+              rounded-full
+
+              flex
+              items-center
+              justify-center
+
+              border
+
+              transition-all
+              duration-300
+
+              ${
+                isActive(
+                  "/profile"
+                )
+                  ? `
+                    bg-purple-600
+                    border-purple-600
+                    text-white
+                  `
+                  : darkMode
+                  ? `
+                    bg-white/10
+                    border-white/10
+                    hover:bg-white/20
+                  `
+                  : `
+                    bg-black/5
+                    border-black/10
+                    hover:bg-black/10
+                  `
+              }
+            `}
+          >
+            <FaUser />
+          </Link>
+
+          {/* MENU BUTTON */}
+          <button
+            onClick={() =>
+              setOpen(!open)
+            }
+            className={`
+              w-11
+              h-11
+
+              rounded-full
+
+              flex
+              items-center
+              justify-center
+
+              border
+
+              text-2xl
+
+              transition-all
+              duration-300
+
+              ${
+                darkMode
+                  ? `
+                    bg-white/10
+                    border-white/10
+                    hover:bg-white/20
+                  `
+                  : `
+                    bg-black/5
+                    border-black/10
+                    hover:bg-black/10
+                  `
+              }
+            `}
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+
+      {/* =========================================
+          MOBILE SEARCH
+      ========================================= */}
+      {/* <div
+        className="
+          lg:hidden
+          mt-4
+        "
+      >
+        <SearchBar />
+      </div> */}
+
+      {/* =========================================
+          DROPDOWN
+      ========================================= */}
+      {open && (
+        <div
+          ref={menuRef}
+          className={`
+            absolute
+            top-[90px]
+            right-4
+            md:right-8
+
+            w-[290px]
+            max-h-[80vh]
+            overflow-y-auto
+
+            rounded-[28px]
+
+            border
+
+            shadow-2xl
+
+            backdrop-blur-2xl
+
+            p-4
+
+            z-[999999]
+
+            animate-in
+            fade-in
+            zoom-in-95
+            duration-200
+
+            ${
+              darkMode
+                ? `
+                  bg-gray-950/95
+                  border-white/10
+                  text-white
+                `
+                : `
+                  bg-white/95
+                  border-black/10
+                  text-black
+                `
+            }
+          `}
+        >
+          {/* LINKS */}
+          <div
+            className="
+              flex
+              flex-col
+              gap-1
+            "
+          >
+            {navLinks.map(
+              (link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() =>
+                    setOpen(
+                      false
+                    )
+                  }
+                  className={`
+                    flex
+                    items-center
+                    gap-3
+
+                    px-4
+                    py-3
+
+                    rounded-2xl
+
+                    transition-all
+                    duration-200
+
+                    ${
+                      isActive(
+                        link.path
+                      )
+                        ? `
+                          bg-purple-600
+                          text-white
+                        `
+                        : darkMode
+                        ? `
+                          hover:bg-white/10
+                        `
+                        : `
+                          hover:bg-black/5
+                        `
+                    }
+                  `}
+                >
+                  <span>
+                    {link.icon}
+                  </span>
+
+                  <span>
+                    {link.name}
+                  </span>
+                </Link>
+              )
+            )}
+
+            {/* LOGOUT */}
+            <button
+              onClick={() => {
+                localStorage.removeItem(
+                  "authToken"
+                );
+
+                navigate(
+                  "/login"
+                );
+              }}
+              className="
+                flex
+                items-center
+                gap-3
+
+                mt-3
+                px-4
+                py-3
+
+                rounded-2xl
+
+                text-red-500
+
+                hover:bg-red-500/10
+
+                transition-all
+                duration-200
+              "
+            >
+              <FaSignOutAlt />
+
+              Logout
+            </button>
+          </div>
         </div>
       )}
-
     </nav>
   );
 }

@@ -14,6 +14,14 @@ import Profile from "../pages/profile";
 import Preview from "../pages/Preview";
 import Categories from "../components/Categories";
 import ProtectedRoute from "../components/ProtectedRoute";
+import About from "../pages/About";
+import Contact from "../pages/Contact";
+import Help from "../pages/Help";
+import Feedback from "../pages/Feedback";
+import FAQ from "../pages/FAQ";
+import Terms from "../pages/Terms";
+import Privacy from "../pages/Privacy";
+import NotFound from "../pages/NotFound";
 
 export default function AppRoutes() {
   return (
@@ -21,13 +29,19 @@ export default function AppRoutes() {
       {/* PUBLIC ROUTES */}
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
-
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/help" element={<Help />} />
+      <Route path="/feedback" element={<Feedback />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/not-found" element={<NotFound />} />
       <Route path="/books" element={<Books />} />
       <Route path="/books/:id" element={<BookDetails />} />
       <Route path="/preview/:id" element={<Preview />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/cart" element={<Cart />} />
-
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
@@ -78,7 +92,7 @@ export default function AppRoutes() {
       />
 
       {/* FALLBACK */}
-      <Route path="*" element={<Home />} />
+      <Route path="*" element={<NotFound />} />
 
     </Routes>
   );
