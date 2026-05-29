@@ -9,6 +9,7 @@ import bookRoutes from "./routes/bookRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
 
 // =========================
 // CONFIG
@@ -89,6 +90,10 @@ app.use(
   webhookRoutes
 );
 
+app.use(
+  "/api/contact",
+  contactRoutes
+);
 // =========================
 // HEALTH CHECK
 // =========================
