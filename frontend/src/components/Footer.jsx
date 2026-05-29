@@ -28,22 +28,44 @@ export default function Footer() {
 
             {/* Socials */}
             <div className="flex gap-4">
-              
+              <a
+                href="https://web.facebook.com/profile.php?id=61567080574540"
+                target="_blank"
+                rel="noreferrer"
+              >
               <button className="w-11 h-11 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition">
                 <FaFacebookF />
               </button>
+              </a>
+              <a
+                href="https://www.instagram.com/uketbooks/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="w-11 h-11 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition">
+                  <FaInstagram />
+                </button>
+              </a>
 
-              <button className="w-11 h-11 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition">
-                <FaInstagram />
-              </button>
+              <a
+                href="https://twitter.com/uketbooks"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="w-11 h-11 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition">
+                  <FaTwitter />
+                </button>
+              </a>
 
-              <button className="w-11 h-11 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition">
-                <FaTwitter />
-              </button>
-
-              <button className="w-11 h-11 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition">
-                <FaLinkedinIn />
-              </button>
+              <a
+                href="https://www.linkedin.com/company/uketbooks"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="w-11 h-11 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-yellow-400 hover:text-black transition">
+                  <FaLinkedinIn />
+                </button>
+              </a>
 
             </div>
           </div>

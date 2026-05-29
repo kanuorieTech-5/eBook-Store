@@ -8,7 +8,7 @@ export default function Home() {
     <div className="min-h-screen bg-purple-900 text-black dark:bg-black dark:text-white relative overflow-hidden">
 
       {/* Soft background glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black to-black pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-purple-900/20 to-black pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10">

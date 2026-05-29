@@ -344,7 +344,7 @@ export default function Login() {
               font-semibold
             "
           >
-            Register
+            Sign Up
           </Link>
         </p>
       </div>

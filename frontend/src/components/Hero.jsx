@@ -56,11 +56,11 @@ export default function Hero() {
       >
 
         {/* Brand */}
-        <h1 className="text-4xl md:text-6xl font-black text-yellow-400 mb-3">
+        <h1 className="text-5xl md:text-6xl font-black text-yellow-400 mb-3">
           UketBooks
         </h1>
 
-        <p className="text-gray-300 mb-6 text-lg md:text-xl">
+        <p className="text-yellow-300 mb-6 text-2xl md:text-xl">
           Your favorite bookstore.
         </p>
 
@@ -90,7 +90,7 @@ export default function Hero() {
 
           <Link
             to="/books"
-            className="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-4 rounded-2xl font-bold transition"
+            className="bg-purple-500 hover:bg-yellow-300 text-white px-8 py-4 rounded-2xl font-bold transition"
           >
             Explore Books
           </Link>

@@ -92,7 +92,7 @@ export default function PreviewModal({ isOpen, closeModal, book }) {
         </div>
 
         {/* PDF / VIDEO PREVIEW */}
-        {book.preview ? (
+        {/* {book.preview ? (
           <div className="rounded-2xl overflow-hidden border border-white/10">
             {loading && (
               <p className="text-center text-gray-400 py-3">
@@ -111,7 +111,7 @@ export default function PreviewModal({ isOpen, closeModal, book }) {
           <div className="text-center text-gray-500 p-6 border border-white/10 rounded-xl">
             No preview available — unlock full book after purchase.
           </div>
-        )}
+        )} */}
 
         {/* ACTIONS */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
