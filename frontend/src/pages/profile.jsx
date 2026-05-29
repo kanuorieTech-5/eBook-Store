@@ -295,20 +295,6 @@ export default function Profile() {
                   Edit Profile
                 </button>
               )}
-
-              <Link
-                to="/dashboard"
-                className="
-                  bg-yellow-400 hover:bg-yellow-300
-                  transition
-                  text-black
-                  px-6 py-3 rounded-2xl
-                  font-bold
-                "
-              >
-                Open Admin Dashboard
-              </Link>
-
             </div>
 
           </div>
@@ -394,6 +380,19 @@ export default function Profile() {
                 "
               >
                 Explore Books
+              </Link>
+              
+              <Link
+                to="/dashboard"
+                className="
+                  bg-yellow-400 hover:bg-yellow-300
+                  transition
+                  text-black
+                  px-6 py-3 rounded-2xl
+                  font-bold
+                "
+              >
+                Open Admin Dashboard
               </Link>
 
             </div>
