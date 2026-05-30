@@ -1,26 +1,19 @@
 import express from "express";
-
-import {
-  getDashboardStats,
-  getAllUsers,
-  getAllBooks,
-  createBook,
-  updateBook,
-  deleteBook,
-} from "../controllers/adminController.js";
-
+import { getDashboardStats, getAllUsers, getAllBooks, createBook, updateBook, deleteBook, } from "../controllers/adminController.js";
 import protect from "../middleware/authMiddleware.js";
 import adminOnly from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
-// DASHBOARD
+// DASHBOARD STATS (PROTECTED)
 router.get(
   "/dashboard",
   protect,
   adminOnly,
   getDashboardStats
 );
+
+router.get("/stats", protect, adminOnly, getDashboardStats);
 
 // USERS
 router.get(
