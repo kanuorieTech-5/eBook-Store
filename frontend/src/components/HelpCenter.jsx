@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export default function HelpCenter() {
   const faqs = [
     {
@@ -111,7 +112,7 @@ export default function HelpCenter() {
         <section className="bg-gray-900 border border-white/10 rounded-3xl p-6 md:p-10 shadow-xl">
           <div className="mb-8">
             <h2 className="text-3xl font-black mb-2">
-              Frequently Asked Questions
+              Related Questions
             </h2>
 
             <p className="text-gray-400">
@@ -155,7 +156,8 @@ export default function HelpCenter() {
               ebook access, technical issues, and account recovery.
             </p>
 
-            <button className="bg-black text-white px-6 py-4 rounded-2xl font-bold hover:scale-105 transition-all duration-300">
+            <button onClick={() => window.location.href = "mailto:uketbooks@gmail.com"}
+              className="bg-black text-white px-6 py-4 rounded-2xl font-bold hover:scale-105 transition-all duration-300">
               Contact Support
             </button>
           </div>
@@ -194,6 +196,9 @@ export default function HelpCenter() {
             <div className="bg-black/40 border border-white/10 rounded-2xl p-4 text-sm text-gray-400 leading-relaxed">
               Include your payment reference and registered email when contacting support for faster resolution.
             </div>
+            <Link to="/contact" className="text-yellow-400 font-bold hover:underline border border-yellow-400/30 px-4 py-2 rounded-xl transition-all duration-300 inline-block">
+              contact support
+            </Link>
           </div>
         </section>
       </div>

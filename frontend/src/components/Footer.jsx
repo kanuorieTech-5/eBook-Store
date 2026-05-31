@@ -27,6 +27,9 @@ export default function Footer() {
             </p>
 
             {/* Socials */}
+            <h2 className="text-white font-bold text-xl mb-6">
+              Follow Us On Social Media
+            </h2>
             <div className="flex gap-4">
               <a
                 href="https://web.facebook.com/profile.php?id=61567080574540"

@@ -21,79 +21,84 @@ import "swiper/css/navigation";
 const testimonials = [
   {
     id: 1,
-
     name: "Sarah Johnson",
-
     role: "Product Designer",
-
-    image:
-      "https://randomuser.me/api/portraits/women/44.jpg",
-
-    review:
-      "UketBooks completely changed how I consume digital books. The experience feels premium, fast, and beautifully designed.",
-
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    review: "UketBooks completely changed how I consume digital books. The experience feels premium, fast, and beautifully designed.",
     rating: 5,
   },
 
   {
     id: 2,
-
     name: "Michael Chen",
-
     role: "Startup Founder",
-
-    image:
-      "https://randomuser.me/api/portraits/men/32.jpg",
-
-    review:
-      "The instant ebook delivery and clean reading experience are incredible. Easily one of the best digital libraries I’ve used.",
-
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    review: "The instant ebook delivery and clean reading experience are incredible. Easily one of the best digital libraries I’ve used.",
     rating: 5,
   },
 
   {
     id: 3,
-
     name: "Amina Yusuf",
-
     role: "Software Engineer",
-
-    image:
-      "https://randomuser.me/api/portraits/women/68.jpg",
-
-    review:
-      "I love the smooth checkout process and modern UI. Everything feels polished and professional from start to finish.",
-
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    review: "I love the smooth checkout process and modern UI. Everything feels polished and professional from start to finish.",
     rating: 5,
   },
   {
     id: 4,
-
     name: "David Lee",
-
     role: "Marketing Director",
-
-    image:
-      "https://randomuser.me/api/portraits/men/22.jpg",
-
-    review:
-      "As a busy professional, UketBooks saves me time and provides an excellent reading experience. Highly recommended!",
-
+    image: "https://randomuser.me/api/portraits/men/22.jpg",
+    review: "As a busy professional, UketBooks saves me time and provides an excellent reading experience. Highly recommended!",
     rating: 5,
   },
   {
     id: 5,
-
     name: "Emily Davis",
-
     role: "Content Creator",
-
-    image:
-      "https://randomuser.me/api/portraits/women/65.jpg",
-
-    review:
-      "UketBooks has become my go-to platform for discovering new authors and diving into captivating stories. The curation is top-notch!",
-
+    image: "https://randomuser.me/api/portraits/women/65.jpg",
+    review: "UketBooks has become my go-to platform for discovering new authors and diving into captivating stories. The curation is top-notch!",
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: "James Wilson",
+    role: "Content Creator",
+    image: "https://randomuser.me/api/portraits/men/44.jpg",
+    review: "The reading experience on UketBooks is fantastic. The collection is diverse, easy to navigate, and always keeps me coming back for more.",
+    rating: 5,
+  },
+  {
+    id: 7,
+    name: "Sophia Martinez",
+    image: "https://randomuser.me/api/portraits/women/12.jpg",
+    role: "Content Creator",
+    review: "I love how simple it is to find quality ebooks on UketBooks. The platform is reliable, user-friendly, and packed with great titles.",
+    rating: 5,
+  },
+  {
+    id: 8,
+    name: "Liam Anderson",
+    image: "https://randomuser.me/api/portraits/men/55.jpg",
+    role: "Content Creator",
+    review: "UketBooks has completely transformed the way I read digital books. The selection is impressive, and the downloads are seamless.",
+    rating: 5,
+  },
+  {
+    id: 9,
+    name: "Olivia Brown",
+    image: "https://randomuser.me/api/portraits/women/78.jpg",
+    role: "Content Creator",
+    review: "The quality of books available on UketBooks is outstanding. I've discovered some of my favorite authors through this platform.",
+    rating: 5,
+  },
+  {
+    id: 10,
+    name: "Noah Taylor",
+    image: "https://randomuser.me/api/portraits/men/33.jpg",
+    role: "Content Creator",
+    review: "From bestselling titles to hidden gems, UketBooks consistently delivers excellent content. It's a must-have platform for book lovers.",
     rating: 5,
   }
 ];
