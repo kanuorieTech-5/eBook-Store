@@ -4,6 +4,7 @@ import Order from "../models/Order.js";
 import Book from "../models/Book.js";
 import User from "../models/User.js";
 import sendReceipt from "../utils/sendReceipt.js";
+import { io } from "../server.js";
 // =========================
 // VERIFY PAYMENT
 // =========================
@@ -207,7 +208,8 @@ const verifyPayment = async (
 
       reference,
     });
-
+    io.emit("statsUpdated");
+    
     // UPDATE SALES
     for (const item of normalisedCart) {
       if (

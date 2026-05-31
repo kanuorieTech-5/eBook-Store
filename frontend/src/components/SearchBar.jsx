@@ -54,12 +54,14 @@ export default function SearchBar({ search, setSearch, books = [] }) {
         <FiSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl" />
 
         <input
+          type="text"
+          id="term-mobile"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onFocus={() => setFocus(true)}
           onBlur={() => setTimeout(() => setFocus(false), 200)}
           onKeyDown={handleKeyDown}
-          placeholder="Search books, authors, categories..."
+          placeholder="Search books by title, authors, categories..."
           className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 pr-10 text-gray-800 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
         />
       </div>

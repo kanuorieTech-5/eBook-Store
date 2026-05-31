@@ -4,10 +4,9 @@ import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import CategoryFilter from "../components/CategoryFilter";
 import { CartContext } from "../context/CartContext";
-import {
-  getBookId,
-  isSameBook,
-} from "../utils/bookIds";
+import { getBookId, isSameBook, } from "../utils/bookIds";
+import BookSections from "../components/BookSections";
+import FeaturedTabs from "../components/FeaturedTabs";
 
 export default function Books() {
   const { addToCart } = useContext(CartContext);
@@ -77,12 +76,16 @@ export default function Books() {
 
       {/* SEARCH */}
       <SearchBar search={search} setSearch={setSearch} books={books} />
+       
+      <section>
+        <FeaturedTabs />
+      </section>
 
       {/* CATEGORY FILTER */}
       <CategoryFilter category={category} setCategory={setCategory} />
 
       {/* RESULTS INFO */}
-      <div className="px-4 md:px-8 text-gray-400 text-sm mb-4">
+      <div className="px-4 md:px-8 text-yellow-400 text-sm mb-4">
         Showing {visibleBooks.length} of {filteredBooks.length} books
       </div>
 
@@ -106,6 +109,8 @@ export default function Books() {
         )}
 
       </div>
+      
+      
 
       {/* LOAD MORE BUTTON */}
       {visibleCount < filteredBooks.length && (

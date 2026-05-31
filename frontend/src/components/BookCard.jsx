@@ -1,15 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import {
-  getBookId,
-} from "../utils/bookIds";
+import {  getBookId, } from "../utils/bookIds";
 
 export default function BookCard({ book }) {
 
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const bookId = getBookId(book);
+  const formatUSD = (amount) =>
+  Number(amount || 0).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-2xl transition duration-300 group">
@@ -54,11 +57,11 @@ export default function BookCard({ book }) {
         <div className="flex items-center gap-2 mt-3">
 
           <p className="text-purple-700 font-bold text-lg">
-            ${book.price}
+            {formatUSD(book.price)}
           </p>
 
           <span className="text-gray-400 line-through text-sm">
-            ${(book.price + 5).toFixed(2)}
+            {formatUSD(book.price + 500)}
           </span>
 
         </div>
@@ -77,25 +80,25 @@ export default function BookCard({ book }) {
             }}
             className="flex-1 bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition"
           >
-            {book._id ? "Add to Cart" : "View Details"}
+            {book._id ? "Add to Cart" : "+ cart"}
           </button>
 
           <button
             onClick={() => navigate(`/books/${bookId}`)}
-            className="border border-purple-600 text-purple-600 px-4 rounded-xl hover:bg-purple-600 hover:text-white transition"
+            className="border border-purple-600  px-4 rounded-xl hover:bg-purple-600 hover:text-white transition bg-yellow-400"
           >
             View
           </button>
 
         </div>
 
-        {/* Preview Link */}
+        {/* Preview Link
         <Link
           to={`/preview/${bookId}`}
           className="block text-center text-sm text-purple-600 mt-3 hover:underline"
         >
           Quick Preview
-        </Link>
+        </Link> */}
 
       </div>
     </div>

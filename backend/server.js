@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-
+import http from "http";
+import { Server } from "socket.io";
 import connectDB from "./config/db.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -25,6 +26,22 @@ connectDB();
 // APP
 // =========================
 const app = express();
+
+const server = http.createServer(app);
+
+export const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("Admin connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("Admin disconnected");
+  });
+});
 
 // =========================
 // CORS

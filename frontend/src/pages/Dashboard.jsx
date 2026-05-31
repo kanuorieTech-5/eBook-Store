@@ -1,49 +1,92 @@
-import { useEffect, useMemo, useState, useContext } from "react";
-
+import { useEffect, useMemo, useState, useRef,} from "react";
 import { getBooks, createBook, updateBook as updateBookService, deleteBook as deleteBookService, } from "../services/bookService";
-
-import { FaBook, FaEdit, FaTrash, FaUsers, FaMoneyBillWave, FaDownload, FaPlus, FaSearch, FaStar, FaChartLine, FaFilePdf, FaImage, } from "react-icons/fa";
-
-import { usePurchases } from "../context/PurchaseContext";
-import {
-  getBookId,
-} from "../utils/bookIds";
+import { FaChartLine, FaImage,FaSearch, FaStar,FaFilePdf, FaBook,
+  FaEdit, FaTrash, FaUsers, FaMoneyBillWave, FaDownload, FaPlus, } from "react-icons/fa";import { usePurchases, } from "../context/PurchaseContext";
+import { getBookId, } from "../utils/bookIds";
+import { getStats,} from "../services/adminService";
+import { motion } from "framer-motion";
+import { io } from "socket.io-client";
 
 export default function Dashboard() {
-  // =========================================
-  // STATES
-  // =========================================
-  const [books, setBooks] =
-    useState([]);
+const socketRef = useRef(null);
+const formatUSD = (amount) =>
+Number(amount || 0).toLocaleString("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 
-  const [editingId, setEditingId] =
-    useState(null);
+// =========================================
+// STATES
+// =========================================
+const INITIAL_FORM = {
+  title: "",
+  author: "",
+  description: "",
+  category: "",
+  price: "",
+  cover: "",
+  file: "",
+  preview: "",
+  featured: false,
+  bestseller: false,
+  pages: "",
+  language: "English",
+};
 
-  const [search, setSearch] =
-    useState("");
+const [books, setBooks] =
+  useState([]);
 
-  const [loading, setLoading] =
-    useState(false);
+const [editingId, setEditingId] =
+  useState(null);
 
-  const [form, setForm] =
-    useState({
-      title: "",
-      author: "",
-      description: "",
-      category: "",
+const [search, setSearch] =
+  useState("");
 
-      price: "",
+const [loading, setLoading] =
+  useState(false);
 
-      cover: "",
-      file: "",
-      preview: "",
+const [form, setForm] =
+  useState(INITIAL_FORM);
 
-      featured: false,
-      bestseller: false,
+const [stats, setStats] = useState({
+  users: 0,
+  books: 0,
+  downloads: 0,
+  revenue: 0,
+  weeklyRevenue: 0,
+});
 
-      pages: "",
-      language: "English",
-    });
+useEffect(() => {
+  const loadStats = async () => {
+    try {
+      const res = await getStats();
+
+      if (res?.stats) {
+        setStats(res.stats);
+      }
+    } catch (err) {
+      console.error(
+        "Dashboard stats error:",
+        err
+      );
+    }
+  };
+
+  loadStats();
+
+  socketRef.current = io(
+    "https://uketbooks-api-7cnt.onrender.com"
+  );
+
+  socketRef.current.on(
+    "statsUpdated",
+    loadStats
+  );
+
+  return () => {
+    socketRef.current?.disconnect();
+  };
+}, []);
 
   // =========================================
   // PURCHASES
@@ -76,71 +119,65 @@ export default function Dashboard() {
   // =========================================
   // ANALYTICS
   // =========================================
-  const stats = useMemo(() => {
-    const revenue =
-      purchases.reduce(
-        (sum, item) =>
-          sum +
-          Number(item.price || 0),
-        0
+  const purchaseStats = useMemo(() => {
+  const revenue = purchases.reduce(
+      (sum, item) =>
+        sum + Number(item.price || 0),
+      0
+    );
+  const recentOrders = purchases.filter(
+    (o) => {
+      const orderDate = new Date(
+        o.createdAt
       );
+      const last7Days = new Date();
+      last7Days.setDate(last7Days.getDate() - 7);
+      return orderDate >= last7Days;
+    }
+  );
+  const weeklyRevenue = recentOrders.reduce(
+    (sum, item) => sum + Number(item.price || 0),
+    0
+  );
+  const downloads =
+    purchases.length;
 
-    const downloads =
-      purchases.length;
+  const booksSold =
+    purchases.length;
 
-    const booksSold =
-      purchases.length;
+  const users =
+    new Set(
+      purchases.map(
+        (item) => item.email
+      )
+    ).size || 1;
 
-    const users =
-      new Set(
-        purchases.map(
-          (item) => item.email
-        )
-      ).size || 1;
-
-    return {
-      revenue,
-      downloads,
-      booksSold,
-      users,
-    };
-  }, [purchases]);
+  return {
+    TotalRevenue: formatUSD(revenue / 100),
+    downloads,
+    booksSold,
+    weeklyRevenue: formatUSD(weeklyRevenue),
+    users,
+  };
+}, [purchases]);
 
   // =========================================
   // FILTERED BOOKS
   // =========================================
   const filteredBooks =
-    books.filter((book) =>
-      book.title
-        ?.toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
-    );
+  books.filter((book) =>
+    (book.title || "")
+      .toLowerCase()
+      .includes(
+        search.toLowerCase()
+      )
+  );
 
-  // =========================================
-  // RESET FORM
-  // =========================================
   const resetForm = () => {
     setEditingId(null);
 
     setForm({
-      title: "",
-      author: "",
-      description: "",
-      category: "",
-
-      price: "",
-
-      cover: "",
-      file: "",
-      preview: "",
-
-      featured: false,
-      bestseller: false,
-
-      pages: "",
-      language: "English",
+      ...INITIAL_FORM
     });
   };
 
@@ -155,13 +192,10 @@ export default function Dashboard() {
       checked,
     } = e.target;
 
-    setForm({
-      ...form,
-      [name]:
-        type === "checkbox"
-          ? checked
-          : value,
-    });
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   // =========================================
@@ -325,7 +359,10 @@ export default function Dashboard() {
         )
       );
     } catch (error) {
-      console.log(error);
+     console.error(
+      "Dashboard Error:",
+      error
+    );
     }
   };
 
@@ -417,60 +454,6 @@ export default function Dashboard() {
             mb-10
           "
         >
-          <div
-            className="
-              bg-white/5
-              border
-              border-white/10
-              rounded-3xl
-              p-6
-              backdrop-blur-xl
-            "
-          >
-            <div
-              className="
-                flex
-                justify-between
-                mb-4
-              "
-            >
-              <FaMoneyBillWave
-                className="
-                  text-yellow-400
-                  text-2xl
-                "
-              />
-
-              <span
-                className="
-                  text-xs
-                  text-green-400
-                "
-              >
-                +12%
-              </span>
-            </div>
-
-            <p
-              className="
-                text-gray-400
-                mb-2
-              "
-            >
-              Revenue
-            </p>
-
-            <h2
-              className="
-                text-3xl
-                font-black
-              "
-            >
-              ₦
-              {stats.revenue.toLocaleString()}
-            </h2>
-          </div>
-
           <div
             className="
               bg-white/5
@@ -571,7 +554,7 @@ export default function Dashboard() {
                 font-black
               "
             >
-              {books.length}
+              {stats.books}
             </h2>
           </div>
 
@@ -625,6 +608,111 @@ export default function Dashboard() {
             >
               {stats.users}
             </h2>
+          </div>
+          <div
+            className="
+              bg-white/5
+              border
+              border-white/10
+              rounded-3xl
+              p-6
+              backdrop-blur-xl
+            "
+          >
+            <div
+              className="
+                flex
+                justify-between
+                mb-4
+              "
+            >
+              <FaMoneyBillWave
+                className="
+                  text-yellow-400
+                  text-2xl
+                "
+              />
+
+              <span               
+                className="
+                  text-xs
+                  text-green-400
+                "
+              >
+                +12%
+              </span>
+            </div>
+
+            <p
+              className="
+                text-gray-400
+                mb-2
+              "
+            >
+              Revenue
+            </p>
+
+            <motion.h2
+              key={stats.revenue}
+              initial={{ opacity: 0.5, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="text-3xl font-black"
+            >
+              ${(stats.revenue || 0).toLocaleString()}
+            </motion.h2>
+          </div>
+          <div
+            className="
+              bg-white/5
+              border
+              border-white/10
+              rounded-3xl
+              p-6
+            "
+          >
+            <div
+              className="
+                flex
+                justify-between
+                mb-4
+              "
+            >
+              <FaChartLine
+                className="
+                  text-yellow-400
+                  text-2xl
+                "
+              />
+
+              <span
+                className="
+                  text-xs
+                  text-green-400
+                "
+              >
+                +12%
+              </span>
+            </div>
+
+            <p
+              className="
+                text-gray-400
+                mb-2
+              "
+            >
+              Weekly Revenue
+            </p>
+
+            <motion.h2
+              key={stats.weeklyRevenue}
+              initial={{ opacity: 0.5, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="text-3xl font-black"
+            >
+             ${(stats.weeklyRevenue || 0).toLocaleString()}
+            </motion.h2>
           </div>
         </div>
 
@@ -767,11 +855,11 @@ export default function Dashboard() {
             />
 
             <input
+              type="number"
+              min="0"
               name="price"
               value={form.price}
-              onChange={
-                handleChange
-              }
+              onChange={handleChange}
               placeholder="Price"
               className="
                 p-4
@@ -799,11 +887,11 @@ export default function Dashboard() {
             />
 
             <input
+              type="number"
+              min="1"
               name="pages"
               value={form.pages}
-              onChange={
-                handleChange
-              }
+              onChange={handleChange}
               placeholder="Pages"
               className="
                 p-4
@@ -1024,6 +1112,40 @@ export default function Dashboard() {
 
                 Bestseller
               </label>
+            <label
+                className="
+                  flex
+                  items-center
+                  gap-2
+                "
+              >
+                <input
+                  type="checkbox"
+                  name="trending"
+                  checked={form.trending}
+                  onChange={
+                    handleChange
+                  }
+                />
+                Trending
+              </label>
+              <label
+                className="
+                  flex
+                  items-center
+                  gap-2
+                "
+              >
+                <input
+                  type="checkbox"
+                  name="newRelease"
+                  checked={form.newRelease}
+                  onChange={
+                    handleChange
+                  }
+                />
+                New Releases
+              </label>
             </div>
 
             {/* BUTTONS */}
@@ -1238,24 +1360,8 @@ export default function Dashboard() {
                     </button>
 
                     <button
-                      onClick={() =>
-                        handleDelete(
-                          getBookId(book)
-                        )
-                      }
-                      className="
-                        flex
-                        items-center
-                        gap-2
-
-                        px-5
-                        py-3
-
-                        rounded-2xl
-
-                        bg-red-600
-                        font-bold
-                      "
+                      onClick={() => handleDelete(book._id)}
+                      className=" flex items-center gap-2 px-5 py-3 rounded-2xl bg-red-600 font-bold"
                     >
                       <FaTrash />
 

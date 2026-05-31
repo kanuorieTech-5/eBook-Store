@@ -106,13 +106,13 @@ export default function Navbar() {
     },
 
     {
-      name: "Books",
+      name: "Explore Books",
       path: "/books",
       icon: <FaBook />,
     },
 
     {
-      name: "Library",
+      name: "My Library",
       path: "/mylibrary",
       icon: <FaBookOpen />,
     },
@@ -249,10 +249,6 @@ export default function Navbar() {
             "
           >
             📚
-          </span>
-
-          <span>
-            eBook Store
           </span>
         </Link>
 
@@ -393,21 +389,7 @@ export default function Navbar() {
           {/* PROFILE */}
           <Link
             to="/profile"
-            className={`
-              w-11
-              h-11
-
-              rounded-full
-
-              flex
-              items-center
-              justify-center
-
-              border
-
-              transition-all
-              duration-300
-
+            className={` w-11 h-11 rounded-full flex items-center justify-center border transition-all duration-300
               ${
                 isActive(
                   "/profile"

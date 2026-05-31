@@ -23,6 +23,7 @@ import FAQ from "../pages/FAQ";
 import Terms from "../pages/Terms";
 import Privacy from "../pages/Privacy";
 import NotFound from "../pages/NotFound";
+import HelpCenter from "../components/HelpCenter";
 
 export default function AppRoutes() {
   return (
@@ -45,6 +46,7 @@ export default function AppRoutes() {
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/helpcenter" element={<HelpCenter />} />
 
       {/* PROTECTED ROUTES */}
       <Route

@@ -1,11 +1,4 @@
-import {
-  FaBriefcase,
-  FaChartLine,
-  FaLaptopCode,
-  FaHeart,
-  FaBookOpen,
-  FaCode,
-} from "react-icons/fa";
+import {FaBriefcase, FaChartLine, FaLaptopCode, FaHeart, FaBookOpen, FaCode,} from "react-icons/fa";
 
 const categories = [
   {
@@ -40,14 +33,14 @@ export default function CategoryFilter({
 }) {
 
   return (
-    <section className="px-4 md:px-8 py-14 bg-black border-t border-white/10">
+    <section className="px-4 md:px-8 py-14 bg-transparent border-t border-white/10">
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
 
         <div>
           <h2 className="text-3xl md:text-5xl font-black text-white mb-3">
-            Browse Categories
+            Top Categories
           </h2>
 
           <p className="text-gray-400 max-w-2xl text-sm md:text-lg">
@@ -55,14 +48,6 @@ export default function CategoryFilter({
             finance, self-development, and more.
           </p>
         </div>
-
-        <button
-          onClick={() => setCategory("All")}
-          className="text-yellow-400 hover:text-yellow-300 transition font-semibold text-left md:text-right"
-        >
-          View All
-        </button>
-
       </div>
 
       {/* Categories */}
@@ -119,6 +104,12 @@ export default function CategoryFilter({
         })}
 
       </div>
+      <button
+          onClick={() => setCategory("All")}
+          className="text-yellow-400 hover:text-yellow-300 transition font-semibold text-left md:text-right"
+        >
+          View All
+        </button>
 
     </section>
   );

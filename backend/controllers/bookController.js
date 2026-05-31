@@ -63,6 +63,8 @@ const createBook = async (
   }
 };
 
+io.emit("statsUpdated");
+
 // =========================
 // GET ALL BOOKS
 // =========================

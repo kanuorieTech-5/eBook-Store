@@ -5,7 +5,9 @@ import {
   FaFlask,
   FaBrain,
   FaLandmark,
+  FaIcons,
 } from "react-icons/fa";
+import { IconBase } from "react-icons/lib";
 
 export default function CategoryFilter({
   category,
@@ -41,8 +43,19 @@ export default function CategoryFilter({
       name: "History",
       icon: <FaLandmark />,
     },
+    {
+      name: "Medicine",
+      icon: <FaFlask />
+    },  
+    {
+      name: "Religion",
+      icon: <FaBook />,
+    },
+    {
+      name: "Others",
+      icon: <FaIcons />,
+    },
   ];
-
   return (
     <section className="mb-10">
 

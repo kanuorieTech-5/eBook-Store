@@ -102,6 +102,11 @@ export default function FeatureCarousel() {
       ? carouselBooks
       : fallbackBooks;
 
+  const formatUSD = (amount) =>
+  Number(amount || 0).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
   return (
     <section
       className="
@@ -299,7 +304,7 @@ export default function FeatureCarousel() {
                       shadow-lg
                     "
                   >
-                    NGN {Number(book.price).toLocaleString()}
+                    {formatUSD(book.price)}
                   </div>
 
                 </div>
@@ -376,7 +381,7 @@ export default function FeatureCarousel() {
                         hover:bg-yellow-300
                         transition
                         text-black
-                        py-3
+                        py-6
                         rounded-2xl
                         font-bold
                         text-center
@@ -403,6 +408,8 @@ export default function FeatureCarousel() {
                         hover:bg-white/5
                         transition
                         text-white
+                        bg-purple-600
+                        hover:bg-purple-700
                         py-3
                         rounded-2xl
                         font-semibold

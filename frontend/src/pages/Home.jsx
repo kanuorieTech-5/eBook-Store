@@ -2,6 +2,9 @@ import Hero from "../components/Hero";
 import Categories from "../components/Categories";
 import FeatureCarousel from "../components/FeatureCarousel";
 import Testimonials from "../components/Testimonials";
+import FeaturedTitles from "../components/FeaturedTitles";
+import FeaturedTabs from "../components/FeaturedTabs"; 
+import BookSections from "../components/BookSections";
 
 export default function Home() {
   return (
@@ -23,8 +26,29 @@ export default function Home() {
           Join over 50,000 readers who have found their next great read with UketBooks.
         </section>
 
+        {/* FEATURED SECTION */}
+        <section className="max-w-6xl mx-auto px-6 mb-24">
+          {/* Apple-style container */}
+          <div className="
+            bg-white/5 backdrop-blur-xl
+            border border-white/10
+            rounded-3xl
+            p-6
+          ">
+            <FeatureCarousel />
+          </div>
+        </section>
+
+        <section className="max-w-6xl mx-auto px-6 mb-10">
+          <FeaturedTitles />
+        </section>
+
+        <section className="max-w-6xl mx-auto px-6 mb-10">
+          <BookSections />
+        </section>
+
         {/* CATEGORIES */}
-        <section className="max-w-6xl mx-auto px-6 mb-20">
+        <section className="max-w-6xl mx-auto px-6 mb-10">
           <div className="
             bg-white/5 backdrop-blur-xl
             border border-white/10
@@ -36,23 +60,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FEATURED SECTION */}
-        <section className="max-w-6xl mx-auto px-6 mb-24">
-
-          {/* Apple-style container */}
-          <div className="
-            bg-white/5 backdrop-blur-xl
-            border border-white/10
-            rounded-3xl
-            p-6
-          ">
-            <FeatureCarousel />
-          </div>
-
-        </section>
-
         {/* FINAL CTA SECTION (SAAS STYLE) */}
-        <section className="max-w-6xl mx-auto px-6 mb-28">
+        <section className="max-w-6xl mx-auto px-6 mb-10">
 
           <div className="
             text-center
@@ -103,7 +112,7 @@ export default function Home() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="max-w-6xl mx-auto px-6 mb-28">
+        <section className="max-w-6xl mx-auto px-6 mb-10">
           <Testimonials />
         </section>
 

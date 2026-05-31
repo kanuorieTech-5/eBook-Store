@@ -381,29 +381,10 @@ export default function Profile() {
               >
                 Explore Books
               </Link>
-
-              <Link
-                to="/dashboard"
-                className="
-                  bg-yellow-400 hover:bg-yellow-300
-                  transition
-                  text-black
-                  text-center
-                  px-6 py-3 rounded-2xl
-                  font-bold
-                "
-              >
-                Open Admin Dashboard
-              </Link>
-
             </div>
-
           </div>
-
         </motion.div>
-
       </div>
-
     </main>
   );
 }
