@@ -23,6 +23,7 @@ const server = http.createServer(app);
 const allowedOrigins = [
   "http://localhost:5173",
   "https://uketbooks-store.vercel.app",
+  "https://uketbooks-store-cwmar8k9r-uketbooks-team.vercel.app",
   "https://uketbooks-frontend-7cnt.onrender.com",
 ];
 // =========================
@@ -49,20 +50,25 @@ io.on("connection", (socket) => {
 // // =========================
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: function (origin, callback) {
+      // allow Postman / server-to-server
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
-      callback(new Error("Not allowed by CORS"));
+      console.log("Blocked by CORS:", origin);
+      return callback(null, false);
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 // =========================
