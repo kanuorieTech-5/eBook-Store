@@ -255,10 +255,14 @@ useEffect(() => {
   // =========================================
   // CREATE / UPDATE BOOK
   // =========================================
+  const [submitting, setSubmitting] =
+  useState(false);
+
   const handleSubmit = async (
     e
   ) => {
     e.preventDefault();
+    console.log("Submit clicked");
 
     try {
       if (
@@ -1010,7 +1014,7 @@ useEffect(() => {
                 rounded-3xl
                 p-5
               "
-            >
+             >
               <div
                 className="
                   flex
@@ -1069,8 +1073,10 @@ useEffect(() => {
                 flex
                 gap-6
                 md:col-span-2
+                sm:flex-row
+                flex-col
               "
-            >
+             >
               <label
                 className="
                   flex
@@ -1112,7 +1118,7 @@ useEffect(() => {
 
                 Bestseller
               </label>
-            <label
+              <label
                 className="
                   flex
                   items-center
@@ -1144,7 +1150,7 @@ useEffect(() => {
                     handleChange
                   }
                 />
-                New Releases
+                New Release
               </label>
             </div>
 
@@ -1158,29 +1164,28 @@ useEffect(() => {
             >
               <button
                 type="submit"
+                disabled={submitting}
                 className="
                   flex
                   items-center
                   gap-2
-
                   bg-yellow-400
                   hover:bg-yellow-300
-
+                  disabled:opacity-50
                   text-black
                   font-bold
-
                   px-8
                   py-4
-
                   rounded-2xl
-                  transition-all
                 "
               >
                 <FaPlus />
 
-                {editingId
-                  ? "Update Book"
-                  : "Add Book"}
+                {submitting
+                  ? "Uploading..."
+                  : editingId
+                    ? "Update Book"
+                    : "Upload Book"}
               </button>
 
               {editingId && (

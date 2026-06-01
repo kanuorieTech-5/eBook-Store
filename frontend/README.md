@@ -1,4 +1,4 @@
-📚 eBook-Store
+📚 UketBooks-Store
 
 A modern, responsive React frontend for an online eBook store, featuring search, category filters, book details, a cart, and a checkout/payment prototype. Built with React, Tailwind CSS, and Vite.
 
@@ -36,7 +36,7 @@ Visit http://localhost:5173/ to see the app in your browser.
 
 Project Structure:
 
-eBook-Store/
+UketBook-Store/
 ├─ public/                  # Static assets
 │   └─ covers/              # Book cover images
 ├─ src/
@@ -67,5 +67,5 @@ Persistent user sessions across devices
 
 Author
 
-Stephanie Kanu – Frontend Developer
-GitHub | LinkedIn
+KanuorieTech – Full-Stack Web Developer
+GitHub | LinkedIn |Facebook | Instagram | Twitter
