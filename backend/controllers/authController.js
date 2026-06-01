@@ -82,66 +82,52 @@ const registerUser = async (
 // =========================
 // LOGIN
 // =========================
-const loginUser = async (
-  req,
-  res
-) => {
+ const loginUser = async (req, res) => {
   try {
-    const {
-      email,
-      password,
-    } = req.body;
+    const { email, password } = req.body;
 
-    if (
-      !email ||
-      !password
-    ) {
+    if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message:
-          "Email and password required",
+        message: "Email and password required",
       });
     }
 
-    const user =
-      await User.findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
-        message:
-          "Invalid credentials",
+        message: "Invalid credentials",
       });
     }
 
-    const isMatch =
-      await bcrypt.compare(
-        password,
-        user.password
-      );
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
-        message:
-          "Invalid credentials",
+        message: "Invalid credentials",
       });
     }
+
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
     res.json({
       success: true,
-      token: generateToken(user),
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      token,
+      user,
     });
+
   } catch (error) {
+    console.error("LOGIN ERROR:", error);
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Server error",
     });
   }
 };
