@@ -1,0 +1,89 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import http from "http";
+import { Server } from "socket.io";
+
+import connectDB from "./config/db.js";
+
+import adminRoutes from "./routes/adminRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import bookRoutes from "./routes/bookRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import webhookRoutes from "./routes/webhookRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
+
+dotenv.config();
+connectDB();
+
+const app = express();
+const server = http.createServer(app);
+
+// =========================
+// SOCKET.IO
+// =========================
+export const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("Admin connected:", socket.id);
+
+  socket.on("disconnect", () => {
+    console.log("Admin disconnected");
+  });
+});
+
+// =========================
+// MIDDLEWARE
+// =========================
+app.use(cors({
+  origin: "*",
+  credentials: true,
+}));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// =========================
+// ROUTES
+// =========================
+app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/books", bookRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/uploads", uploadRoutes);
+app.use("/api/webhooks", webhookRoutes);
+app.use("/api/contact", contactRoutes);
+
+// =========================
+// HEALTH CHECK
+// =========================
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Ebook Store API Running 🚀",
+  });
+});
+
+// =========================
+// 404
+// =========================
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+// =========================
+// SERVER START
+// =========================
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
