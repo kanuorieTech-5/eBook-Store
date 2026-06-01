@@ -26,10 +26,14 @@ const server = http.createServer(app);
 // =========================
 export const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: 
+      process.env.FRONTEND_URL 
+      || "http://localhost:3000",
+
+    methods: ["GET", "POST"],
   },
 });
-
+ 
 io.on("connection", (socket) => {
   console.log("Admin connected:", socket.id);
 
@@ -38,13 +42,37 @@ io.on("connection", (socket) => {
   });
 });
 
+// ========================= 
+// CORS 
+// // ========================= 
+app.use( 
+  cors({ origin: [ 
+    "http://localhost:5173",
+     "https://uketbooks-store.vercel.app", 
+     "https://uketbooks-frontend-7cnt.onrender.com", ], 
+     credentials: true, 
+    }) 
+  );
+
 // =========================
 // MIDDLEWARE
 // =========================
-app.use(cors({
-  origin: "*",
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or Postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
