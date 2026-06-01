@@ -3,25 +3,18 @@ import API from "./axios";
 // =========================
 // HELPERS
 // =========================
-const createFormData = (
-  data
-) => {
-  const formData =
-    new FormData();
+const createFormData = (data) => {
+  const formData = new FormData();
 
-  Object.keys(data).forEach(
-    (key) => {
-      if (
-        data[key] !== undefined &&
-        data[key] !== null
-      ) {
-        formData.append(
-          key,
-          data[key]
-        );
+  Object.entries(data).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      if (Array.isArray(value)) {
+        value.forEach((item) => formData.append(key, item));
+      } else {
+        formData.append(key, value);
       }
     }
-  );
+  });
 
   return formData;
 };

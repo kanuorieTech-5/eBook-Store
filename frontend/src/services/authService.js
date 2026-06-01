@@ -19,12 +19,7 @@ const saveToken = (
 // =========================
 export const registerUser =
   async (userData) => {
-    try {
-      const response =
-        await API.post(
-          "/api/auth/register",
-          userData
-        );
+    try {await API.post("/auth/register", userData);
 
       // Save token if backend returns one
       saveToken(
@@ -48,12 +43,7 @@ export const registerUser =
 // =========================
 export const loginUser =
   async (userData) => {
-    try {
-      const response =
-        await API.post(
-          "/api/auth/login",
-          userData
-        );
+    try {await API.post("/auth/login", userData);
 
       // Save auth token
       saveToken(
@@ -77,12 +67,7 @@ export const loginUser =
 // =========================
 export const getProfile =
   async () => {
-    try {
-      const response =
-        await API.get(
-          "/api/auth/profile"
-        );
-
+    try {await API.get("/auth/profile");
       return response.data;
     } catch (error) {
       console.error(
@@ -100,11 +85,7 @@ export const getProfile =
 // =========================
 export const logoutUser =
   async () => {
-    try {
-      const response =
-        await API.post(
-          "/api/auth/logout"
-        );
+    try { const response = await API.post("/auth/logout");
 
       // Remove local token
       localStorage.removeItem(
@@ -133,12 +114,7 @@ export const logoutUser =
 // =========================
 export const sendReceiptEmail =
   async (emailData) => {
-    try {
-      const response =
-        await API.post(
-          "/api/auth/send-receipt",
-          emailData
-        );
+    try {await API.post("/auth/send-receipt", emailData);
 
       return response.data;
     } catch (error) {

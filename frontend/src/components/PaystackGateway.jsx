@@ -10,47 +10,23 @@ export default function PaystackGateway({
   cart = [],
   onSuccess,
 }) {
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const publicKey =
-    import.meta.env.VITE_PAYSTACK_KEY;
+  const publicKey = import.meta.env.VITE_PAYSTACK_KEY;
 
-  // Convert Naira → Kobo
-  const paystackAmount =
-    Number(amount) * 100;
+  const paystackAmount = Number(amount) * 100;
 
-  // Prevent invalid payments
   if (!amount || amount <= 0) {
     return (
-      <div
-        className="
-          rounded-2xl
-          border border-red-500/20
-          bg-red-500/10
-          p-4
-          text-center
-          text-red-400
-        "
-      >
+      <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-center text-red-400">
         Invalid payment amount
       </div>
     );
   }
 
-  // Prevent missing Paystack key
   if (!publicKey) {
     return (
-      <div
-        className="
-          rounded-2xl
-          border border-red-500/20
-          bg-red-500/10
-          p-4
-          text-center
-          text-red-400
-        "
-      >
+      <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-center text-red-400">
         Paystack public key missing
       </div>
     );
@@ -58,11 +34,8 @@ export default function PaystackGateway({
 
   const componentProps = {
     email,
-
     amount: paystackAmount,
-
     publicKey,
-
     metadata,
 
     channels: [
@@ -76,31 +49,19 @@ export default function PaystackGateway({
 
     text: loading
       ? "Processing..."
-      : `Pay ₦${Number(
-          amount
-        ).toLocaleString()}`,
+      : `Pay ₦${Number(amount).toLocaleString()}`,
 
     onSuccess: async (reference) => {
       try {
         setLoading(true);
 
-        console.log(
-          "Payment success:",
-          reference
-        );
+        const paymentReference =
+          reference?.reference || reference?.trxref || reference;
 
-        // VERIFY PAYMENT
-        const response =
-          await verifyPayment({
-            reference:
-              reference.reference,
-
-            cart,
-
-            user: {
-              email,
-            },
-          });
+        const response = await verifyPayment({
+          reference: paymentReference,
+          cart,
+        });
 
         if (response?.success) {
           localStorage.setItem(
@@ -108,23 +69,15 @@ export default function PaystackGateway({
             JSON.stringify(reference)
           );
 
-          if (onSuccess) {
-            onSuccess(response);
-          }
+          onSuccess?.(response);
         } else {
-          throw new Error(
-            "Payment verification failed"
-          );
+          throw new Error("Payment verification failed");
         }
       } catch (error) {
-        console.error(
-          "Payment Error:",
-          error
-        );
+        console.error("Payment Error:", error);
 
         alert(
-          error?.response?.data
-            ?.message ||
+          error?.response?.data?.message ||
             error.message ||
             "Payment verification failed"
         );
@@ -135,42 +88,20 @@ export default function PaystackGateway({
 
     onClose: () => {
       setLoading(false);
-
-      console.log(
-        "Payment popup closed"
-      );
+      console.log("Payment popup closed");
     },
 
     onLoad: () => {
-      console.log(
-        "Paystack loaded"
-      );
+      console.log("Paystack loaded");
     },
   };
 
   return (
     <div className="space-y-6">
-      
       {/* INFO CARD */}
-      <div
-        className="
-          rounded-3xl
-          border border-white/10
-          bg-gray-800
-          p-5
-        "
-      >
+      <div className="rounded-3xl border border-white/10 bg-gray-800 p-5">
         <div className="mb-3 flex items-center gap-3">
-          <div
-            className="
-              flex h-10 w-10
-              items-center
-              justify-center
-              rounded-xl
-              bg-yellow-400
-              text-black
-            "
-          >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-400 text-black">
             <FaLock />
           </div>
 
@@ -178,55 +109,31 @@ export default function PaystackGateway({
             <h3 className="text-lg font-bold">
               Secure Paystack Payment
             </h3>
-
             <p className="text-sm text-gray-400">
               Instant ebook access after payment
             </p>
           </div>
         </div>
 
-        <div
-          className="
-            mt-4 flex
-            justify-between
-            text-sm
-            text-gray-400
-          "
-        >
+        <div className="mt-4 flex justify-between text-sm text-gray-400">
           <span>Email</span>
-
-          <span className="text-white">
-            {email}
-          </span>
+          <span className="text-white">{email}</span>
         </div>
 
-        <div
-          className="
-            mt-2 flex
-            justify-between
-            text-sm
-            text-gray-400
-          "
-        >
+        <div className="mt-2 flex justify-between text-sm text-gray-400">
           <span>Total</span>
-
           <span className="font-bold text-yellow-400">
-            ₦
-            {Number(
-              amount
-            ).toLocaleString()}
+            ₦{Number(amount).toLocaleString()}
           </span>
         </div>
       </div>
 
-      {/* PAY BUTTON */}
+      {/* BUTTON */}
       <PaystackButton
         {...componentProps}
         disabled={loading}
         className={`
-          w-full rounded-2xl py-4
-          font-bold transition-all duration-300
-
+          w-full rounded-2xl py-4 font-bold transition-all duration-300
           ${
             loading
               ? "cursor-not-allowed bg-gray-500 text-white"
@@ -236,13 +143,7 @@ export default function PaystackGateway({
       />
 
       {/* TRUST BADGES */}
-      <div
-        className="
-          flex flex-wrap
-          justify-center gap-3
-          text-xs text-gray-500
-        "
-      >
+      <div className="flex flex-wrap justify-center gap-3 text-xs text-gray-500">
         <span>🔒 Secure Checkout</span>
         <span>⚡ Instant Downloads</span>
         <span>📚 Digital Access</span>

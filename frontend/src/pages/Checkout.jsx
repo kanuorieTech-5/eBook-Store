@@ -3,10 +3,8 @@ import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { usePurchases, } from "../context/PurchaseContext";
 import { useAuth } from "../context/AuthContext";
-import {
-  getBookId,
-} from "../utils/bookIds";
-
+import { getBookId,} from "../utils/bookIds";
+import { verifyPayment } from "../services/paymentService";
 import PaystackGateway from "../components/PaystackGateway";
 
 export default function Checkout() {
@@ -25,17 +23,38 @@ export default function Checkout() {
     0
   );
 
-  const handleSuccess = (response) => {
-    const purchasedBooks =
-      response?.purchases?.length
-        ? response.purchases
-        : cart;
+  const handleSuccess = async (response) => {
+  try {
+    const reference =
+      response?.reference ||
+      response?.transaction?.reference;
 
-    addPurchase(purchasedBooks);
-    clearCart();
-    navigate("/success");
+    if (!reference) {
+      console.error("No payment reference returned");
+      return;
+    }
+
+    const result = await verifyPayment({
+      reference,
+      cart,
+    });
+
+    if (result?.success) {
+      const purchasedBooks =
+        result?.purchases?.length
+          ? result.purchases
+          : cart;
+
+      addPurchase(purchasedBooks);
+      clearCart();
+      navigate("/success");
+      } else {
+        console.error("Payment verification failed");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+    }
   };
-
   return (
     <main className="
       min-h-screen

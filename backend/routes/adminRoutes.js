@@ -2,6 +2,7 @@ import express from "express";
 import { getDashboardStats, getAllUsers, getAllBooks, createBook, updateBook, deleteBook,} from "../controllers/adminController.js";
 import protect from "../middleware/authMiddleware.js";
 import adminOnly from "../middleware/adminMiddleware.js";
+import { getRevenueStats } from "../controllers/adminController.js";
 
 const router = express.Router();
 
@@ -10,6 +11,7 @@ router.get("/dashboard", protect, adminOnly, getDashboardStats);
 
 router.get("/stats", protect, adminOnly, getDashboardStats);
 
+router.get("/revenue", protect, adminOnly, getRevenueStats);
 // USERS
 router.get("/users", protect, adminOnly, getAllUsers);
 

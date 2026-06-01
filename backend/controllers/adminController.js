@@ -170,3 +170,27 @@ export const getAllUsers = async (req, res) => {
     });
   }
 };
+
+export const getRevenueStats = async (req, res) => {
+  try {
+    const orders = await Order.find();
+
+    const totalRevenue = orders.reduce(
+      (sum, o) => sum + o.totalAmount,
+      0
+    );
+
+    const totalSales = orders.length;
+
+    res.json({
+      success: true,
+      totalRevenue,
+      totalSales,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};

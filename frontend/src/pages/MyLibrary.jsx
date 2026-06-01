@@ -1,14 +1,6 @@
-import {
-  usePurchases,
-} from "../context/PurchaseContext";
-
-import {
-  FaDownload,
-  FaBookOpen,
-} from "react-icons/fa";
-import {
-  getBookId,
-} from "../utils/bookIds";
+import {usePurchases,} from "../context/PurchaseContext";
+import { FaDownload, FaBookOpen,} from "react-icons/fa";
+import {getBookId,} from "../utils/bookIds";
 
 export default function MyLibrary() {
 
@@ -16,6 +8,12 @@ export default function MyLibrary() {
     purchases,
   } = usePurchases();
 
+  const downloadBook = (token) => {
+  window.open(
+    `${import.meta.env.VITE_API_URL}/api/download/${token}`,
+    "_blank"
+  );
+};
   return (
     <main
       className="

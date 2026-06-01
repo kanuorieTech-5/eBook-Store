@@ -13,6 +13,7 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import downloadRoutes from "./routes/downloadRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -58,7 +59,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/webhooks", webhookRoutes);
 app.use("/api/contact", contactRoutes);
-
+app.use("/api/downloads", downloadRoutes);
 // =========================
 // HEALTH CHECK
 // =========================

@@ -8,10 +8,7 @@ import { io } from "../server.js";
 // =========================
 // VERIFY PAYMENT
 // =========================
-const verifyPayment = async (
-  req,
-  res
-) => {
+const verifyPayment = async (req, res) => {
   try {
     const {
       reference,
@@ -167,19 +164,14 @@ const verifyPayment = async (
     if (expectedTotal <= 0) {
       return res.status(400).json({
         success: false,
-        message:
-          "Cart total is invalid",
+        message: "Cart total is invalid",
       });
     }
 
-    if (
-      Math.round(expectedTotal) !==
-      Math.round(totalAmount)
-    ) {
+    if (Math.round(expectedTotal) !== Math.round(totalAmount)) {
       return res.status(400).json({
         success: false,
-        message:
-          "Payment amount does not match cart total",
+        message: "Payment amount mismatch detected",
       });
     }
 
@@ -199,7 +191,7 @@ const verifyPayment = async (
       });
 
       await sendReceipt({
-      email: user.email,
+        email: req.user.email,
 
       books: cart,
 
@@ -266,4 +258,4 @@ const verifyPayment = async (
   }
 };
 
-export default verifyPayment;
+export { verifyPayment };

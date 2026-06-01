@@ -74,18 +74,13 @@ useEffect(() => {
 
   loadStats();
 
-  socketRef.current = io(
-    "https://uketbooks-api-7cnt.onrender.com"
-  );
+  const socket = io(import.meta.env.VITE_API_URL);
 
-  socketRef.current.on(
-    "statsUpdated",
-    loadStats
-  );
+  socket.on("statsUpdated", () => {
+    loadStats(); // refresh dashboard
+  });
 
-  return () => {
-    socketRef.current?.disconnect();
-  };
+  return () => socket.disconnect();
 }, []);
 
   // =========================================
@@ -115,6 +110,15 @@ useEffect(() => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+  const fetchRevenue = async () => {
+    const res = await API.get("/api/admin/revenue");
+    setRevenue(res.data);
+  };
+
+  fetchRevenue();
+}, []);
 
   // =========================================
   // ANALYTICS
