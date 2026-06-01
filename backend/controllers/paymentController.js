@@ -266,4 +266,4 @@ const verifyPayment = async (
   }
 };
 
-export { verifyPayment };
+export default verifyPayment;

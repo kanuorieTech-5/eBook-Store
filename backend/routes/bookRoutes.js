@@ -4,7 +4,7 @@ import { createBook, getBooks, getBook, updateBook, deleteBook, } from "../contr
 
 import upload from "../middleware/uploadMiddleware.js";
 
-import { protect, } from "../middleware/authMiddleware.js";
+import protect from "../middleware/authMiddleware.js";
 
 import adminOnly from "../middleware/adminMiddleware.js";
 

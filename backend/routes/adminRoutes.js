@@ -1,13 +1,5 @@
 import express from "express";
-import {
-  getDashboardStats,
-  getAllUsers,
-  getAllBooks,
-  createBook,
-  updateBook,
-  deleteBook,
-} from "../controllers/adminController.js";
-
+import { getDashboardStats, getAllUsers, getAllBooks, createBook, updateBook, deleteBook,} from "../controllers/adminController.js";
 import protect from "../middleware/authMiddleware.js";
 import adminOnly from "../middleware/adminMiddleware.js";
 
