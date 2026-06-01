@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
-
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-
 import generateToken from "../utils/generateToken.js";
 
 // =========================
@@ -121,6 +120,7 @@ const loginUser = async (req, res) => {
       token,
       user,
     });
+
   } catch (error) {
     console.error("LOGIN ERROR:", error);
 

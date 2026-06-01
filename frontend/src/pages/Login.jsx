@@ -1,20 +1,8 @@
-import {
-  useState,
-} from "react";
-
-import {
-  useNavigate,
-  Link,
-} from "react-router-dom";
-
-import {
-  useAuth,
-} from "../context/AuthContext";
-
-import {
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
+import { useState,} from "react";
+import { useNavigate, Link,} from "react-router-dom";
+import { useAuth,} from "../context/AuthContext";
+import { FaEye, FaEyeSlash,} from "react-icons/fa";
+import { useNavigate, Link, useLocation,} from "react-router-dom";
 
 export default function Login() {
   const navigate =
@@ -22,7 +10,9 @@ export default function Login() {
 
   const { login } =
     useAuth();
+  const location = useLocation();
 
+  const from = location.state?.from?.pathname || "/profile";
   // =========================
   // STATES
   // =========================
@@ -92,11 +82,10 @@ export default function Login() {
       try {
         setLoading(true);
 
-        const result =
-          await login(
-            form.email,
-            form.password
-          );
+        const result = await login(
+          form.email,
+          form.password
+        );
 
         if (!result.success) {
           setError(
@@ -106,9 +95,8 @@ export default function Login() {
           return;
         }
 
-        navigate(
-          "/profile"
-        );
+        navigate(from, { replace: true });
+        
       } catch (err) {
         console.error(err);
 
