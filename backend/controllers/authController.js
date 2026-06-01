@@ -82,7 +82,7 @@ const registerUser = async (
 // =========================
 // LOGIN
 // =========================
- const loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -102,7 +102,10 @@ const registerUser = async (
       });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(
+      password,
+      user.password
+    );
 
     if (!isMatch) {
       return res.status(401).json({
@@ -111,20 +114,16 @@ const registerUser = async (
       });
     }
 
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    const token = generateToken(user);
 
     res.json({
       success: true,
       token,
       user,
     });
-
   } catch (error) {
     console.error("LOGIN ERROR:", error);
+
     res.status(500).json({
       success: false,
       message: "Server error",
