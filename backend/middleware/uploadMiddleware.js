@@ -7,27 +7,14 @@ import {
 import cloudinary
   from "../config/cloudinary.js";
 
-const storage =
-  new CloudinaryStorage({
-    cloudinary,
-
-    params: async (
-      req,
-      file
-    ) => ({
-      folder: "uketbooks",
-
-      resource_type: "auto",
-
-      allowed_formats: [
-        "jpg",
-        "png",
-        "jpeg",
-        "webp",
-        "pdf",
-      ],
-    }),
-  });
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "uketbooks",
+    resource_type: "auto",
+    allowed_formats: ["jpg", "png", "jpeg", "webp", "pdf"],
+  },
+});
 
 const upload = multer({
   storage,

@@ -3,7 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import http from "http";
 import { Server } from "socket.io";
+
 import connectDB from "./config/db.js";
+
 import adminRoutes from "./routes/adminRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
@@ -12,23 +14,15 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 
-// =========================
-// CONFIG
-// =========================
 dotenv.config();
-
-// =========================
-// DATABASE
-// =========================
 connectDB();
 
-// =========================
-// APP
-// =========================
 const app = express();
-
 const server = http.createServer(app);
 
+// =========================
+// SOCKET.IO
+// =========================
 export const io = new Server(server, {
   cors: {
     origin: "*",
@@ -44,110 +38,52 @@ io.on("connection", (socket) => {
 });
 
 // =========================
-// CORS
-// =========================
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-
-      "https://uketbooks-store.vercel.app",
-      
-      "https://uketbooks-frontend-7cnt.onrender.com",
-    ],
-
-    credentials: true,
-  })
-);
-
-// =========================
 // MIDDLEWARE
 // =========================
+app.use(cors({
+  origin: "*",
+  credentials: true,
+}));
+
 app.use(express.json());
-
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+app.use(express.urlencoded({ extended: true }));
 
 // =========================
-// STATIC FILES
+// ROUTES
 // =========================
-app.use(
-  "/uploads",
-  express.static("uploads")
-);
+app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/books", bookRoutes);
+app.use("/api/payments", paymentRoutes);
+app.use("/api/uploads", uploadRoutes);
+app.use("/api/webhooks", webhookRoutes);
+app.use("/api/contact", contactRoutes);
 
-// =========================
-// API ROUTES
-// =========================
-app.use(
-  "/api/auth",
-  authRoutes
-);
-
-app.use(
-  "/api/admin",
-  adminRoutes
-);
-
-app.use(
-  "/api/books",
-  bookRoutes
-);
-
-app.use(
-  "/api/payments",
-  paymentRoutes
-);
-
-app.use(
-  "/api/uploads",
-  uploadRoutes
-);
-
-app.use(
-  "/api/webhooks",
-  webhookRoutes
-);
-
-app.use(
-  "/api/contact",
-  contactRoutes
-);
 // =========================
 // HEALTH CHECK
 // =========================
 app.get("/", (req, res) => {
-  res.status(200).json({
+  res.json({
     success: true,
-
-    message:
-      "Ebook Store API Running 🚀",
+    message: "Ebook Store API Running 🚀",
   });
 });
 
 // =========================
-// 404 HANDLER
+// 404
 // =========================
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-
     message: "Route not found",
   });
 });
 
 // =========================
-// SERVER
+// SERVER START
 // =========================
-const PORT =
-  process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
-  console.log(
-    `Server running on port ${PORT}`
-  );
+  console.log(`Server running on port ${PORT}`);
 });
-
