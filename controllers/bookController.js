@@ -1,5 +1,5 @@
 import Book from "../models/Book.js";
-
+import { io } from "../server.js";
 // =========================
 // CREATE BOOK
 // =========================
@@ -51,6 +51,8 @@ const createBook = async (
       language,
     });
 
+    io.emit("statsUpdated");
+
     res.status(201).json({
       success: true,
       book,
@@ -62,8 +64,6 @@ const createBook = async (
     });
   }
 };
-
-io.emit("statsUpdated");
 
 // =========================
 // GET ALL BOOKS
@@ -153,6 +153,8 @@ const updateBook = async (
         }
       );
 
+    io.emit("statsUpdated");
+
     res.json({
       success: true,
       book: updatedBook,
@@ -187,7 +189,9 @@ const deleteBook = async (
     }
 
     await book.deleteOne();
-
+    
+    io.emit("statsUpdated");
+    
     res.json({
       success: true,
       message:

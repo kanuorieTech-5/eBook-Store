@@ -13,22 +13,29 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import downloadRoutes from "./routes/downloadRoutes.js";
 
 dotenv.config();
 connectDB();
 
 const app = express();
 const server = http.createServer(app);
-
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://uketbooks-store.vercel.app",
+  "https://uketbooks-api-7cnt.onrender.com"
+];
 // =========================
 // SOCKET.IO
 // =========================
 export const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+    credentials: true,
   },
 });
-
+ 
 io.on("connection", (socket) => {
   console.log("Admin connected:", socket.id);
 
@@ -37,15 +44,30 @@ io.on("connection", (socket) => {
   });
 });
 
-// =========================
-// MIDDLEWARE
-// =========================
-app.use(cors({
-  origin: "*",
-  credentials: true,
-}));
+// // =========================
+// // MIDDLEWARE
+// // =========================
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow Postman / server-to-server
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.log("Blocked by CORS:", origin);
+      return callback(null, false);
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 // =========================
@@ -58,7 +80,7 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/webhooks", webhookRoutes);
 app.use("/api/contact", contactRoutes);
-
+app.use("/api/downloads", downloadRoutes);
 // =========================
 // HEALTH CHECK
 // =========================
