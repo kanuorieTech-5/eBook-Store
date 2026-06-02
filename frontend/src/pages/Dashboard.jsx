@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef,} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getBooks, createBook, updateBook as updateBookService, deleteBook as deleteBookService, } from "../services/bookService";
 import { FaChartLine, FaImage,FaSearch, FaStar,FaFilePdf, FaBook,
   FaEdit, FaTrash, FaUsers, FaMoneyBillWave, FaDownload, FaPlus, } from "react-icons/fa";import { usePurchases, } from "../context/PurchaseContext";
@@ -6,9 +6,9 @@ import { getBookId, } from "../utils/bookIds";
 import { getStats,} from "../services/adminService";
 import { motion } from "framer-motion";
 import { io } from "socket.io-client";
+import API from "../services/axios";
 
 export default function Dashboard() {
-const socketRef = useRef(null);
 const formatUSD = (amount) =>
 Number(amount || 0).toLocaleString("en-US", {
   style: "currency",
@@ -33,28 +33,17 @@ const INITIAL_FORM = {
   language: "English",
 };
 
-const [books, setBooks] =
-  useState([]);
-
-const [editingId, setEditingId] =
-  useState(null);
-
-const [search, setSearch] =
-  useState("");
-
-const [loading, setLoading] =
-  useState(false);
-
-const [form, setForm] =
-  useState(INITIAL_FORM);
-
-const [stats, setStats] = useState({
-  users: 0,
-  books: 0,
-  downloads: 0,
-  revenue: 0,
-  weeklyRevenue: 0,
-});
+const [books, setBooks] = useState([]);
+const [editingId, setEditingId] = useState(null);
+const [search, setSearch] = useState("");
+const [loading, setLoading] = useState(false);
+const [form, setForm] = useState(INITIAL_FORM);
+const [stats, setStats] = useState({ users: 0, books: 0, downloads: 0, revenue: 0, weeklyRevenue: 0,});
+const [coverFile, setCoverFile] = useState(null);
+const [bookFile, setBookFile] = useState(null);
+const [coverPreview, setCoverPreview] = useState("");
+const [submitting, setSubmitting] = useState(false);
+const [revenue, setRevenue] = useState(null);
 
 useEffect(() => {
   const loadStats = async () => {
@@ -76,12 +65,12 @@ useEffect(() => {
 
   const socket = io(import.meta.env.VITE_API_URL);
 
-  socket.on("statsUpdated", () => {
-    loadStats(); // refresh dashboard
-  });
+    socket.on("statsUpdated", () => {
+      loadStats(); // refresh dashboard
+    });
 
-  return () => socket.disconnect();
-}, []);
+    return () => socket.disconnect();
+  }, []);
 
   // =========================================
   // PURCHASES
@@ -143,19 +132,11 @@ useEffect(() => {
     (sum, item) => sum + Number(item.price || 0),
     0
   );
-  const downloads =
-    purchases.length;
+  const downloads = purchases.length;
 
-  const booksSold =
-    purchases.length;
+  const booksSold = purchases.length;
 
-  const users =
-    new Set(
-      purchases.map(
-        (item) => item.email
-      )
-    ).size || 1;
-
+  const users = new Set( purchases.map((item) => item.email)).size || 1;
   return {
     TotalRevenue: formatUSD(revenue / 100),
     downloads,
@@ -178,12 +159,13 @@ useEffect(() => {
   );
 
   const resetForm = () => {
-    setEditingId(null);
+  setEditingId(null);
+  setForm(INITIAL_FORM);
 
-    setForm({
-      ...INITIAL_FORM
-    });
-  };
+  setCoverFile(null);
+  setBookFile(null);
+  setCoverPreview("");
+};
 
   // =========================================
   // INPUT CHANGE
@@ -205,130 +187,119 @@ useEffect(() => {
   // =========================================
   // COVER UPLOAD
   // =========================================
-  const handleCoverUpload = (
-    e
-  ) => {
-    const file =
-      e.target.files[0];
-
+  const handleCoverUpload = (e) => {
+  const file = e.target.files[0];
     if (!file) return;
+    if (!file.type.startsWith("image/")) {
+    alert("Please upload an image.");
+    return;
+   }
+    setCoverFile(file);
 
-    const reader =
-      new FileReader();
-
-    reader.onloadend = () => {
-      setForm((prev) => ({
-        ...prev,
-        cover:
-          reader.result,
-      }));
-    };
-
-    reader.readAsDataURL(file);
+  const previewUrl = URL.createObjectURL(file);
+    setCoverPreview(previewUrl);
+    setForm((prev) => ({
+      ...prev,
+      cover: previewUrl,
+    }));
   };
+
+  useEffect(() => {
+    return () => {
+      if (coverPreview) {
+        URL.revokeObjectURL(coverPreview);
+      }
+    };
+  }, [coverPreview]);
 
   // =========================================
   // BOOK FILE UPLOAD
   // =========================================
-  const handleBookUpload = (
-    e
-  ) => {
-    const file =
-      e.target.files[0];
+  const handleBookUpload = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.type !== "application/pdf") {
+    alert("Only PDF files are allowed.");
+    return;
+  }
+  setBookFile(file); // ✅ store actual file
 
-    if (!file) return;
-
-    const reader =
-      new FileReader();
-
-    reader.onloadend = () => {
-      setForm((prev) => ({
-        ...prev,
-
-        file:
-          reader.result,
-
-        preview:
-          reader.result,
-      }));
-    };
-
-    reader.readAsDataURL(file);
-  };
+  setForm((prev) => ({
+    ...prev,
+    file: file.name, // optional display only
+  }));
+};
 
   // =========================================
   // CREATE / UPDATE BOOK
   // =========================================
-  const [submitting, setSubmitting] =
-  useState(false);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async (
-    e
-  ) => {
-    e.preventDefault();
-    console.log("Submit clicked");
+  try {
+    setSubmitting(true);
 
-    try {
-      if (
-        !form.title ||
-        !form.author ||
-        !form.price
-      ) {
-        return alert(
-          "Please fill all required fields."
-        );
-      }
-
-      const payload = {
-        ...form,
-
-        price: Number(
-          form.price
-        ),
-
-        pages: Number(
-          form.pages
-        ),
-
-        updatedAt:
-          new Date().toISOString(),
-      };
-
-      // UPDATE
-      if (editingId) {
-        const updated =
-          await updateBookService(
-            editingId,
-            payload
-          );
-
-        setBooks((prev) =>
-          prev.map((book) =>
-            book._id === editingId
-              ? updated.book
-              : book
-          )
-        );
-      }
-
-      // CREATE
-      else {
-        const created =
-          await createBook(
-            payload
-          );
-
-        setBooks((prev) => [
-          created.book,
-          ...prev,
-        ]);
-      }
-
-      resetForm();
-    } catch (error) {
-      console.log(error);
+    if (!form.title || !form.author || !form.price) {
+      alert("Please fill all required fields.");
+      return;
     }
-  };
+
+    if (!editingId) {
+      if (!coverFile) {
+        alert("Please upload a cover image.");
+        return;
+      }
+
+      if (!bookFile) {
+        alert("Please upload a PDF file.");
+        return;
+      }
+    }
+
+    const payload = {
+      title: form.title,
+      author: form.author,
+      description: form.description,
+      category: form.category,
+      language: form.language,
+      featured: form.featured,
+      bestseller: form.bestseller,
+      price: Number(form.price),
+      pages: Number(form.pages),
+
+      cover: coverFile || form.cover,
+      file: bookFile || form.file,
+    };
+
+    if (editingId) {
+      const updated = await updateBookService(
+        editingId,
+        payload
+      );
+
+      setBooks((prev) =>
+        prev.map((book) =>
+          book._id === editingId
+            ? updated.book
+            : book
+        )
+      );
+    } else {
+      const created = await createBook(payload);
+
+      setBooks((prev) => [
+        created.book,
+        ...prev,
+      ]);
+    }
+
+    resetForm();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   // =========================================
   // EDIT
@@ -360,11 +331,7 @@ useEffect(() => {
 
       await deleteBookService(id);
 
-      setBooks((prev) =>
-        prev.filter(
-          (book) =>
-            book._id !== id
-        )
+      setBooks((prev) => prev.filter((book) => book._id !== id)
       );
     } catch (error) {
      console.error(

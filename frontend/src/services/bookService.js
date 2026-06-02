@@ -7,12 +7,21 @@ const createFormData = (data) => {
   const formData = new FormData();
 
   Object.entries(data).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      if (Array.isArray(value)) {
-        value.forEach((item) => formData.append(key, item));
-      } else {
-        formData.append(key, value);
-      }
+    if (value === undefined || value === null) return;
+
+    // Handle File objects properly
+    if (value instanceof File) {
+      formData.append(key, value);
+    }
+    // Handle arrays
+    else if (Array.isArray(value)) {
+      value.forEach((item) => {
+        formData.append(key, item);
+      });
+    }
+    // fallback
+    else {
+      formData.append(key, value);
     }
   });
 
@@ -69,22 +78,20 @@ export const getBook =
 export const createBook =
   async (bookData) => {
     try {
-      const formData =
-        createFormData(
-          bookData
-        );
+      const formData = new FormData();
+        formData.append("title", title);
+        formData.append("author", author);
+        formData.append("description", description);
 
-      const response =
-        await API.post(
-          "/api/books",
-          formData,
-          {
-            headers: {
-              "Content-Type":
-                "multipart/form-data",
-            },
-          }
-        );
+        // IMPORTANT: files
+        formData.append("cover", coverFile); // file input
+        formData.append("file", bookFile);   // pdf file
+
+        await API.post("/api/books", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
 
       return response.data;
     } catch (error) {
