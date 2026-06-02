@@ -15,8 +15,6 @@ import {
   CartContext,
 } from "../context/CartContext";
 
-import SearchBar from "./SearchBar";
-
 import {
   FaMoon,
   FaSun,
@@ -251,19 +249,6 @@ export default function Navbar() {
             📚
           </span>
         </Link>
-
-        {/* =========================================
-            SEARCH
-        ========================================= */}
-        <div
-          className="
-            hidden
-            lg:block
-            w-[350px]
-          "
-        >
-          <SearchBar />
-        </div>
 
         {/* =========================================
             RIGHT SIDE

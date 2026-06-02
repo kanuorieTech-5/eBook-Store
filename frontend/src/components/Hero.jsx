@@ -256,16 +256,8 @@ export default function Hero() {
               }
               onKeyDown={handleKeyDown}
               autoComplete="off"
-              className="
-                flex-1
-                rounded-2xl
-                border-none
-                outline-none
-                text-gray-500
-                px-4
-                py-4
-                placeholder:text-gray-500
-              "
+              className=" flex-1 rounded-2xl border-none outline-none
+                text-gray-500 px-4 py-4 placeholder:text-gray-500"
             />
 
             <button
@@ -300,7 +292,7 @@ export default function Hero() {
           <Link
             to="/books"
             className="
-              bg-purple-600
+              bg-purple-700/50
               hover:bg-yellow-400
               hover:text-black
               text-white
@@ -321,8 +313,10 @@ export default function Hero() {
             className="
               border
               border-white/20
-              bg-white/10
-              hover:bg-white/20
+              bg-purple-700/50
+              hover:bg-yellow-400
+              hover:border-yellow-400
+              hover:text-black
               text-white
               px-8
               py-4

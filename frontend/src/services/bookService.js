@@ -75,34 +75,30 @@ export const getBook =
 // =========================
 // CREATE BOOK
 // =========================
-export const createBook =
-  async (bookData) => {
-    try {
-      const formData = new FormData();
-        formData.append("title", title);
-        formData.append("author", author);
-        formData.append("description", description);
+export const createBook = async (bookData) => {
+  try {
+    const formData = createFormData(bookData);
 
-        // IMPORTANT: files
-        formData.append("cover", coverFile); // file input
-        formData.append("file", bookFile);   // pdf file
+    const response = await API.post(
+      "/api/books",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-        await API.post("/api/books", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error creating book:",
+      error
+    );
 
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error creating book:",
-        error
-      );
-
-      throw error;
-    }
-  };
+    throw error;
+  }
+};
 
 // =========================
 // UPDATE BOOK
