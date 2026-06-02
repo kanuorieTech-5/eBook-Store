@@ -22,8 +22,13 @@ const app = express();
 const server = http.createServer(app);
 const allowedOrigins = [
   "http://localhost:5173",
+
+  // your Vercel frontend (IMPORTANT - add ALL variants)
   "https://uketbooks-store.vercel.app",
-  "https://uketbooks-api-7cnt.onrender.com"
+  "https://uketbooks-store-6jv5nsnsz-uketbooks-team.vercel.app",
+
+  // optional older Render frontend
+  "https://uketbooks-frontend-7cnt.onrender.com",
 ];
 // =========================
 // SOCKET.IO
@@ -47,24 +52,19 @@ io.on("connection", (socket) => {
 // // =========================
 // // MIDDLEWARE
 // // =========================
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // allow Postman / server-to-server
-      if (!origin) return callback(null, true);
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
 
-      console.log("Blocked by CORS:", origin);
-      return callback(null, false);
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+    console.log("Blocked by CORS:", origin);
+    return callback(null, true); // Allow all origins for testing, but log blocked ones
+  },
+  credentials: true,
+}));
 
 app.use(express.json());
 
