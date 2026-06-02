@@ -1,15 +1,11 @@
 import { useState,} from "react";
-import { useNavigate, Link,} from "react-router-dom";
 import { useAuth,} from "../context/AuthContext";
 import { FaEye, FaEyeSlash,} from "react-icons/fa";
 import { useNavigate, Link, useLocation,} from "react-router-dom";
 
 export default function Login() {
-  const navigate =
-    useNavigate();
-
-  const { login } =
-    useAuth();
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/profile";

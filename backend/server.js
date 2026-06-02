@@ -23,8 +23,7 @@ const server = http.createServer(app);
 const allowedOrigins = [
   "http://localhost:5173",
   "https://uketbooks-store.vercel.app",
-  "https://uketbooks-store-cwmar8k9r-uketbooks-team.vercel.app",
-  "https://uketbooks-frontend-7cnt.onrender.com",
+  "https://uketbooks-api-7cnt.onrender.com"
 ];
 // =========================
 // SOCKET.IO
