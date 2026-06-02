@@ -8,8 +8,8 @@ export default function BookCard({ book }) {
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const bookId = getBookId(book);
-  const formatUSD = (amount) =>
-  Number(amount || 0).toLocaleString("en-US", {
+  const formatPrice = (price) =>
+  Number(price).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
   });
@@ -57,11 +57,11 @@ export default function BookCard({ book }) {
         <div className="flex items-center gap-2 mt-3">
 
           <p className="text-purple-700 font-bold text-lg">
-            {formatUSD(book.price)}
+            {formatPrice(book.price)}
           </p>
 
           <span className="text-gray-400 line-through text-sm">
-            {formatUSD(book.price + 500)}
+            {formatPrice(book.price + 5)}
           </span>
 
         </div>

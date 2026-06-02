@@ -11,11 +11,14 @@ export default function PaystackGateway({
   onSuccess,
 }) {
   const [loading, setLoading] = useState(false);
-
   const publicKey = import.meta.env.VITE_PAYSTACK_KEY;
-
+  const formatUSD = (amount) =>
+  Number(amount || 0).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
   const paystackAmount = Number(amount) * 100;
-
+  
   if (!amount || amount <= 0) {
     return (
       <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-center text-red-400">
@@ -32,12 +35,12 @@ export default function PaystackGateway({
     );
   }
 
-  const componentProps = {
+  const config = {
+    // reference,
     email,
-    amount: paystackAmount,
+    amount: Math.round(amount * 100),
+    currency: "USD",
     publicKey,
-    metadata,
-
     channels: [
       "card",
       "bank",
@@ -46,10 +49,9 @@ export default function PaystackGateway({
       "mobile_money",
       "bank_transfer",
     ],
-
     text: loading
       ? "Processing..."
-      : `Pay ₦${Number(amount).toLocaleString()}`,
+      : `Pay ${formatUSD(amount)}`,
 
     onSuccess: async (reference) => {
       try {
@@ -107,7 +109,7 @@ export default function PaystackGateway({
 
           <div>
             <h3 className="text-lg font-bold">
-              Secure Paystack Payment
+              Secure Payment with Paystack
             </h3>
             <p className="text-sm text-gray-400">
               Instant ebook access after payment
@@ -123,14 +125,14 @@ export default function PaystackGateway({
         <div className="mt-2 flex justify-between text-sm text-gray-400">
           <span>Total</span>
           <span className="font-bold text-yellow-400">
-            ₦{Number(amount).toLocaleString()}
+            {formatUSD(amount)}
           </span>
         </div>
       </div>
 
       {/* BUTTON */}
       <PaystackButton
-        {...componentProps}
+        {...config}
         disabled={loading}
         className={`
           w-full rounded-2xl py-4 font-bold transition-all duration-300

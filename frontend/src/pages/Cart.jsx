@@ -17,7 +17,11 @@ export default function Cart() {
   } = useContext(CartContext);
 
   const navigate = useNavigate();
-
+const formatPrice = (price) =>
+  Number(price).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
   return (
     <div className="min-h-screen bg-black text-white px-4 py-10">
       <div className="max-w-3xl mx-auto bg-gray-900 rounded-2xl p-6 shadow-lg">
@@ -38,7 +42,7 @@ export default function Cart() {
               <div>
                 <h3 className="font-semibold">{item.title}</h3>
                 <p className="text-sm text-gray-400">
-                  NGN {Number(item.price).toLocaleString()} x {item.quantity}
+                  {formatPrice(item.price)} x {item.quantity}
                 </p>
               </div>
 
@@ -78,7 +82,7 @@ export default function Cart() {
           <div className="mt-6 flex justify-between items-center border-t border-gray-700 pt-4">
             <span className="text-lg font-bold">Total</span>
             <span className="text-lg font-bold text-yellow-400">
-              NGN {totalPrice.toLocaleString()}
+              {formatPrice(totalPrice)}
             </span>
           </div>
         )}

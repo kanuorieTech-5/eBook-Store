@@ -690,7 +690,123 @@ const handleSubmit = async (e) => {
             </motion.h2>
           </div>
         </div>
+        {/* =========================================
+            RECENT PURCHASES
+        ========================================= */}
+        <div
+          className="
+            bg-white/5
+            border
+            border-white/10
+            rounded-[32px]
+            p-6
+            md:p-8
+            backdrop-blur-xl
+          "
+          >
+          <h2
+            className="
+              text-2xl
+              font-black
+              mb-8
+            "
+          >
+            Recent Purchases
+          </h2>
 
+          {purchases.length ===
+          0 ? (
+            <p
+              className="
+                text-gray-400
+              "
+            >
+              No purchases yet.
+            </p>
+             ) : (
+            <div
+              className="
+                space-y-4
+              "
+            >
+              {purchases
+                .slice(0, 10)
+                .map(
+                  (
+                    order,
+                    index
+                  ) => (
+                    <div
+                      key={index}
+                      className="
+                        flex
+                        items-center
+                        justify-between
+
+                        p-4
+
+                        bg-black/20
+                        border
+                        border-white/10
+
+                        rounded-2xl
+                      "
+                    >
+                      <div>
+                        <h3
+                          className="
+                            font-bold
+                            mb-1
+                          "
+                        >
+                          {
+                            order.title
+                          }
+                        </h3>
+
+                        <p
+                          className="
+                            text-sm
+                            text-gray-400
+                          "
+                        >
+                          Digital
+                          Purchase
+                        </p>
+                      </div>
+
+                      <div
+                        className="
+                          text-right
+                        "
+                      >
+                        <p
+                          className="
+                            font-bold
+                            text-yellow-400
+                          "
+                        >
+                          ₦
+                          {
+                            order.price
+                          }
+                        </p>
+
+                        <p
+                          className="
+                            text-green-400
+                            text-sm
+                          "
+                        >
+                          Paid
+                        </p>
+                      </div>
+                    </div>
+                  )
+                )}
+            </div>
+          )}
+        </div>
         {/* =========================================
             BOOK MANAGER
         ========================================= */}
@@ -703,9 +819,9 @@ const handleSubmit = async (e) => {
             p-6
             md:p-8
             mb-10
-            backdrop-blur-xl
+            backdrop-blur-xl mt-10
           "
-        >
+          >
           {/* TOP */}
           <div
             className="
@@ -1348,124 +1464,6 @@ const handleSubmit = async (e) => {
               )
             )}
           </div>
-        </div>
-
-        {/* =========================================
-            RECENT PURCHASES
-        ========================================= */}
-        <div
-          className="
-            bg-white/5
-            border
-            border-white/10
-            rounded-[32px]
-            p-6
-            md:p-8
-            backdrop-blur-xl
-          "
-        >
-          <h2
-            className="
-              text-2xl
-              font-black
-              mb-8
-            "
-          >
-            Recent Purchases
-          </h2>
-
-          {purchases.length ===
-          0 ? (
-            <p
-              className="
-                text-gray-400
-              "
-            >
-              No purchases yet.
-            </p>
-          ) : (
-            <div
-              className="
-                space-y-4
-              "
-            >
-              {purchases
-                .slice(0, 10)
-                .map(
-                  (
-                    order,
-                    index
-                  ) => (
-                    <div
-                      key={index}
-                      className="
-                        flex
-                        items-center
-                        justify-between
-
-                        p-4
-
-                        bg-black/20
-                        border
-                        border-white/10
-
-                        rounded-2xl
-                      "
-                    >
-                      <div>
-                        <h3
-                          className="
-                            font-bold
-                            mb-1
-                          "
-                        >
-                          {
-                            order.title
-                          }
-                        </h3>
-
-                        <p
-                          className="
-                            text-sm
-                            text-gray-400
-                          "
-                        >
-                          Digital
-                          Purchase
-                        </p>
-                      </div>
-
-                      <div
-                        className="
-                          text-right
-                        "
-                      >
-                        <p
-                          className="
-                            font-bold
-                            text-yellow-400
-                          "
-                        >
-                          ₦
-                          {
-                            order.price
-                          }
-                        </p>
-
-                        <p
-                          className="
-                            text-green-400
-                            text-sm
-                          "
-                        >
-                          Paid
-                        </p>
-                      </div>
-                    </div>
-                  )
-                )}
-            </div>
-          )}
         </div>
       </div>
     </main>

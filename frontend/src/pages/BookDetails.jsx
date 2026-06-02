@@ -2,10 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useBooks, } from "../context/BookContext";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import {
-  getBookId,
-  isSameBook,
-} from "../utils/bookIds";
+import { getBookId, isSameBook,} from "../utils/bookIds";
 
 export default function BookDetails() {
   const { id } = useParams();
@@ -15,6 +12,11 @@ export default function BookDetails() {
   const book = books.find((b) =>
     isSameBook(b, id)
   );
+  const formatPrice = (price) =>
+  Number(price).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
   const bookId = getBookId(book);
 
   if (!book) {
@@ -36,7 +38,7 @@ export default function BookDetails() {
 
       <p className="mt-2 text-gray-600">{book.description}</p>
 
-      <p className="font-bold mt-3 text-lg text-yellow-600">₦{book.price}</p>
+      <p className="font-bold mt-3 text-lg text-yellow-600">{formatPrice(book.price)}</p>
       <button
         onClick={() => {
           navigate(`/preview/${bookId}`);
