@@ -86,9 +86,9 @@ export default function Home() {
           <section className="text-center text-gray-500 text-sm mb-10 px-6">
             Join over 50,000 readers who have found their next great read with UketBooks.
           </section>
-          <section className="max-w-6xl mx-auto px-6 mb-10 bg-purple border border-white/10 rounded-3xl">
+          {/* <section className="max-w-6xl mx-auto px-6 mb-10 bg-purple border border-white/10 rounded-3xl">
             <FeaturedTabs />
-          </section>
+          </section> */}
           <section className="max-w-6xl mx-auto px-6 mb-10 border border-white/10 rounded-3xl">
             <FeaturedTitles /> 
           </section>

@@ -24,17 +24,7 @@ export default function BookCard({ book }) {
   };
 
   return (
-    <div
-      className="
-        bg-gray-900
-        rounded-3xl
-        overflow-hidden
-        border border-white/10
-        hover:border-yellow-400/50
-        transition-all
-        duration-300
-        group
-      "
+    <div className="bg-gray-900 rounded-3xl overflow-hidden border border-white/10 hover:border-yellow-400/50 transition-all duration-300 group"
     >
       {/* Cover */}
       <div className="relative overflow-hidden">
@@ -46,7 +36,7 @@ export default function BookCard({ book }) {
               "https://via.placeholder.com/300x450?text=No+Cover";
           }}
           className="
-            w-full h-[120px] object-cover group-hover:scale-105 transition-transform duration-500"
+            w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500"
         />
 
         {book.category && (

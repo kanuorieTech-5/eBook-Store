@@ -26,6 +26,7 @@ const INITIAL_FORM = {
   description: "",
   category: "",
   price: "",
+  originalPrice: "",
   cover: "",
   file: "",
   preview: "",
@@ -268,6 +269,7 @@ const handleSubmit = async (e) => {
     formData.append("description", form.description);
     formData.append("category", form.category);
     formData.append("price", form.price);
+    formData.append("originalPrice", form.originalPrice);
     formData.append("pages", form.pages);
     formData.append("language", form.language);
     formData.append("featured", form.featured);
@@ -324,6 +326,7 @@ const handleSubmit = async (e) => {
     setForm({
       ...INITIAL_FORM,
       ...book,
+      
     });
     window.scrollTo({
       top: 0,
@@ -617,6 +620,7 @@ const handleSubmit = async (e) => {
               className="grid md:grid-cols-2 gap-5 mb-10"
           >
             <input
+              type="text"
               name="title"
               value={form.title}
               onChange={
@@ -646,7 +650,16 @@ const handleSubmit = async (e) => {
               placeholder="Price"
               className="p-4 rounded-2xl bg-black/30 border border-white/10"
             />
-
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              name="originalPrice"
+              value={form.originalPrice}
+              onChange={handleChange}
+              placeholder="Original Price"
+              className="p-4 rounded-2xl bg-black/30 border border-white/10"
+            />
             <input
               name="category"
               value={form.category}
@@ -903,7 +916,13 @@ const handleSubmit = async (e) => {
                           ⭐ Featured
                         </span>
                       )}
-
+                      {
+                        book.trending && (
+                          <span className="px-3 py-1 rounded-full bg-red-500/20 text-red-300 text-xs">
+                            🔥 Trending
+                          </span>
+                        )
+                      }
                       {book.justArrived && (
                         <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs">
                           🆕 Just Arrived

@@ -65,7 +65,7 @@ export default function Books() {
     <div className="min-h-screen bg-black text-white">
 
       {/* HERO BANNER */}
-      {/* <div className="relative flex items-center justify-center text-center">
+      <div className="relative flex items-center justify-center text-center">
         <div
         className="
           absolute inset-0
@@ -78,13 +78,13 @@ export default function Books() {
         }}
       />
         <SearchBar search={search} setSearch={setSearch} books={books} />
-      </div> */}
+      </div>
 
       {/* SEARCH */}
       
        <section >
-                 <Hero />
-               </section>
+          <FeaturedTabs />
+       </section>
 
       {/* CATEGORY FILTER */}
       <CategoryFilter category={category} setCategory={setCategory} />
@@ -98,7 +98,7 @@ export default function Books() {
       <div className="grid grid-cols-3 gap-2 p-6"> 
         {books.map ((book) => (
           <BookCard
-          key={book.id}
+         key={book._id} 
           book={book}
           addToCart={addToCart}
           />

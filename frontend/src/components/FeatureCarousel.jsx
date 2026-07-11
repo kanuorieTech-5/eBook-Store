@@ -49,7 +49,7 @@ export default function FeatureCarousel() {
 
         <div>
           <p className="text-yellow-400 uppercase tracking-[0.2em] text-sm mb-4">
-            Premium Collection
+            Premium Collections
           </p>
 
           <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">

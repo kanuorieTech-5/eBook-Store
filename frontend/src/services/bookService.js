@@ -104,8 +104,12 @@ export const createBook = async (bookData) => {
 // UPDATE BOOK
 // =========================
 export const updateBook = async (id, formData) => {
+  console.log("SERVICE CALLED");
   try {
-    const response = await API.put(`/api/books/${id}`,
+    console.log("Sending PUT to:", `/api/books/${id}`);
+
+    const response = await API.put(
+      `/api/books/${id}`,
       formData,
       {
         headers: {
@@ -113,6 +117,7 @@ export const updateBook = async (id, formData) => {
         },
       }
     );
+    console.log("SERVICE RESPONSE:", response);
     return response.data;
   } catch (error) {
     console.error("Error updating book:", error);

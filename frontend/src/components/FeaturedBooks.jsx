@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { useBooks } from "../context/BookContext";
@@ -16,9 +16,11 @@ export default function FeaturedBooks() {
   const { books } = useBooks();
   const navigate = useNavigate();
 
-  const featuredBooks = books
-    .filter((book) => book.featured)
-    .slice(0, 10);
+  const featuredBooks = useMemo(() => {
+    return books
+        .filter(book => book.featured)
+        .slice(0, 12);
+  }, [books]);
     
   if (!featuredBooks.length) {
   return (
@@ -83,11 +85,12 @@ export default function FeaturedBooks() {
                     src={book.cover}
                     alt={book.title}
                     className="w-full h-72 object-cover group-hover:scale-105 transition"
+                    loading="lazy"
                   />
 
                   {/* Price badge */}
                   <span className="absolute top-3 right-3 bg-yellow-400 text-black px-3 py-1 rounded-full font-bold text-sm">
-                    ${book.price.toFixed(2)}
+                    ${Number(book.price).toFixed(2)}
                   </span>
 
                 </div>

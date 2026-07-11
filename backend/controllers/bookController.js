@@ -3,10 +3,7 @@ import { io } from "../server.js";
 // =========================
 // CREATE BOOK
 // =========================
-const createBook = async (
-  req,
-  res
-) => {
+const createBook = async (req, res) => {
   try {
     const {
       title,
@@ -14,9 +11,9 @@ const createBook = async (
       description,
       category,
       price,
+      originalPrice,
       pages,
       language,
-
       featured,
       featuredTitle,
       justArrived,
@@ -45,14 +42,12 @@ const createBook = async (
       description,
       category,
       price,
-
+      originalPrice,
       cover,
       file,
       preview,
-
       pages,
       language,
-
       featured: featured === "true",
       featuredTitle: featuredTitle === "true",
       justArrived: justArrived === "true",
@@ -163,6 +158,7 @@ const updateBook = async (req, res) => {
       description: req.body.description,
       category: req.body.category,
       price: Number(req.body.price),
+      originalPrice: Number(req.body.originalPrice),
       pages: Number(req.body.pages),
       language: req.body.language,
 

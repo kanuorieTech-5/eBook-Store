@@ -27,7 +27,12 @@ const bookSchema = new mongoose.Schema(
       required: true,
     },
 
-   cover: {
+    originalPrice: {
+      type: Number,
+      default: 0,
+    },
+
+    cover: {
       type: String,
       required: true,
     },
