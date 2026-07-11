@@ -15,27 +15,11 @@ export default function MyLibrary() {
   );
 };
   return (
-    <main
-      className="
-        min-h-screen
-        px-6
-        py-10
-      "
-    >
-
-      <div
-        className="
-          max-w-7xl
-          mx-auto
-        "
-      >
+    <main className="min-h-screen px-6 py-10">
+      <div className=" max-w-7xl mx-auto ">
 
         {/* HEADER */}
-        <div
-          className="
-            mb-10
-          "
-        >
+        <div className=" mb-10">
 
           <h1
             className="
@@ -96,10 +80,16 @@ export default function MyLibrary() {
                 text-gray-400
               "
             >
-              Purchased ebooks
+             Your Purchased ebooks
               will appear here.
             </p>
-
+            <button
+              onClick={() => {
+                window.location.href = "/Books";
+              }}
+              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-6 rounded-2xl transition-all mt-6">
+              Browse Books
+            </button>
           </div>
         )}
 

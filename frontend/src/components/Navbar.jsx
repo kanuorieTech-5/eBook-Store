@@ -1,63 +1,25 @@
-import {
-  Link,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import {Link, useNavigate, useLocation,} from "react-router-dom";
 
-import {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import {useContext, useState, useEffect, useRef,} from "react";
 
-import {
-  CartContext,
-} from "../context/CartContext";
+import {CartContext,} from "../context/CartContext";
 
-import {
-  FaMoon,
-  FaSun,
-  FaHome,
-  FaBook,
-  FaUser,
-  FaShoppingCart,
-  FaInfoCircle,
-  FaEnvelope,
-  FaQuestionCircle,
-  FaCommentDots,
-  FaShieldAlt,
-  FaFileContract,
-  FaBookOpen,
-  FaTachometerAlt,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import {FaMoon, FaSun, FaHome, FaBook, FaUser, FaShoppingCart, FaInfoCircle, FaEnvelope, FaQuestionCircle, FaCommentDots, FaShieldAlt, FaFileContract, FaBookOpen, FaTachometerAlt, FaSignOutAlt,} from "react-icons/fa";
 
-import {
-  useTheme,
-} from "../context/ThemeContext";
+import {useTheme,} from "../context/ThemeContext";
 
 export default function Navbar() {
-  const {
-    totalItems,
-  } = useContext(CartContext);
+  const {totalItems,} = useContext(CartContext);
 
-  const [open, setOpen] =
-    useState(false);
+  const [open, setOpen] = useState(false);
 
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
-  const location =
-    useLocation();
+  const location = useLocation();
 
-  const menuRef =
-    useRef();
+  const menuRef = useRef();
 
-  const {
-    darkMode,
-    toggleTheme,
-  } = useTheme();
+  const { darkMode, toggleTheme,} = useTheme();
 
   // =========================================
   // CLOSE MENU ON OUTSIDE CLICK
@@ -80,8 +42,7 @@ export default function Navbar() {
       handleClickOutside
     );
 
-    return () =>
-      document.removeEventListener(
+    return () => document.removeEventListener(
         "mousedown",
         handleClickOutside
       );
@@ -90,8 +51,7 @@ export default function Navbar() {
   // =========================================
   // ACTIVE LINK
   // =========================================
-  const isActive = (path) =>
-    location.pathname === path;
+  const isActive = (path) => location.pathname === path;
 
   // =========================================
   // NAV LINKS

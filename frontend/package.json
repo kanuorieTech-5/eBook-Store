@@ -21,6 +21,7 @@
     "react-paystack": "^6.0.0",
     "react-pdf": "^10.4.1",
     "react-router-dom": "^6.30.3",
+    "react-toastify": "^11.1.0",
     "socket.io-client": "^4.8.3",
     "swiper": "^12.1.4"
   },

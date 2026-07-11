@@ -12,7 +12,6 @@ import Dashboard from "../pages/Dashboard";
 import MyLibrary from "../pages/MyLibrary";
 import Profile from "../pages/profile";
 import Preview from "../pages/Preview";
-import Categories from "../components/Categories";
 import ProtectedRoute from "../components/ProtectedRoute";
 import AdminRoute from "../components/AdminRoute";
 import About from "../pages/About";
@@ -46,7 +45,6 @@ export default function AppRoutes() {
         <Route path="/books" element={<Books />} />
         <Route path="/books/:id" element={<BookDetails />} />
         <Route path="/preview/:id" element={<Preview />} />
-        <Route path="/categories" element={<Categories />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

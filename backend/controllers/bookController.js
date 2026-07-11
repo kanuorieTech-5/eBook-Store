@@ -14,10 +14,16 @@ const createBook = async (
       description,
       category,
       price,
-      featured,
-      bestseller,
       pages,
       language,
+
+      featured,
+      featuredTitle,
+      justArrived,
+      bestSeller,
+      recommended,
+      deals,
+      comingSoon,
     } = req.body;
 
     const cover = req.files?.cover
@@ -44,11 +50,16 @@ const createBook = async (
       file,
       preview,
 
-      featured,
-      bestseller,
-
       pages,
       language,
+
+      featured: featured === "true",
+      featuredTitle: featuredTitle === "true",
+      justArrived: justArrived === "true",
+      bestSeller: bestSeller === "true",
+      recommended: recommended === "true",
+      deals: deals === "true",
+      comingSoon: comingSoon === "true",
     });
 
     io.emit("statsUpdated");
@@ -126,32 +137,70 @@ const getBook = async (
 // =========================
 // UPDATE BOOK
 // =========================
-const updateBook = async (
-  req,
-  res
-) => {
+const updateBook = async (req, res) => {
   try {
-    const book =
-      await Book.findById(
-        req.params.id
-      );
+    console.log("\n========== UPDATE REQUEST ==========");
+    console.log("ID:", req.params.id);
+    console.log("BODY:", req.body);
+    console.log("FILES:", req.files);
+
+    const book = await Book.findById(req.params.id);
 
     if (!book) {
+      console.log("BOOK NOT FOUND");
       return res.status(404).json({
         success: false,
-        message:
-          "Book not found",
+        message: "Book not found",
       });
     }
 
-    const updatedBook =
-      await Book.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {
-          new: true,
-        }
-      );
+    console.log("CURRENT BOOK:");
+    console.log(book);
+
+    const updateData = {
+      title: req.body.title,
+      author: req.body.author,
+      description: req.body.description,
+      category: req.body.category,
+      price: Number(req.body.price),
+      pages: Number(req.body.pages),
+      language: req.body.language,
+
+      featured: req.body.featured === "true",
+      featuredTitle: req.body.featuredTitle === "true",
+      justArrived: req.body.justArrived === "true",
+      bestSeller: req.body.bestSeller === "true",
+      recommended: req.body.recommended === "true",
+      deals: req.body.deals === "true",
+      comingSoon: req.body.comingSoon === "true",
+    };
+
+    if (req.files?.cover?.length) {
+      updateData.cover = req.files.cover[0].path;
+    }
+
+    if (req.files?.file?.length) {
+      updateData.file = req.files.file[0].path;
+    }
+
+    if (req.files?.preview?.length) {
+      updateData.preview = req.files.preview[0].path;
+    }
+
+    console.log("UPDATE DATA:");
+    console.log(updateData);
+
+    const updatedBook = await Book.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    console.log("UPDATED BOOK:");
+    console.log(updatedBook);
 
     io.emit("statsUpdated");
 
@@ -160,13 +209,14 @@ const updateBook = async (
       book: updatedBook,
     });
   } catch (error) {
+    console.error("UPDATE ERROR:", error);
+
     res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
-
 // =========================
 // DELETE BOOK
 // =========================

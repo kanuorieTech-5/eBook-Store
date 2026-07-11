@@ -1,68 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { useRef, useEffect } from "react";
-
-
-const featuredBooks = [
-  {
-    id: 1,
-    title: "Between Two Fires",
-    author: "Christopher Buehlman",
-    price: "$12.99",
-    cover:
-      "https://image.ebooks.com/cover/346929868.jpg?width=220&height=340&quality=85",
-  },
-
-  {
-    id: 2,
-    title: "Moonwalk",
-    author: "Michael Jackson",
-    price: "$11.99",
-    cover:
-      "https://image.ebooks.com/cover/569452.jpg?width=220&height=340&quality=85",
-  },
-
-  {
-    id: 3,
-    title: "The Psychology of Money",
-    author: "Morgan Housel",
-    price: "$14.99",
-    cover:
-      "https://image.ebooks.com/cover/210119242.jpg?width=220&height=340&quality=85",
-  },
-
-  {
-    id: 4,
-    title: "The Deal",
-    author: "Elle Kennedy",
-    price: "$13.00",
-    cover:
-      "https://image.ebooks.com/cover/211074533.jpg?width=220&height=340&quality=85",
-  },
-
-  {
-    id: 5,
-    title: "Wisdom Untethered",
-    author: "Michael A. Singer",
-    price: "$15.00",
-    cover:
-      "https://image.ebooks.com/cover/347208758.jpg?width=220&height=340&quality=85",
-  },
-
-  {
-    id: 6,
-    title: "Life Hacks for ChatGPT",
-    author: "Stanley Lieber",
-    price: "$10.00",
-    cover:
-      "https://image.ebooks.com/cover/346870071.jpg?width=220&height=340&quality=85",
-  },
-];
+import { useBooks } from "../context/BookContext";
+import { getBookId } from "../utils/bookIds";
 
 export default function FeaturedTitles() {
+  const navigate = useNavigate();
   const scrollRef = useRef(null);
 
+  const { books } = useBooks();
+
+  const featuredBooks = books
+    .filter((book) => book.featuredTitle)
+    .slice(0, 12);
+
+  const scroll = (direction) => {
+   if (!scrollRef.current) return;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -400 : 400,
+      behavior: "smooth",
+    });
+  };
   useEffect(() => {
   const container = scrollRef.current;
 
@@ -95,17 +54,17 @@ export default function FeaturedTitles() {
 
         {/* HEADER */}
         <div className="flex items-center justify-between mb-10">
-          <div>
-            <h2 className="text-4xl font-black text-yellow-400">
-              Bestsellers
+          <div className="text-cente">
+            <h2 className="text-3xl font-black text-yellow-400 py-3">
+              Trending Titles
             </h2>
 
-            <p className="text-gray-400 mt-2">
+            <p className="text-gray-400 mt-1">
               Discover trending ebooks readers love.
             </p>
           </div>
 
-          <div className="hidden md:flex gap-3">
+          <div className="hidden md:flex gap-3 mt-20">
             <button
               onClick={() => scroll("left")}
               className="
@@ -150,7 +109,7 @@ export default function FeaturedTitles() {
         >
         {featuredBooks.map((book, index) => (
             <motion.div
-            key={index}
+            key={book._id}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
@@ -210,23 +169,14 @@ export default function FeaturedTitles() {
 
                 <div className="flex items-center justify-between mt-5">
                 <span className="text-yellow-400 font-black">
-                    {book.price}
+                    ${book.price.toFixed(2)}
                 </span>
 
                 <button 
-                    className="
-                    bg-yellow-400
-                    hover:bg-yellow-300
-                    text-black
-                    text-sm
-                    font-bold
-                    px-4
-                    py-2
-                    rounded-xl
-                    transition
-                    "
+                  onClick={() => navigate(`/books/${getBookId(book)}`)}
+                  className="bg-yellow-400 hover:bg-yellow-300 text-black text-sm font-bold px-4 py-2 rounded-xl transition" 
                 >
-                    Buy
+                  Buy Now
                 </button>
                 </div>
             </div>

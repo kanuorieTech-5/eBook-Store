@@ -16,7 +16,6 @@ import contactRoutes from "./routes/contactRoutes.js";
 import downloadRoutes from "./routes/downloadRoutes.js";
 
 dotenv.config();
-connectDB();
 
 const app = express();
 const server = http.createServer(app);
@@ -106,6 +105,18 @@ app.use((req, res) => {
 // =========================
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    server.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();

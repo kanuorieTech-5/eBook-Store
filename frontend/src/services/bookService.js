@@ -103,58 +103,32 @@ export const createBook = async (bookData) => {
 // =========================
 // UPDATE BOOK
 // =========================
-export const updateBook =
-  async (
-    id,
-    updatedData
-  ) => {
-    try {
-      const formData =
-        createFormData(
-          updatedData
-        );
-
-      const response =
-        await API.put(
-          `/api/books/${id}`,
-          formData,
-          {
-            headers: {
-              "Content-Type":
-                "multipart/form-data",
-            },
-          }
-        );
-
-      return response.data;
-    } catch (error) {
-      console.error(
-        "Error updating book:",
-        error
-      );
-
-      throw error;
-    }
-  };
+export const updateBook = async (id, formData) => {
+  try {
+    const response = await API.put(`/api/books/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating book:", error);
+    throw error;
+  }
+};
 
 // =========================
 // DELETE BOOK
 // =========================
-export const deleteBook =
-  async (id) => {
+export const deleteBook = async (id) => {
     try {
-      const response =
-        await API.delete(
-          `/api/books/${id}`
-        );
-
+      const response = await API.delete(`/api/books/${id}`);
       return response.data;
     } catch (error) {
-      console.error(
-        "Error deleting book:",
-        error
-      );
-
+      console.error("Error deleting book:", error);
       throw error;
     }
   };

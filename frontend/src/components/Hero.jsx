@@ -1,40 +1,30 @@
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
+import { useBooks }from "../context/BookContext";
+import SearchBar from "./SearchBar";
+import CategoryFilter from "./CategoryFilter";
 
 export default function Hero() {
   const navigate = useNavigate();
-
-  const text =
-    "Discover your next favorite book";
-
-  const [displayText, setDisplayText] =
-    useState("");
-
-  const [search, setSearch] =
-    useState("");
-
-  const [focus, setFocus] =
-    useState(false);
-
+  const text = "Discover your next favorite book";
+  const [displayText, setDisplayText] = useState("");
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
+  const [focus, setFocus] = useState(false);
+  const { books } = useBooks();
+   
   // =========================
   // TYPING EFFECT
   // =========================
-  useEffect(() => {
-    let i = 0;
+  useEffect(() => { let i = 0;
 
-    const interval = setInterval(() => {
-      setDisplayText(
-        text.slice(0, i)
-      );
-
+    const interval = setInterval(() => { setDisplayText( text.slice(0, i));
       i++;
-
       if (i > text.length) {
         clearInterval(interval);
       }
     }, 60);
-
     return () =>
       clearInterval(interval);
   }, []);
@@ -42,18 +32,33 @@ export default function Hero() {
   // =========================
   // SEARCH HANDLER
   // =========================
-  const handleSearch = (e) => {
-    e.preventDefault();
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
 
-    if (!search.trim()) return;
+  //   if (!search.trim()) return;
 
-    navigate(
-      `/books?search=${encodeURIComponent(
-        search
-      )}`
-    );
-  };
-
+  //   navigate(
+  //     `/books?search=${encodeURIComponent(
+  //       search
+  //     )}`
+  //   );
+  // };
+  // 🔥 Smart search + filter system
+    const filteredBooks = useMemo(() => {
+      const q = search.toLowerCase();
+      return books.filter((book) => {
+        const matchesSearch =
+          book.title.toLowerCase().includes(q) ||
+          book.author.toLowerCase().includes(q) ||
+          book.category.toLowerCase().includes(q);
+  
+        const matchesCategory =
+          category === "All" || book.category === category;
+  
+        return matchesSearch && matchesCategory;
+      });
+    }, [search, category]);
+  
   // =========================
   // ENTER KEY
   // =========================
@@ -65,10 +70,7 @@ export default function Hero() {
 
   return (
     <section
-      className="
-        relative
-        w-full
-        min-h-screen
+      className="relative w-full mb-5
         flex
         items-center
         justify-center
@@ -218,67 +220,9 @@ export default function Hero() {
             |
           </span>
         </h2>
-
-        {/* SEARCH BAR */}
-        <form
-          onSubmit={handleSearch}
-          className="max-w-2xl mx-auto mb-10">
-          <div
-            className={`
-              flex
-              items-center
-              gap-2
-              rounded-2xl
-              p-2
-              border
-              transition-all duration-300
-              ${
-                focus
-                  ? "border-yellow-400 shadow-yellow-400/20 shadow-2xl"
-                  : "border-white/10"
-              }
-              bg-gray-900/90
-              backdrop-blur-lg
-            `}
-          >
-            <input
-              type="text"
-              placeholder="Search by title, author, category or ISBN"
-              value={search}
-              onChange={(e) =>
-                setSearch(e.target.value)
-              }
-              onFocus={() =>
-                setFocus(true)
-              }
-              onBlur={() =>
-                setFocus(false)
-              }
-              onKeyDown={handleKeyDown}
-              autoComplete="off"
-              className=" flex-1 rounded-2xl border-none outline-none
-                text-gray-500 px-4 py-4 placeholder:text-gray-500"
-            />
-
-            <button
-              type="submit"
-              className="
-                bg-yellow-400
-                hover:bg-yellow-300
-                text-black
-                font-bold
-                px-6
-                py-4
-                rounded-xl
-                transition-all duration-300
-                hover:scale-105
-              "
-            >
-              Search
-            </button>
-          </div>
-        </form>
-
+        {/* SEARCH */}
+          <SearchBar search={search} setSearch={setSearch} books={books} />
+        
         {/* CTA BUTTONS */}
         <div
           className="
@@ -309,7 +253,7 @@ export default function Hero() {
           </Link>
 
           <Link
-            to="/books"
+            to="/myLibrary"
             className="
               border
               border-white/20

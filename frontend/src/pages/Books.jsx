@@ -7,10 +7,10 @@ import { CartContext } from "../context/CartContext";
 import { getBookId, isSameBook, } from "../utils/bookIds";
 import BookSections from "../components/BookSections";
 import FeaturedTabs from "../components/FeaturedTabs";
+import Hero from "../components/Hero";
 
 export default function Books() {
   const { addToCart } = useContext(CartContext);
-
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(8);
@@ -19,7 +19,6 @@ export default function Books() {
   // 🔥 Smart search + filter system
   const filteredBooks = useMemo(() => {
     const q = search.toLowerCase();
-
     return books.filter((book) => {
       const matchesSearch =
         book.title.toLowerCase().includes(q) ||
@@ -66,20 +65,26 @@ export default function Books() {
     <div className="min-h-screen bg-black text-white">
 
       {/* HERO BANNER */}
-      <div className="w-full">
-        <img
-          src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80"
-          alt="ebook banner"
-          className="w-full h-48 md:h-64 object-cover"
-        />
-      </div>
+      {/* <div className="relative flex items-center justify-center text-center">
+        <div
+        className="
+          absolute inset-0
+          bg-cover bg-center
+          scale-110
+        "
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1400&q=80')",
+        }}
+      />
+        <SearchBar search={search} setSearch={setSearch} books={books} />
+      </div> */}
 
       {/* SEARCH */}
-      <SearchBar search={search} setSearch={setSearch} books={books} />
-       
-      <section>
-        <FeaturedTabs />
-      </section>
+      
+       <section >
+                 <Hero />
+               </section>
 
       {/* CATEGORY FILTER */}
       <CategoryFilter category={category} setCategory={setCategory} />
@@ -89,28 +94,16 @@ export default function Books() {
         Showing {visibleBooks.length} of {filteredBooks.length} books
       </div>
 
-      {/* BOOK GRID */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 md:px-8 pb-10">
-
-        {visibleBooks.length > 0 ? (
-          visibleBooks.map((book) => (
-            <BookCard
-              key={getBookId(book)}
-              book={book}
-              addToCart={addToCart}
-              wishlist={wishlist}
-              toggleWishlist={toggleWishlist}
-            />
-          ))
-        ) : (
-          <p className="text-gray-400 col-span-full text-center">
-            No books found 😢
-          </p>
-        )}
-
-      </div>
-      
-      
+      {/* BOOK GRID */} 
+      <div className="grid grid-cols-3 gap-2 p-6"> 
+        {books.map ((book) => (
+          <BookCard
+          key={book.id}
+          book={book}
+          addToCart={addToCart}
+          />
+        ))}
+      </div>  
 
       {/* LOAD MORE BUTTON */}
       {visibleCount < filteredBooks.length && (

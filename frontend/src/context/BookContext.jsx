@@ -2,122 +2,88 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
-import { books as initialBooks }
-from "../data/books";
+import { getBooks } from "../services/bookService";
 
-import {
-  getBooks,
-} from "../services/bookService";
+const BookContext = createContext();
 
-import {
-  isSameBook,
-} from "../utils/bookIds";
-
-const BookContext =
-  createContext();
-
-export function BookProvider({
-  children,
-}) {
-
-  const [books, setBooks] =
-    useState(() => {
-
-      const savedBooks =
-        localStorage.getItem(
-          "uketbooks-books"
-        );
-
-      return savedBooks
-        ? JSON.parse(savedBooks)
-        : initialBooks;
-    });
-
-  /* SAVE TO STORAGE */
-  useEffect(() => {
-
-    localStorage.setItem(
-      "uketbooks-books",
-      JSON.stringify(books)
-    );
-
-  }, [books]);
+export function BookProvider({ children }) {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadBooks = async () => {
-      try {
-        const data = await getBooks();
-
-        if (data?.books?.length) {
-          setBooks(data.books);
-        }
-      } catch (error) {
-        console.warn(
-          "Using local fallback books because the API is unavailable."
-        );
-      }
-    };
-
     loadBooks();
   }, []);
 
-  /* ADD BOOK */
-  const addBook = (book) => {
+  const loadBooks = async () => {
+    try {
+      setLoading(true);
 
-    const newBook = {
-      ...book,
+      const response = await getBooks();
 
-      id: Date.now(),
-
-      createdAt:
-        new Date().toISOString(),
-    };
-
-    setBooks((prev) => [
-      newBook,
-      ...prev,
-    ]);
+      setBooks(response?.books || []);
+    } catch (error) {
+      console.error("Failed to load books:", error);
+      setBooks([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  /* DELETE BOOK */
-  const deleteBook = (id) => {
+  /* Homepage Collections */
 
-    setBooks((prev) =>
-      prev.filter(
-        (book) =>
-          !isSameBook(book, id)
-      )
-    );
-  };
+  const featuredBooks = useMemo(
+    () => books.filter((book) => book.featured),
+    [books]
+  );
 
-  /* UPDATE BOOK */
-  const updateBook = (
-    id,
-    updatedBook
-  ) => {
+  const featuredTitleBooks = useMemo(
+    () => books.filter((book) => book.featuredTitle),
+    [books]
+  );
 
-    setBooks((prev) =>
-      prev.map((book) =>
-        isSameBook(book, id)
-          ? {
-              ...book,
-              ...updatedBook,
-            }
-          : book
-      )
-    );
-  };
+  const justArrivedBooks = useMemo(
+    () => books.filter((book) => book.justArrived),
+    [books]
+  );
+
+  const bestSellerBooks = useMemo(
+    () => books.filter((book) => book.bestSeller),
+    [books]
+  );
+
+  const recommendedBooks = useMemo(
+    () => books.filter((book) => book.recommended),
+    [books]
+  );
+
+  const dealsBooks = useMemo(
+    () => books.filter((book) => book.deals),
+    [books]
+  );
+
+  const comingSoonBooks = useMemo(
+    () => books.filter((book) => book.comingSoon),
+    [books]
+  );
 
   return (
     <BookContext.Provider
       value={{
+        loading,
         books,
-        addBook,
-        deleteBook,
-        updateBook,
+        refreshBooks: loadBooks,
+
+        featuredBooks,
+        featuredTitleBooks,
+        justArrivedBooks,
+        bestSellerBooks,
+        recommendedBooks,
+        dealsBooks,
+        comingSoonBooks,
       }}
     >
       {children}
@@ -125,5 +91,4 @@ export function BookProvider({
   );
 }
 
-export const useBooks = () =>
-  useContext(BookContext);
+export const useBooks = () => useContext(BookContext);

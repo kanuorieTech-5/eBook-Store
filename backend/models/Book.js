@@ -47,11 +47,35 @@ const bookSchema = new mongoose.Schema(
       default: false,
     },
 
-    bestseller: {
+    featuredTitle: {
       type: Boolean,
       default: false,
     },
 
+    justArrived: {
+      type: Boolean,
+      default: false,
+    },
+
+    bestSeller: {
+      type: Boolean,
+      default: false,
+    },
+
+    recommended: {
+      type: Boolean,
+      default: false,
+    },
+
+    deals: {
+      type: Boolean,
+      default: false,
+    },
+
+    comingSoon: {
+      type: Boolean,
+      default: false,
+    },
     pages: {
       type: Number,
       default: 0,
@@ -70,6 +94,10 @@ const bookSchema = new mongoose.Schema(
     downloads: {
       type: Number,
       default: 0,
+    },
+    published: {
+      type: Boolean,
+      default: true,
     },
   },
   {

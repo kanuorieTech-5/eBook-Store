@@ -52,7 +52,6 @@ export default function SearchBar({ search, setSearch, books = [] }) {
       {/* Input */}
       <div className="max-w-3xl mx-auto relative">
         <FiSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl" />
-
         <input
           type="text"
           id="term-mobile"

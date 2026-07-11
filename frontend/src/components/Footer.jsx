@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="bg-black border-t border-white/10 text-gray-400">
       
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-20">
+      <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10 md:px-12 py-20">
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-14">
           
@@ -128,27 +128,21 @@ export default function Footer() {
             <h3 className="text-white font-bold text-xl mb-6">
               Stay Updated
             </h3>
-
             <p className="text-gray-400 mb-5">
               Subscribe to receive updates on new ebooks
               and exclusive offers.
             </p>
-
-            <div className="flex flex-col gap-4">
-              
+            <div className="flex flex-col gap-4"> 
               <input
                 type="email"
                 placeholder="Enter your email"
                 className="bg-gray-900 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none focus:border-yellow-400"
               />
-
               <button className="bg-yellow-400 hover:bg-yellow-300 transition text-black py-4 rounded-2xl font-bold">
                 Subscribe
               </button>
-
             </div>
           </div>
-
         </div>
 
         {/* Bottom */}

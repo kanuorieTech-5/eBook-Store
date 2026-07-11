@@ -30,7 +30,14 @@ router.post(
   createBook
 );
 
-router.put("/:id", protect, adminOnly, updateBook);
+router.put("/:id", protect, adminOnly,
+  upload.fields([
+    { name: "cover", maxCount: 1 },
+    { name: "file", maxCount: 1 },
+    { name: "preview", maxCount: 1 },
+  ]),
+  updateBook
+);
 router.delete("/:id", protect, adminOnly, deleteBook);
 
 export default router;

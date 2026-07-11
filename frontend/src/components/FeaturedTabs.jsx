@@ -1,16 +1,16 @@
-import { useState, useRef, useEffect  } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect, useContext} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Star,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Star,} from "lucide-react";
+import {CartContext } from "../context/CartContext";
+import {useBooks,} from "../context/BookContext";
+import {getBookId,} from "../utils/bookIds";
 
 export default function FeaturedTabs() {
-  const [activeTab, setActiveTab] =
-    useState("featured");
-
+  const navigate = useNavigate();
+  const { addToCart } = useContext(CartContext);
+  const { books } = useBooks();
+  const [activeTab, setActiveTab] = useState("featured");
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -38,125 +38,66 @@ export default function FeaturedTabs() {
 
   return () => clearInterval(interval);
 }, []);
+const featuredBooks = books.filter(book => book.featured);
 
-  const featuredBooks = [
-    {
-      id: 1,
-      title: "Between Two Fires",
-      author: "Christopher Buehlman",
-      category: "Historical Fiction",
-      image:
-        "https://image.ebooks.com/cover/346929868.jpg?width=220&height=340&quality=85",
-      price: "Free",
-    },
-    {
-      id: 2,
-      title: "Moonwalk",
-      author: "Michael Jackson",
-      category: "Biography",
-      image:
-        "https://image.ebooks.com/cover/569452.jpg?width=220&height=340&quality=85",
-      price: "Free",
-    },
-    {
-      id: 3,
-      title: "The Names",
-      author: "Florence Knapp",
-      category: "Mystery",
-      image:
-        "https://image.ebooks.com/cover/211122768.jpg?width=220&height=340&quality=85",
-      price: "$12.99",
-    },
-    {
-      id: 4,
-      title: "The Deal",
-      author: "Elle Kennedy",
-      category: "Romance",
-      image:
-        "https://image.ebooks.com/cover/211074533.jpg?width=220&height=340&quality=85",
-      price: "$13.99",
-    },
-    {
-      id: 5,
-      title: "The Psychology of Money",
-      author: "Morgan Housel",
-      category: "Finance",
-      image:
-        "https://image.ebooks.com/cover/210119242.jpg?width=220&height=340&quality=85",
-      price: "$15.99",
-    },
-    {
-      id: 6,
-      title: "Wisdom Untethered",
-      author: "Michael A. Singer",
-      category: "Self-Help",
-      image:
-        "https://image.ebooks.com/cover/347208758.jpg?width=220&height=340&quality=85",
-      price: "$14.15",
-    },
-  ];
+const justArrivedBooks = books.filter(
+  book => book.justArrived
+);
 
-  const justArrivedBooks = [
-    {
-      id: 7,
-      title: "Fury Bound",
-      author: "Sable Sorensen",
-      category: "Fantasy",
-      image:
-        "https://image.ebooks.com/cover/346575631.jpg?width=220&height=340&quality=85",
-      price: "Free",
-    },
-    {
-      id: 8,
-      title: "King of Gluttony",
-      author: "Ana Huang",
-      category: "Contemporary Fiction",
-      image:
-        "https://image.ebooks.com/cover/346427560.jpg?width=220&height=340&quality=85",
-      price: "$13.99",
-    },
-    {
-      id: 9,
-      title: "Yesteryear",
-      author: "Caro Claire Burke",
-      category: "Historical Fiction",
-      image:
-        "https://image.ebooks.com/cover/346730675.jpg?width=220&height=340&quality=85",
-      price: "Free",
-    },
-    {
-      id: 10,
-      title: "Rewired",
-      author: "Eric Lamarre",
-      category: "Science Fiction",
-      image:
-        "https://image.ebooks.com/cover/347429375.jpg?width=220&height=340&quality=85",
-      price: "$39.50",
-    },
-    {
-      id: 11,
-      title: "Paradox",
-      author: "Douglas Preston",
-      category: "Mystery",
-      image:
-        "https://image.ebooks.com/cover/347335442.jpg?width=220&height=340&quality=85",
-      price: "$8.99",
-    },
-    {
-      id: 12,
-      title: "Agentic Coding with Claude",
-      author: "Eden Marco",
-      category: "Technology",
-      image:
-        "https://image.ebooks.com/cover/347322347.jpg?width=220&height=340&quality=85",
-      price: "$43.99",
-    },
-  ];
+const bestSellerBooks = books.filter(
+  book => book.bestSeller
+);
 
-  const books =
-    activeTab === "featured"
-      ? featuredBooks
-      : justArrivedBooks;
+const recommendedBooks = books.filter(
+  book => book.recommended
+);
+
+const dealBooks = books.filter(
+  book => book.deals
+);
+
+const comingSoonBooks = books.filter(
+  book => book.comingSoon
+);
+
+const tabs = [
+  {
+    id: "featured",
+    label: "Featured",
+  },
+  {
+    id: "justArrived",
+    label: "Just Arrived",
+  },
+  {
+    id: "bestSeller",
+    label: "Best Sellers",
+  },
+  {
+    id: "recommended",
+    label: "Recommended",
+  },
+  {
+    id: "deals",
+    label: "Deals",
+  },
+  {
+    id: "comingSoon",
+    label: "Coming Soon",
+  },
+];
+
+  const tabBooks = {
+  featured: featuredBooks,
+  justArrived: justArrivedBooks,
+  bestSeller: bestSellerBooks,
+  recommended: recommendedBooks,
+  deals: dealBooks,
+  comingSoon: comingSoonBooks,
+};
+
+const booksToDisplay =
+  tabBooks[activeTab] || [];
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -171,7 +112,7 @@ export default function FeaturedTabs() {
   };
 
   return (
-    <section className="bg-black text-white py-20 px-4">
+    <section className="bg- text-white py-5 px-4">
       <div className="max-w-7xl mx-auto">
 
         {/* HEADER */}
@@ -189,49 +130,31 @@ export default function FeaturedTabs() {
               duration: 0.6,
             }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-black text-yellow-400"
+            className="text-3xl md:text-3xl font-black text-yellow-400"
           >
             Discover Amazing Books
           </motion.h2>
 
           <p className="text-gray-400 mt-3 text-lg">
-            Explore featured books and the latest arrivals.
+            Explore trending books and our latest additions.
           </p>
         </div>
 
         {/* TABS */}
-        <div className="flex justify-center gap-4 mb-10">
-          <button
-            onClick={() =>
-              setActiveTab(
-                "featured"
-              )
-            }
-            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
-              activeTab ===
-              "featured"
-                ? "bg-yellow-400 text-black"
-                : "bg-gray-900 text-white hover:bg-gray-800"
-            }`}
-          >
-            Trending Now
-          </button>
-
-          <button
-            onClick={() =>
-              setActiveTab(
-                "arrived"
-              )
-            }
-            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
-              activeTab ===
-              "arrived"
-                ? "bg-yellow-400 text-black"
-                : "bg-gray-900 text-white hover:bg-gray-800"
-            }`}
-          >
-            New Releases
-          </button>
+        <div className="flex md:hidden gap-3 overflow-x-auto scrollbar-hide pb-2">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-6 py-3 rounded-2xl font-bold transition-all ${
+                activeTab === tab.id
+                  ? "bg-yellow-400 text-black"
+                  : "bg-gray-900 text-white hover:bg-gray-800"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         {/* CONTROLS */}
@@ -272,72 +195,28 @@ export default function FeaturedTabs() {
         {/* CAROUSEL */}
         <div
           ref={scrollRef}
-          className="
-            flex
-            flex-nowrap
-            gap-6
-            overflow-x-auto
-            scrollbar-hide
-            scroll-smooth
-            pb-4
-          "
+          className="flex flex-nowrap gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
         >
-          {books.map(
+          {booksToDisplay.map(
             (book, index) => (
               <motion.div
                 key={book.id}
-                initial={{
-                  opacity: 0,
-                  y: 40,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay:
-                    index * 0.1,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                className="
-                  min-w-[220px]
-                  bg-gray-900
-                  rounded-3xl
-                  overflow-hidden
-                  border border-white/10
-                  hover:border-yellow-400/50
-                  transition-all
-                  group
-                "
+                initial={{opacity: 0, y: 40,}}
+                whileInView={{opacity: 1, y: 0,}}
+                transition={{duration: 0.5, delay: index * 0.1,}}
+                viewport={{once: true,}}
+                className="min-w-[220px] bg-gray-900 rounded-3xl overflow-hidden border border-white/10 hover:border-yellow-400/50 transition-all group"
               >
                 {/* COVER */}
                 <div className="overflow-hidden relative">
                   <img
-                    src={book.image}
+                    src={book.cover}
                     alt={book.title}
-                    className="
-                      w-full
-                      h-[320px]
-                      object-cover
-                      group-hover:scale-105
-                      transition
-                      duration-500
-                    "
+                    className="w-full h-[320px] object-cover group-hover:scale-105 transition duration-500"
                   />
 
                   <div
-                    className="
-                      absolute
-                      top-3
-                      right-3
-                      bg-yellow-400
-                      text-black
-                      p-2
-                      rounded-full
-                    "
+                    className="absolute top-3 right-3 bg-yellow-400 text-black p-2 rounded-full"
                   >
                     <Star
                       size={16}
@@ -357,24 +236,14 @@ export default function FeaturedTabs() {
 
                   <div className="flex items-center justify-between mt-5">
                     <span className="text-yellow-400 font-black">
-                      {book.price}
+                      {book.price === 0 ? "Free" : `$${book.price}`}
                     </span>
 
                     <Link
-                      to="/books"
-                      className="
-                        bg-yellow-400
-                        hover:bg-yellow-300
-                        text-black
-                        text-sm
-                        font-bold
-                        px-4
-                        py-2
-                        rounded-xl
-                        transition
-                      "
+                      to={`/books/${getBookId(book)}`}
+                      className="bg-yellow-400 hover:bg-yellow-300 text-black text-sm font-bold px-4 py-2 rounded-xl transition"
                     >
-                      View
+                      Read
                     </Link>
                   </div>
                 </div>

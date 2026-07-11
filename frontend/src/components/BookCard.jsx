@@ -1,105 +1,100 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import {  getBookId, } from "../utils/bookIds";
+import { getBookId } from "../utils/bookIds";
 
 export default function BookCard({ book }) {
-
   const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
+
   const bookId = getBookId(book);
+
   const formatPrice = (price) =>
-  Number(price).toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+    Number(price || 0).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+
+  const handleView = () => {
+    navigate(`/Books/${bookId}`);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(book);
+  };
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-2xl transition duration-300 group">
-
-      {/* Book Cover */}
-      <div className="overflow-hidden relative">
-
+    <div
+      className="
+        bg-gray-900
+        rounded-3xl
+        overflow-hidden
+        border border-white/10
+        hover:border-yellow-400/50
+        transition-all
+        duration-300
+        group
+      "
+    >
+      {/* Cover */}
+      <div className="relative overflow-hidden">
         <img
           src={book.cover}
           alt={book.title}
           onError={(e) => {
             e.target.src =
-              "https://via.placeholder.com/300x400?text=No+Cover";
+              "https://via.placeholder.com/300x450?text=No+Cover";
           }}
-          className="w-full h-72 object-cover group-hover:scale-105 transition duration-300"
+          className="
+            w-full h-[120px] object-cover group-hover:scale-105 transition-transform duration-500"
         />
 
-        {/* Category Badge */}
-        <span className="absolute top-3 left-3 bg-purple-600 text-white text-xs px-3 py-1 rounded-full">
-          {book.category}
-        </span>
-
+        {book.category && (
+          <span
+            className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded-full"
+          >
+            {book.category}
+          </span>
+        )}
       </div>
 
       {/* Content */}
-      <div className="p-4">
-
-        <h3 className="font-bold text-lg text-gray-900 line-clamp-1">
+      <div className="p-1">
+        <h3 className=" font-bold text-white line-clamp-1">
           {book.title}
         </h3>
 
-        <p className="text-gray-500 text-sm mt-1">
+        <p className="text-gray-400 text-sm mt-1">
           {book.author}
         </p>
 
-        {/* Rating */}
-        <div className="flex items-center gap-1 mt-2 text-yellow-500 text-sm">
-          ⭐⭐⭐⭐⭐
-        </div>
-
-        {/* Price */}
-        <div className="flex items-center gap-2 mt-3">
-
-          <p className="text-purple-700 font-bold text-lg">
+        <div className="mt-2 flex items-center justify-between">
+          <span className="text-yellow-400 font-black">
             {formatPrice(book.price)}
-          </p>
-
-          <span className="text-gray-400 line-through text-sm">
-            {formatPrice(book.price + 5)}
           </span>
 
+          {book.sales > 50 && (
+            <span className="text-xs text-green-400">
+              Best Seller
+            </span>
+          )}
         </div>
 
-        {/* Buttons */}
-        <div className="flex gap-2 mt-5">
-
+        <div className="flex gap-1 mt-2">
           <button
-            onClick={() => {
-              if (!book._id) {
-                navigate(`/books/${bookId}`);
-                return;
-              }
-
-              addToCart(book);
-            }}
-            className="flex-1 bg-purple-600 text-white py-2 rounded-xl hover:bg-purple-700 transition"
+            onClick={handleAddToCart}
+            className="flex-1 bg-yellow-400 hover:bg-yellow-300 font-semibold py-1 px-1 rounded-xl transition"
           >
-            {book._id ? "Add to Cart" : "+ cart"}
+            +🛒
           </button>
 
           <button
-            onClick={() => navigate(`/books/${bookId}`)}
-            className="border border-purple-600  px-4 rounded-xl hover:bg-purple-600 hover:text-white transition bg-yellow-400"
+            onClick={handleView}
+            className="px-1 border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-xl transition"
           >
-            View
+            Read
           </button>
-
         </div>
-
-        {/* Preview Link
-        <Link
-          to={`/preview/${bookId}`}
-          className="block text-center text-sm text-purple-600 mt-3 hover:underline"
-        >
-          Quick Preview
-        </Link> */}
-
       </div>
     </div>
   );

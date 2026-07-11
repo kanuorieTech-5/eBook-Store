@@ -1,56 +1,38 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import { useBooks } from "../context/BookContext";
 import { FaStar } from "react-icons/fa";
-import {
-  getBookId,
-} from "../utils/bookIds";
-
+import { getBookId } from "../utils/bookIds";
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 export default function FeaturedBooks() {
-
   const { addToCart } = useContext(CartContext);
+  const { books } = useBooks();
+  const navigate = useNavigate();
 
-  const books = [
-    {
-      id: 1,
-      cover:
-        "https://images-na.ssl-images-amazon.com/images/I/51-nXsSRfZL._SX329_BO1,204,203,200_.jpg",
-      title: "Atomic Habits",
-      author: "James Clear",
-      price: "₦5,000",
-    },
-    {
-      id: 2,
-      cover:
-        "https://m.media-amazon.com/images/I/81bsw6fnUiL.jpg",
-      title: "Rich Dad Poor Dad",
-      author: "Robert Kiyosaki",
-      price: "₦6,500",
-    },
-    {
-      id: 3,
-      cover:
-        "https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg",
-      title: "The Alchemist",
-      author: "Paulo Coelho",
-      price: "₦4,800",
-    },
-    {
-      id: 4,
-      cover:
-        "https://m.media-amazon.com/images/I/81eB+7+CkUL.jpg",
-      title: "Think and Grow Rich",
-      author: "Napoleon Hill",
-      price: "₦4,200",
-    },
-  ];
+  const featuredBooks = books
+    .filter((book) => book.featured)
+    .slice(0, 10);
+    
+  if (!featuredBooks.length) {
+  return (
+    <section className="py-20 text-center border border-white/10 bg-gray-900 rounded-2xl max-w-6xl mx-auto">
+      <h2 className="text-3xl font-bold text-white">
+        Featured Books
+      </h2>
+
+      <p className="text-gray-400 mt-4">
+        No featured books available yet.
+      </p>
+    </section>
+  );
+}
 
   return (
     <section className="bg-black border-t border-white/10 py-20 px-6 md:px-12">
@@ -88,10 +70,9 @@ export default function FeaturedBooks() {
             1024: { slidesPerView: 3 },
           }}
         >
+          {featuredBooks.map((book) => (
 
-          {books.map((book) => (
-
-            <SwiperSlide key={getBookId(book)}>
+            <SwiperSlide key={book._id}>
 
               <div className="bg-gray-900 border border-white/10 rounded-2xl overflow-hidden group hover:-translate-y-2 transition">
 
@@ -106,7 +87,7 @@ export default function FeaturedBooks() {
 
                   {/* Price badge */}
                   <span className="absolute top-3 right-3 bg-yellow-400 text-black px-3 py-1 rounded-full font-bold text-sm">
-                    {book.price}
+                    ${book.price.toFixed(2)}
                   </span>
 
                 </div>
@@ -121,14 +102,14 @@ export default function FeaturedBooks() {
                   <p className="text-gray-400 text-sm mb-2">
                     {book.author}
                   </p>
-
+                  <p className="text-xs text-yellow-400 mb-2">
+                    {book.category}
+                  </p>
                   {/* Fake rating */}
-                  <div className="flex items-center gap-1 text-yellow-400 mb-3">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
+                  <div className="flex text-yellow-400 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} />
+                    ))}
                   </div>
 
                   {/* Buttons */}
@@ -141,8 +122,11 @@ export default function FeaturedBooks() {
                       Add to Cart
                     </button>
 
-                    <button className="flex-1 border border-white/10 text-white py-2 rounded-xl hover:bg-white/10 transition">
-                      Preview
+                    <button
+                      onClick={() => navigate(`/books/${getBookId(book)}`)}
+                      className="flex-1 border border-white/10 text-white py-2 rounded-xl hover:bg-white/10 transition"
+                    >
+                      View Details
                     </button>
 
                   </div>
