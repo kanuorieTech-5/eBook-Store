@@ -69,7 +69,7 @@ function BookSection({title, description, books = [] }) {
         {books.map((book) => (
           <div
             key={book._id}
-            className="min-w-[120px] flex-shrink-0"
+            className="w-full flex-shrink-0"
           >
             <BookCard book={book} />
           </div>
@@ -92,7 +92,7 @@ export default function BookSections() {
   } = useBooks();
 
   return (
-    <section className="bg-transparent text-white px-4">
+    <section className="bg-transparent text-white md:px-12">
       <div className="max-w-7xl mx-auto py-14 border-t border-white/10">
         <BookSection 
           title="🆕Just Arrived"
