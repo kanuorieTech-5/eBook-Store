@@ -24,8 +24,8 @@ function BookSection({title, description, books = [] }) {
   };
 
     return (
-    <section className="py-10 border-b border-white/10">
-      {/* Header */}
+    <section className="py-5 border-b border-white/10">
+      {/* Header */} 
       <div className="items-center justify-between mb-8">
         <div className="md:text-left">
           <h2 className="text-3xl font-black text-yellow-400">
@@ -69,7 +69,7 @@ function BookSection({title, description, books = [] }) {
         {books.map((book) => (
           <div
             key={book._id}
-            className="min-w-[220px] flex-shrink-0"
+            className="min-w-[120px] flex-shrink-0"
           >
             <BookCard book={book} />
           </div>
