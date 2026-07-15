@@ -26,7 +26,7 @@ function BookSection({title, description, books = [] }) {
     return (
     <section className="py-5 border-b border-white/10">
       {/* Header */} 
-      <div className="items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-10">
         <div className="md:text-left">
           <h2 className="text-3xl font-black text-yellow-400">
             {title}
@@ -51,9 +51,10 @@ function BookSection({title, description, books = [] }) {
           >
             <ChevronRight size={20} />
           </button>
-
+        </div>
+        <div className="hidden md:flex gap-3 justify-end">
           <Link
-            to="/books"  
+            to="/books"
             className="text-yellow-400 hover:text-yellow-300 font-bold"
           >
             View All →
@@ -64,12 +65,12 @@ function BookSection({title, description, books = [] }) {
       {/* Horizontal Scroll */}
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+        className="min-w-full flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
       >
         {books.map((book) => (
           <div
             key={book._id}
-            className="w-full flex-shrink-0"
+            className=" max-w-xs flex-shrink-0"
           >
             <BookCard book={book} />
           </div>
@@ -92,7 +93,7 @@ export default function BookSections() {
   } = useBooks();
 
   return (
-    <section className="bg-transparent text-white md:px-12">
+    <section className="bg-transparent text-white my-10">
       <div className="max-w-7xl mx-auto py-14 border-t border-white/10">
         <BookSection 
           title="🆕Just Arrived"
@@ -100,7 +101,7 @@ export default function BookSections() {
           books={justArrivedBooks}
         />
         <BookSection
-          title="🔥Best Sellers"
+          title="📈Best Sellers"
           description="shop Our best-selling books."
           books={bestSellerBooks}
         />
@@ -110,14 +111,19 @@ export default function BookSections() {
           books={dealsBooks}
         />
         <BookSection
-          title="💎Premium Collections"
+          title="💎Recommended"
           description="Explore our premium book collections."
           books={recommendedBooks}
         />
         <BookSection
-          title="📈Trending Now"
+          title="🔥Trending Now"
           description="Discover what's trending in the literary world."
           books={featuredBooks}
+        />
+        <BookSection
+          title="⏳Coming Soon"
+          description="Get a sneak peek at upcoming releases."
+          books={comingSoonBooks}
         />
       </div>
     </section>

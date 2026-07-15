@@ -18,7 +18,8 @@ export default function Books() {
   const { books } = useBooks();
   // 🔥 Smart search + filter system
   const filteredBooks = useMemo(() => {
-    const q = search.toLowerCase();
+  const q = search.toLowerCase();
+
     return books.filter((book) => {
       const matchesSearch =
         book.title.toLowerCase().includes(q) ||
@@ -26,11 +27,13 @@ export default function Books() {
         book.category.toLowerCase().includes(q);
 
       const matchesCategory =
-        category === "All" || book.category === category;
-
+        category === "All" ||
+        book.category?.trim().toLowerCase() ===
+          category.trim().toLowerCase();
+          
       return matchesSearch && matchesCategory;
     });
-  }, [search, category]);
+  }, [books, search, category]);
 
   // 📦 Infinite scroll load more
   const visibleBooks = filteredBooks.slice(0, visibleCount);
@@ -95,15 +98,15 @@ export default function Books() {
       </div>
 
       {/* BOOK GRID */} 
-      <div className="grid grid-cols-3 gap-2 p-6"> 
-        {books.map ((book) => (
+      <div className="grid grid-cols-3 gap-2 p-6">
+        {filteredBooks.map((book) => (
           <BookCard
-         key={book._id} 
-          book={book}
-          addToCart={addToCart}
+            key={book._id}
+            book={book}
+            addToCart={addToCart}
           />
         ))}
-      </div>  
+      </div>
 
       {/* LOAD MORE BUTTON */}
       {visibleCount < filteredBooks.length && (

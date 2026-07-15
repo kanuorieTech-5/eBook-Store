@@ -26,7 +26,7 @@ export default function FeaturedBooks() {
   return (
     <section className="py-20 text-center border border-white/10 bg-gray-900 rounded-2xl max-w-6xl mx-auto">
       <h2 className="text-3xl font-bold text-white">
-        Featured Books
+        Top Pick Books
       </h2>
 
       <p className="text-gray-400 mt-4">
@@ -43,7 +43,7 @@ export default function FeaturedBooks() {
       <div className="max-w-6xl mx-auto mb-10">
 
         <h2 className="text-3xl md:text-4xl font-bold text-white">
-          ⭐ Featured Books
+          ⭐Books You Can't Miss
         </h2>
 
         <p className="text-gray-400 mt-2">

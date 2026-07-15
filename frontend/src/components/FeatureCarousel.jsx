@@ -45,31 +45,24 @@ export default function FeatureCarousel() {
     <section className="bg-black border-white/10 py-5 px-6 md:px-12 overflow-hidden">
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-4">
         <div>
-          <p className="text-yellow-400 uppercase tracking-[0.2em] text-sm mb-4">
+          <p className="text-yellow-400 uppercase tracking-[0.2em] text-sm mb-2">
             Premium Collections
           </p>
-
-          <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
-            Featured
+          <h2 className="text-2xl md:text-6xl font-black text-white leading-tight">
+            Best Rated{" "}
             <span className="text-yellow-400">
               {" "}Ebooks
             </span>
           </h2>
-
-          <p className="text-gray-400 text-lg mt-5 max-w-2xl">
+          <p className="text-gray-400 text-sm mt-2 max-w-2xl">
             Curated books selected by our editors and loved by readers.
           </p>
         </div>
-
       </div>
-
       {/* Slider */}
-
       <div className="max-w-7xl mx-auto">
-
         <Swiper
           modules={[
             Autoplay,
@@ -107,31 +100,22 @@ export default function FeatureCarousel() {
             <SwiperSlide key={getBookId(book)}>
 
               <div className="group bg-gradient-to-b from-gray-900 to-black border border-white/10 rounded-[32px] overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:border-yellow-400/30 hover:shadow-2xl hover:shadow-yellow-400/10">
-
                 {/* Cover */}
-
                 <div className="relative overflow-hidden">
-
                   <img
                     src={book.cover}
                     alt={book.title}
                     className="w-full h-[220px] object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
                   <div className="absolute top-5 right-5 bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-black shadow-lg">
                     {formatUSD(book.price)}
                   </div>
-
                 </div>
-
                 {/* Content */}
-
                 <div className="p-7">
-
                   <div className="flex items-center gap-2 mb-4">
-
                     <div className="flex text-yellow-400 gap-1">
                       <FaStar />
                       <FaStar />
@@ -141,12 +125,13 @@ export default function FeatureCarousel() {
                     </div>
 
                     <span className="text-gray-500 text-sm">
-                      {book.sales || 0} sold
+                      {/* {book.sales || 0} sold */}
+                      (5.0)
                     </span>
 
                   </div>
 
-                  <h3 className="text-2xl font-black text-white mb-2">
+                  <h3 className="text-sm font-black text-white mb-2">
                     {book.title}
                   </h3>
 
@@ -185,7 +170,7 @@ export default function FeatureCarousel() {
 
         </Swiper>
 
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-4">
 
           <Link
             to="/books"

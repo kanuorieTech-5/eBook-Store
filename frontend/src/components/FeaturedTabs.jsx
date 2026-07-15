@@ -205,12 +205,6 @@ const discount =
                   </p>
                   <div className="flex items-center justify-between mt-1">
                     <div className="flex items-center gap-2">
-                      {Number(book.originalPrice) > Number(book.price) && (
-                        <span className="text-gray-500 line-through text-sm">
-                          ${Number(book.originalPrice).toFixed(2)}
-                        </span>
-                      )}
-
                       <span className="text-yellow-400 font-black text-lg">
                         {Number(book.price) === 0
                           ? "Free"
