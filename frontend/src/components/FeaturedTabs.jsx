@@ -84,11 +84,11 @@ const discount =
       )
     : 0;
   return (
-    <section className="bg-transparent text-white py-5 px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-transparent text-white py-2 px-1">
+      <div className="max-w-70xl mx-auto">
 
         {/* HEADER */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-4">
           <motion.h2
             initial={{
               opacity: 0,
@@ -130,7 +130,7 @@ const discount =
         </div>
 
         {/* CONTROLS */}
-        <div className="hidden md:flex gap-3 justify-end mb-8">
+        <div className="hidden md:flex gap-3 justify-end mb-4">
           <button
             onClick={() =>
               scroll("left")
@@ -175,7 +175,7 @@ const discount =
                     loading="lazy"
                     src={book.cover}
                     alt={book.title}
-                    className="w-full h-[320px] object-cover group-hover:scale-105 transition duration-500"
+                    className="w-full h-[300px] object-cover group-hover:scale-105 transition duration-500"
                   />
 
                   <div className="absolute top-3 right-3 bg-yellow-400 text-black p-2 rounded-full"
@@ -192,8 +192,8 @@ const discount =
                 </div>
 
                 {/* CONTENT */}
-                <div className="p-5">
-                  <h3 className="font-bold text-lg line-clamp-1">
+                <div className="p-4">
+                  <h3 className="font-bold text-sm line-clamp-">
                     {book.title}
                   </h3>
 

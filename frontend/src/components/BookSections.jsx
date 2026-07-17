@@ -26,9 +26,9 @@ function BookSection({title, description, books = [] }) {
     return (
     <section className="py-5 border-b border-white/10">
       {/* Header */} 
-      <div className="flex items-center justify-between mb-10">
+      <div className="flex items-center justify-between mb-5">
         <div className="md:text-left">
-          <h2 className="text-3xl font-black text-yellow-400">
+          <h2 className="text-sm font-black text-yellow-400">
             {title}
           </h2>
 
@@ -93,8 +93,8 @@ export default function BookSections() {
   } = useBooks();
 
   return (
-    <section className="bg-transparent text-white my-10">
-      <div className="max-w-7xl mx-auto py-14 border-t border-white/10">
+    <section className="bg-transparent text-white p-2">
+      <div className="py-10 border-t border-white/10">
         <BookSection 
           title="🆕Just Arrived"
           description="Fresh additions to our bookstore."

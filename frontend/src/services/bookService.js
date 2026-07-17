@@ -1,5 +1,4 @@
 import API from "./axios";
-
 // =========================
 // HELPERS
 // =========================
@@ -34,18 +33,14 @@ const createFormData = (data) => {
 export const getBooks =
   async () => {
     try {
-      const response =
-        await API.get(
-          "/api/books"
-        );
-
+      const response = await API.get("/api/books");
       return response.data;
-    } catch (error) {
+    }
+     catch (error) {
       console.error(
         "Error fetching books:",
         error
       );
-
       throw error;
     }
   };
@@ -56,13 +51,10 @@ export const getBooks =
 export const getBook =
   async (id) => {
     try {
-      const response =
-        await API.get(
-          `/api/books/${id}`
-        );
-
+      const response = await API.get(`/api/books/${id}`);
       return response.data;
-    } catch (error) {
+    } 
+    catch (error) {
       console.error(
         "Error fetching book:",
         error
@@ -79,8 +71,7 @@ export const createBook = async (bookData) => {
   try {
     const formData = createFormData(bookData);
 
-    const response = await API.post(
-      "/api/books",
+    const response = await API.post("/api/books",
       formData,
       {
         headers: {
@@ -90,7 +81,8 @@ export const createBook = async (bookData) => {
     );
 
     return response.data;
-  } catch (error) {
+  }
+   catch (error) {
     console.error(
       "Error creating book:",
       error

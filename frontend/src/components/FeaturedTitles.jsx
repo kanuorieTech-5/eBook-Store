@@ -59,12 +59,11 @@ export default function FeaturedTitles() {
 
   return (
     <section className="bg-transparent text-white">
-      <div className="max-w-7xl mx-auto">
-
+      <div>
         {/* HEADER */}
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center justify-between mb-2">
           <div className="text-center md:text-left">
-            <h2 className="text-3xl font-black text-yellow-400 py-3">
+            <h2 className="text-2xl font-black text-yellow-400 py-3">
               🔥Trending Titles
             </h2>
 
@@ -99,7 +98,7 @@ export default function FeaturedTitles() {
         ) : (
 
           <div ref={scrollRef}
-            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 p-2"
           >
             {featuredBooks.map((book, index) => (
               <motion.div
@@ -128,8 +127,8 @@ export default function FeaturedTitles() {
                 </div>
 
                 {/* CONTENT */}
-                <div className="p-5">
-                  <h3 className="font-bold text-lg line-clamp-1">
+                <div className="p-2">
+                  <h3 className="font-bold text-sm line-clamp-">
                     {book.title}
                   </h3>
 
@@ -140,7 +139,7 @@ export default function FeaturedTitles() {
                     {book.category}
                   </p>
                   <div className="flex items-center justify-between mt-1">
-                    <span className="text-yellow-400 font-black">
+                    <span className="text-yellow-400 font-black border rounded-lg p-1 bg-purple-900">
                       ${Number(book.price).toFixed(2)}
                     </span>
 

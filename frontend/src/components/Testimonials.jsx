@@ -106,61 +106,25 @@ const testimonials = [
 export default function Testimonials() {
   return (
     <section
-      className="
-        relative
-        bg-black
-        py-28
-        px-6
-        md:px-12
-        overflow-hidden
-      "
+      className="relative bg-black py-2 px-2 md:px-2 overflow-hidden"
     >
 
       {/* BACKGROUND GLOW */}
       <div
-        className="
-          absolute
-          top-0
-          left-1/2
-          -translate-x-1/2
-          w-[500px]
-          h-[500px]
-          bg-yellow-400/10
-          blur-[120px]
-          rounded-full
-        "
+        className="absolute top-0 left-1/2-translate-x-1/2 w-[500px] h-[500px] bg-yellow-400/10 blur-[120px] rounded-full"
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="relative z-10">
 
         {/* HEADER */}
-        <div
-          className="
-            text-center
-            mb-20
-          "
+        <div className=" text-center mb-5"
         >
-
-          <p
-            className="
-              uppercase
-              tracking-[0.25em]
-              text-yellow-400
-              text-sm
-              mb-4
-            "
+          <p className="uppercase tracking-[0.25em] text-yellow-400 text-sm mb-4"
           >
             Testimonials
           </p>
 
-          <h2
-            className="
-              text-4xl
-              md:text-6xl
-              font-black
-              text-white
-              mb-6
-            "
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-6"
           >
             Loved by
             <span className="text-yellow-400">
@@ -168,13 +132,7 @@ export default function Testimonials() {
             </span>
           </h2>
 
-          <p
-            className="
-              text-gray-400
-              text-lg
-              max-w-3xl
-              mx-auto
-            "
+          <p className="text-gray-400 text-lg max-w-3xl mx-auto"
           >
             Thousands of readers use UketBooks
             to access premium digital books for
@@ -234,76 +192,33 @@ export default function Testimonials() {
                 key={testimonial.id}
             >
 
-                <div
-                className="
-                    relative
-                    group
-                    bg-white/[0.03]
-                    border border-white/10
-                    rounded-[32px]
-                    p-8
-                    backdrop-blur-xl
-                    hover:border-yellow-400/30
-                    hover:-translate-y-2
-                    transition-all
-                    duration-500
-                    h-full
-                "
+                <div className="relative group bg-white/[0.03] border border-white/10 rounded-[32px] p-8 backdrop-blur-xl hover:border-yellow-400/30 hover:-translate-y-2 transition-all duration-500 h-full"
                 >
 
                 {/* QUOTE ICON */}
-                <div
-                    className="
-                    absolute
-                    top-6
-                    right-6
-                    text-yellow-400/20
-                    text-4xl
-                    "
+                <div className="absolute top-6 right-6 text-yellow-400/20 text-4xl"
                 >
                     <FaQuoteLeft />
                 </div>
 
                 {/* USER */}
-                <div
-                    className="
-                    flex
-                    items-center
-                    gap-4
-                    mb-6
-                    "
+                <div className=" flex items-center gap-4 mb-6"
                 >
 
                     <img
                     src={testimonial.image}
                     alt={testimonial.name}
-                    className="
-                        w-16
-                        h-16
-                        rounded-full
-                        object-cover
-                        border-2
-                        border-yellow-400/30
-                    "
+                    className="w-16 h-16 rounded-full object-cover border-2 border-yellow-400/30"
                     />
 
                     <div>
 
-                    <h3
-                        className="
-                        text-white
-                        font-bold
-                        text-lg
-                        "
+                    <h3 className="text-white font-bold text-lg"
                     >
                         {testimonial.name}
                     </h3>
 
-                    <p
-                        className="
-                        text-gray-400
-                        text-sm
-                        "
+                    <p className="text-gray-400 text-sm"
                     >
                         {testimonial.role}
                     </p>
@@ -313,13 +228,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* STARS */}
-                <div
-                    className="
-                    flex
-                    gap-1
-                    text-yellow-400
-                    mb-5
-                    "
+                <div className="flex gap-1 text-yellow-400 mb-5"
                 >
                     {Array.from({
                     length:
@@ -330,12 +239,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* REVIEW */}
-                <p
-                    className="
-                    text-gray-300
-                    leading-relaxed
-                    text-lg
-                    "
+                <p className="text-gray-300 leading-relaxed text-lg"
                 >
                     “{testimonial.review}”
                 </p>

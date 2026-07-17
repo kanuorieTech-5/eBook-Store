@@ -24,7 +24,7 @@ export default function FeaturedBooks() {
     
   if (!featuredBooks.length) {
   return (
-    <section className="py-20 text-center border border-white/10 bg-gray-900 rounded-2xl max-w-6xl mx-auto">
+    <section className="py-10 text-center border border-white/10 bg-gray-900 rounded-2xl max-w-6xl mx-auto">
       <h2 className="text-3xl font-bold text-white">
         Top Pick Books
       </h2>
@@ -37,24 +37,21 @@ export default function FeaturedBooks() {
 }
 
   return (
-    <section className="bg-black border-t border-white/10 py-20 px-6 md:px-12">
+    <section className="bg-black border-t border-white/10 py-5 px-2 md:px-2">
 
       {/* Header */}
-      <div className="max-w-6xl mx-auto mb-10">
+      <div className="mb-2">
 
-        <h2 className="text-3xl md:text-4xl font-bold text-white">
+        <h2 className="text-2xl md:text-4xl font-bold text-white">
           ⭐Books You Can't Miss
         </h2>
 
         <p className="text-gray-400 mt-2">
           Swipe through top picks curated for you
         </p>
-
       </div>
-
       {/* Slider */}
-      <div className="max-w-6xl mx-auto">
-
+      <div>
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}
           spaceBetween={25}
@@ -77,10 +74,8 @@ export default function FeaturedBooks() {
             <SwiperSlide key={book._id}>
 
               <div className="bg-gray-900 border border-white/10 rounded-2xl overflow-hidden group hover:-translate-y-2 transition">
-
                 {/* Image */}
                 <div className="relative overflow-hidden">
-
                   <img
                     src={book.cover}
                     alt={book.title}
@@ -98,7 +93,7 @@ export default function FeaturedBooks() {
                 {/* Content */}
                 <div className="p-5">
 
-                  <h3 className="text-white font-bold text-lg">
+                  <h3 className="text-white font-bold text-sm">
                     {book.title}
                   </h3>
 

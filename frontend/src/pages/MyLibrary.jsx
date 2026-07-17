@@ -16,8 +16,7 @@ export default function MyLibrary() {
 };
   return (
     <main className="min-h-screen px-6 py-10">
-      <div className=" max-w-7xl mx-auto ">
-
+      <div>
         {/* HEADER */}
         <div className=" mb-10">
 

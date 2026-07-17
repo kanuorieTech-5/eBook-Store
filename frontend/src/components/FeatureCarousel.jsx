@@ -42,12 +42,12 @@ export default function FeatureCarousel() {
   if (!displayBooks.length) return null;
 
   return (
-    <section className="bg-black border-white/10 py-5 px-6 md:px-12 overflow-hidden">
+    <section className="bg-black border-white/10 py-1 px-1 md:px-5 overflow-hidden rounded-lg">
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-4">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-2">
         <div>
-          <p className="text-yellow-400 uppercase tracking-[0.2em] text-sm mb-2">
+          <p className="text-yellow-400 uppercase tracking-[0.2em] text-sm mb-3">
             Premium Collections
           </p>
           <h2 className="text-2xl md:text-6xl font-black text-white leading-tight">
@@ -62,7 +62,7 @@ export default function FeatureCarousel() {
         </div>
       </div>
       {/* Slider */}
-      <div className="max-w-7xl mx-auto">
+      <div>
         <Swiper
           modules={[
             Autoplay,
@@ -105,7 +105,7 @@ export default function FeatureCarousel() {
                   <img
                     src={book.cover}
                     alt={book.title}
-                    className="w-full h-[220px] object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-72 group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
@@ -115,7 +115,7 @@ export default function FeatureCarousel() {
                 </div>
                 {/* Content */}
                 <div className="p-7">
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2 mb-2">
                     <div className="flex text-yellow-400 gap-1">
                       <FaStar />
                       <FaStar />
@@ -135,7 +135,7 @@ export default function FeatureCarousel() {
                     {book.title}
                   </h3>
 
-                  <p className="text-gray-400 mb-5">
+                  <p className="text-gray-400 mb-2">
                     by {book.author}
                   </p>
 

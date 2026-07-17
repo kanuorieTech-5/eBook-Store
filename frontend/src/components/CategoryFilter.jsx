@@ -51,16 +51,16 @@ export default function CategoryFilter({
   ];
 
   return (
-    <section className="mb-10">
-      <div className="bg-gray-900 rounded-3xl p-6 md:p-8">
+    <section className="mb-5">
+      <div className="bg-gray-900 rounded-3xl p-2 md:p-4">
 
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-4">
           <h1 className="text-4xl md:text-5xl font-black text-yellow-400">
             Discover Amazing Books
           </h1>
 
-          <p className="text-gray-400 mt-3">
+          <p className="text-gray-400 mt-2">
             Browse books by category.
           </p>
         </div>

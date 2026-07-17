@@ -70,11 +70,7 @@ export default function Books() {
       {/* HERO BANNER */}
       <div className="relative flex items-center justify-center text-center">
         <div
-        className="
-          absolute inset-0
-          bg-cover bg-center
-          scale-110
-        "
+        className="absolute inset-0 bg-cover bg-center scale-110"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1400&q=80')",
@@ -82,23 +78,20 @@ export default function Books() {
       />
         <SearchBar search={search} setSearch={setSearch} books={books} />
       </div>
-
-      {/* SEARCH */}
-      
-       <section >
+       <section className="p-2">
           <FeaturedTabs />
        </section>
-
       {/* CATEGORY FILTER */}
+      <section className="p-3">
       <CategoryFilter category={category} setCategory={setCategory} />
-
+      </section>
       {/* RESULTS INFO */}
       <div className="px-4 md:px-8 text-yellow-400 text-sm mb-4">
         Showing {visibleBooks.length} of {filteredBooks.length} books
       </div>
 
       {/* BOOK GRID */} 
-      <div className="grid grid-cols-3 gap-2 p-6">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-2 p-3">
         {filteredBooks.map((book) => (
           <BookCard
             key={book._id}

@@ -77,37 +77,39 @@ export default function Home() {
           <Hero />
         </section>
         {/* FEATURED SECTION */}
-       <section className="max-w-6xl mx-auto px-6 mb-10">
+       <section className="max-w-70xl mx-auto mb-5">
           {/* Apple-style container */}
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 mb-10">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-4 mb-5">
             <FeatureCarousel /> 
           </div>
           {/* TRUST STRIP (NEW SaaS FEEL) */}
-          <section className="text-center text-gray-500 text-sm mb-10 px-6">
+          <section className="text-center text-gray-500 text-sm mb-2 px-6">
             Join over 50,000 readers who have found their next great read with UketBooks.
           </section>
           {/* <section className="max-w-6xl mx-auto px-6 mb-10 bg-purple border border-white/10 rounded-3xl">
             <FeaturedTabs />
           </section> */}
-          <section className="max-w-6xl mx-auto px-6 mb-10 border border-white/10 rounded-3xl">
+          <section className="border-white/10 rounded-3xl">
             <FeaturedTitles /> 
           </section>
-          <section className="max-w-6xl mx-auto px-6 mb-10 border border-white/10 rounded-3xl">
+          <section className="border-white/10 rounded-3xl">
             <BookSections />
-          </section>
+          </section >
+          <section className="border-white/10 rounded-3xl">
           <FeaturedBooks />
+          </section>
         </section>
         {/* FINAL CTA SECTION (SAAS STYLE) */}
-        <section className="max-w-6xl mx-auto px-6 mb-5">
+        <section className="max-w-70xl mx-auto mb-1">
 
           <div className="text-center bg-gradient-to-r from-purple-900/20 via-white/5 to-purple-900/20
             border border-white/10 rounded-3xl p-12 md:p-16 backdrop-blur-xl">
 
-            <h2 className="text-3xl md:text-5xl font-black mb-5">
+            <h2 className="text-3xl md:text-5xl font-black mb-2">
               Start reading smarter today
             </h2>
 
-            <p className="text-gray-400 max-w-2xl mx-auto mb-5">
+            <p className="text-gray-400 max-w-2xl mx-auto mb-2">
               Join thousands of readers accessing premium ebooks instantly with a seamless experience.
             </p>
 
@@ -143,7 +145,7 @@ export default function Home() {
         </section>
 
         {/* TESTIMONIALS */}
-        <section className="max-w-6xl mx-auto px-6">
+        <section className="max-w-70xl mx-auto px-6">
           <Testimonials />
         </section>
 

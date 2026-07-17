@@ -53,7 +53,7 @@ export default function BookCard({ book }) {
       </div>
       {/* Content */}
       <div className="p-1">
-        <h3 className="font-bold text-white line-clamp-1">
+        <h3 className="font-bold text-white text-sm line-clamp-">
           {book.title}
         </h3>
         <p className="text-gray-400 text-sm mt-1">
@@ -65,7 +65,6 @@ export default function BookCard({ book }) {
               <span className="text-gray-500 line-through text-sm">
                 {formatPrice(originalPrice)}
               </span>
-
               <span className="bg-red-500 text-white text-[10px] px-2 py-1 rounded-full font-bold">
                 -{discount}%
               </span> 

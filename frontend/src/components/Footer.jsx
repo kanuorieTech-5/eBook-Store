@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="bg-black border-t border-white/10 text-gray-400">
       
       {/* Main Footer */}
-      <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10 md:px-12 py-20">
+      <div className="w-full px-4 sm:px-6 lg:px-10 md:px-12 py-20">
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-14">
           
