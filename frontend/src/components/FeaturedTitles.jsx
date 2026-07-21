@@ -58,17 +58,17 @@ export default function FeaturedTitles() {
 }, [featuredBooks.length]);
 
   return (
-    <section className="bg-transparent text-white">
+    <section className="bg-transparent text-white p-2 md:p-2 rounded-3xl border border-white/10">
       <div>
         {/* HEADER */}
         <div className="flex items-center justify-between mb-2">
           <div className="text-center md:text-left">
-            <h2 className="text-2xl font-black text-yellow-400 py-3">
-              🔥Trending Titles
+            <h2 className="text-2xl font-black text-white py-3">
+              ⭐Books You Can't Miss
             </h2>
 
             <p className="text-gray-400 mt-1">
-              Discover trending ebooks readers love.
+              Swipe through top picks curated for you
             </p>
           </div>
 

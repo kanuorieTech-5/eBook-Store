@@ -67,10 +67,8 @@ export const getBook =
 // =========================
 // CREATE BOOK
 // =========================
-export const createBook = async (bookData) => {
+export const createBook = async (formData) => {
   try {
-    const formData = createFormData(bookData);
-
     const response = await API.post("/api/books",
       formData,
       {

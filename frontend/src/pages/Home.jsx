@@ -11,7 +11,6 @@ import FeaturedTitles from "../components/FeaturedTitles";
 import FeaturedTabs from "../components/FeaturedTabs"; 
 import BookSections from "../components/BookSections";
 import BookCard from "../components/BookCard";
-import FeaturedBooks from "../components/FeaturedBooks";
 
 export default function Home() {
   const { addToCart } = useContext(CartContext);

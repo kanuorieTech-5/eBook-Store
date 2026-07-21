@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useBooks } from "../context/BookContext";
 import BookCard from "./BookCard";
-import FeaturedBooks from "./FeaturedBooks";
 
 function BookSection({title, description, books = [] }) {
    const scrollRef = useRef(null);
@@ -28,7 +27,7 @@ function BookSection({title, description, books = [] }) {
       {/* Header */} 
       <div className="flex items-center justify-between mb-5">
         <div className="md:text-left">
-          <h2 className="text-sm font-black text-yellow-400">
+          <h2 className="text-lg md:text-3xl font-black text-yellow-400">
             {title}
           </h2>
 

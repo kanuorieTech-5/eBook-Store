@@ -251,6 +251,14 @@ const handleSubmit = async (e) => {
       toast.error("Enter a valid price.");
       return;
     }
+    {
+      if (!form.originalPrice ||
+        parseFloat(form.originalPrice) <= 0
+      ) {
+        toast.error("Enter a valid original price.");
+        return;
+      }
+    }
     if (!editingId) {
       if (!coverFile) {
         toast.error("Please upload a cover image.");
