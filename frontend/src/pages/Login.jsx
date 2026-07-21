@@ -8,7 +8,7 @@ export default function Login() {
   const { login } = useAuth();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/profile";
+  const from = location.state?.from?.pathname || "/";
   // =========================
   // STATES
   // =========================
@@ -155,19 +155,7 @@ export default function Login() {
 
         {/* ERROR */}
         {error && (
-          <div
-            className="
-              bg-red-500/20
-              border
-              border-red-500/30
-
-              text-red-400
-
-              p-3
-              rounded-xl
-
-              mb-5
-            "
+          <div className="bg-red-500/20 border border-red-500/30 text-red-400 p-3 rounded-xl mb-5"
           >
             {error}
           </div>
@@ -230,22 +218,7 @@ export default function Login() {
               onChange={
                 handleChange
               }
-              className="
-                w-full
-                bg-black/70
-
-                border
-                border-gray-700
-
-                rounded-xl
-                p-4
-                pr-14
-
-                outline-none
-
-                focus:border-yellow-400
-                transition-all
-              "
+              className="w-full bg-black/70 border border-gray-700 rounded-xl p-4 pr-14 outline-none focus:border-yellow-400 transition-all"
             />
 
             {/* TOGGLE */}

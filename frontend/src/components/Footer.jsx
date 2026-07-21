@@ -1,9 +1,5 @@
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaTwitter,
-  FaLinkedinIn,
-} from "react-icons/fa";
+import {FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn,} from "react-icons/fa";
+import { Link,} from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -81,19 +77,19 @@ export default function Footer() {
 
             <ul className="space-y-4 text-gray-400">
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                Home
+                <Link to="/">Home</Link>
               </li>
 
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                Categories
+                <Link to="/categories">Categories</Link>
               </li>
 
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                Featured Books
+                <Link to="/featured">Featured Books</Link>
               </li>
 
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                New Releases
+                <Link to="/new-releases">New Releases</Link>
               </li>
             </ul>
           </div>
@@ -106,19 +102,19 @@ export default function Footer() {
 
             <ul className="space-y-4 text-gray-400">
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                About Us
+                <Link to="/about">About Us</Link>
               </li>
 
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                Careers
+                <Link to="/careers">Careers</Link>
               </li>
 
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                Privacy Policy
+                <Link to="/privacy">Privacy Policy</Link>
               </li>
 
               <li className="hover:text-yellow-400 transition cursor-pointer">
-                Terms & Conditions
+                <Link to="/terms">Terms & Conditions</Link>
               </li>
             </ul>
           </div>
@@ -153,19 +149,18 @@ export default function Footer() {
           </p>
 
           <div className="flex gap-6 text-gray-500 text-sm">
-            <span className="hover:text-yellow-400 cursor-pointer transition">
+            <Link to="/cookies" className="hover:text-yellow-400 cursor-pointer transition">
               Cookies
-            </span>
+            </Link>
 
-            <span className="hover:text-yellow-400 cursor-pointer transition">
+            <Link to="/security" className="hover:text-yellow-400 cursor-pointer transition">
               Security
-            </span>
+            </Link>
 
-            <span className="hover:text-yellow-400 cursor-pointer transition">
+            <Link to="/accessibility" className="hover:text-yellow-400 cursor-pointer transition">
               Accessibility
-            </span>
+            </Link>
           </div>
-
         </div>
       </div>
     </footer>

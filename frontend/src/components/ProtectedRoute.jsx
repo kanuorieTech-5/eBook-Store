@@ -37,6 +37,7 @@ export default function ProtectedRoute({
     return (
       <Navigate
         to="/login"
+        state={{ from: location }}
         replace
       />
     );

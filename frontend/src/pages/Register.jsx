@@ -1,66 +1,28 @@
-import {
-  useState,
-} from "react";
-
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
-
-import {
-  useAuth,
-} from "../context/AuthContext";
-
-import {
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
+import {useState,} from "react";
+import {Link, useNavigate,} from "react-router-dom";
+import {useAuth,} from "../context/AuthContext";
+import {FaEye, FaEyeSlash,} from "react-icons/fa";
 
 export default function Register() {
-  const navigate =
-    useNavigate();
-
-  const { register } =
-    useAuth();
-
-  // =========================
-  // STATES
-  // =========================
-  const [form, setForm] =
-    useState({
+  const navigate = useNavigate();
+  const { register } = useAuth();
+  const [form, setForm] = useState({
       name: "",
       email: "",
       password: "",
     });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword,] = useState(false);
 
-  const [loading, setLoading] =
-    useState(false);
-
-  const [error, setError] =
-    useState("");
-
-  const [showPassword,
-    setShowPassword,
-  ] = useState(false);
-
-  // =========================
-  // HANDLE CHANGE
-  // =========================
   const handleChange = (e) => {
     const {
       name,
       value,
     } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm((prev) => ({...prev, [name]: value,}));
   };
 
-  // =========================
-  // VALIDATION
-  // =========================
   const validateForm = () => {
     if (
       !form.name ||
@@ -79,9 +41,6 @@ export default function Register() {
     return null;
   };
 
-  // =========================
-  // SUBMIT
-  // =========================
   const handleSubmit =
     async (e) => {
       e.preventDefault();
@@ -115,9 +74,7 @@ export default function Register() {
           return;
         }
 
-        navigate(
-          "/profile"
-        );
+       navigate(from, { replace: true });
       } catch (err) {
         console.error(err);
 
@@ -333,16 +290,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className={`
-              w-full
-
-              font-bold
-
-              py-4
-              rounded-xl
-
-              transition-all
-
+            className={`w-full font-bold py-4 rounded-xl transition-all 
               ${
                 loading
                   ? `
@@ -364,8 +312,7 @@ export default function Register() {
         </form>
 
         {/* FOOTER */}
-        <p
-          className="
+        <p className="
             text-gray-400
             mt-6
             text-center
