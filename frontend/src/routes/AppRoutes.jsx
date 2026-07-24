@@ -24,7 +24,7 @@ import Privacy from "../pages/Privacy";
 import NotFound from "../pages/NotFound";
 import HelpCenter from "../components/HelpCenter";
 import ScrollToTop from "../components/ScrollToTop";
-
+import CookieBanner from "../components/CookieBanner";
 export default function AppRoutes() {
   return (
     <>
@@ -99,6 +99,7 @@ export default function AppRoutes() {
         {/* FALLBACK */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CookieBanner />
     </>
   );
 }

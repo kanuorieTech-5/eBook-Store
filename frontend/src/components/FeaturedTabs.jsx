@@ -113,7 +113,7 @@ const discount =
         </div>
 
         {/* TABS */}
-        <div className="flex md:hidden gap-3 overflow-x-auto scrollbar-hide pb-2 ">
+        <div className="flex md:hidde gap-3 overflow-x-auto scrollbar-hide pb-2 ">
           {tabs.map((tab) => (
             <button
               key={tab.id}

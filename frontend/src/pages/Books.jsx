@@ -70,7 +70,7 @@ export default function Books() {
       {/* HERO BANNER */}
       <div className="relative flex items-center justify-center text-center">
         <div
-        className="absolute inset-0 bg-cover bg-center scale-110"
+        className="absolute inset-0 bg-cover bg-center scale-100 transition-transform duration-500 hover:scale-105"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1400&q=80')",

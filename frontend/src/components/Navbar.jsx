@@ -4,7 +4,7 @@ import {useContext, useState, useEffect, useRef,} from "react";
 
 import {CartContext,} from "../context/CartContext";
 
-import {FaMoon, FaSun, FaHome, FaBook, FaUser, FaShoppingCart, FaInfoCircle, FaEnvelope, FaQuestionCircle, FaCommentDots, FaShieldAlt, FaFileContract, FaBookOpen, FaTachometerAlt, FaSignOutAlt,} from "react-icons/fa";
+import {FaMoon, FaSun, FaHome, FaBook, FaUser, FaShoppingCart, FaInfoCircle, FaEnvelope, FaQuestionCircle, FaCommentDots, FaShieldAlt, FaFileContract, FaBookOpen, FaTachometerAlt, FaSignOutAlt, FaCookie,} from "react-icons/fa";
 
 import {useTheme,} from "../context/ThemeContext";
 
@@ -90,7 +90,7 @@ export default function Navbar() {
     },
 
     {
-      name: "About",
+      name: "About Us",
       path: "/about",
       icon: (
         <FaInfoCircle />
@@ -98,13 +98,13 @@ export default function Navbar() {
     },
 
     {
-      name: "Contact",
+      name: "support",
       path: "/contact",
       icon: <FaEnvelope />,
     },
 
     {
-      name: "Help",
+      name: "Help Center",
       path: "/help",
       icon: (
         <FaQuestionCircle />
@@ -120,7 +120,7 @@ export default function Navbar() {
     },
 
     {
-      name: "FAQ",
+      name: "FAQ ",
       path: "/faq",
       icon: (
         <FaQuestionCircle />
@@ -128,7 +128,7 @@ export default function Navbar() {
     },
 
     {
-      name: "Terms",
+      name: "Terms of Service",
       path: "/terms",
       icon: (
         <FaFileContract />
@@ -136,12 +136,19 @@ export default function Navbar() {
     },
 
     {
-      name: "Privacy",
+      name: "Privacy Policy",
       path: "/privacy",
       icon: (
         <FaShieldAlt />
       ),
     },
+    {
+      name: "Cookies Policy",
+      path: "/cookies",
+      icon: (
+        <FaCookie />
+      ),
+    }
   ];
 
   return (
